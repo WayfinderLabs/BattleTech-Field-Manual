@@ -17,7 +17,7 @@ const HARDPOINT_DISPLAY: Record<string, string> = {
 const MechDetailScreen = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const mech = MECHS.find((m) => m.id === id);
+  const mech = MECHS.find((m) => m.id === Number(id));
 
   if (!mech) {
     return (
