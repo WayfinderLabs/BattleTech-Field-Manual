@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
-import WEAPONS, { type Weapon } from "@/data/weapons";
+import { WEAPONS, type Weapon } from "@/data/weapons";
 
 const CATEGORY_COLORS: Record<Weapon["category"], string> = {
   Ballistic: "bg-[hsl(220,9%,46%)] text-white",
