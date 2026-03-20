@@ -12,7 +12,7 @@ const BottomNav = () => {
   const navigate = useNavigate();
 
   const isActive = (path: string) => {
-    if (path === "/") return location.pathname === "/";
+    if (path === "/") return location.pathname === "/" || location.pathname.startsWith("/weapons");
     return location.pathname.startsWith(path);
   };
 
