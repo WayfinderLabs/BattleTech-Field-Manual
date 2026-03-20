@@ -5,7 +5,7 @@ import { WEAPONS } from "@/data/weapons";
 const WeaponDetailScreen = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const weapon = WEAPONS.find((w) => w.id === id);
+  const weapon = WEAPONS.find((w) => w.id === Number(id));
 
   if (!weapon) {
     return (
