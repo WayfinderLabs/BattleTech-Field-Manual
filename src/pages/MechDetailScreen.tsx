@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
-import MECHS from "@/data/mechs";
+import { MECHS } from "@/data/mechs";
 
 const CLASS_COLORS: Record<string, string> = {
   Light: "bg-[hsl(142,71%,45%)] text-white",
