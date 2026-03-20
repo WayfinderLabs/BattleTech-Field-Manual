@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
-import MECHS, { type Mech } from "@/data/mechs";
+import { MECHS, type Mech } from "@/data/mechs";
 
 const CLASS_COLORS: Record<Mech["chassisClass"], string> = {
   Light: "bg-[hsl(142,71%,45%)] text-white",

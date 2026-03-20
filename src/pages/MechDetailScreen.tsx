@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
-import MECHS from "@/data/mechs";
+import { MECHS } from "@/data/mechs";
 
 const CLASS_COLORS: Record<string, string> = {
   Light: "bg-[hsl(142,71%,45%)] text-white",
@@ -17,7 +17,7 @@ const HARDPOINT_DISPLAY: Record<string, string> = {
 const MechDetailScreen = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const mech = MECHS.find((m) => m.id === id);
+  const mech = MECHS.find((m) => m.id === Number(id));
 
   if (!mech) {
     return (
