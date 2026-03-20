@@ -1,149 +1,204 @@
 export interface Equipment {
-  id: string;
+  id: number;
   name: string;
-  category: 'Heat Sink' | 'Jump Jet' | 'Sensor' | 'Actuator' | 'Other';
+  category: 'Heat Sink' | 'Jump Jet' | 'Sensor' | 'Actuator' | 'Structure' | 'Armor' | 'Other';
   tonnage: number;
   criticalSlots: number;
   effectDescription: string;
   isClan: boolean;
 }
 
-const EQUIPMENT: Equipment[] = [
+export const EQUIPMENT: Equipment[] = [
+
+  // ── HEAT SINKS ─────────────────────────────────────────────────────────────
+
   {
-    id: 'single-heat-sink',
+    id: 1,
     name: 'Single Heat Sink',
     category: 'Heat Sink',
     tonnage: 1,
     criticalSlots: 1,
-    effectDescription: 'Dissipates 3 heat per turn.',
+    effectDescription: 'Dissipates 3 heat per turn. Standard heat management equipment. Every mech starts with 10 built into the engine.',
     isClan: false,
   },
   {
-    id: 'double-heat-sink',
+    id: 2,
     name: 'Double Heat Sink',
     category: 'Heat Sink',
     tonnage: 1,
-    criticalSlots: 2,
-    effectDescription: 'Dissipates 6 heat per turn. Twice as efficient as standard.',
+    criticalSlots: 3,
+    effectDescription: 'Dissipates 6 heat per turn — double the efficiency of a Single Heat Sink. Takes 3 critical slots. Major upgrade for energy-heavy builds.',
     isClan: false,
   },
   {
-    id: 'clan-double-heat-sink',
+    id: 3,
     name: 'Clan Double Heat Sink',
     category: 'Heat Sink',
     tonnage: 1,
     criticalSlots: 2,
-    effectDescription: 'Dissipates 6 heat per turn. Clan-spec, identical performance to IS DHS.',
+    effectDescription: 'Clan-spec Double Heat Sink. Dissipates 6 heat per turn but uses only 2 critical slots instead of 3. Significant slot advantage over IS version.',
     isClan: true,
   },
+
+  // ── JUMP JETS ──────────────────────────────────────────────────────────────
+
   {
-    id: 'jump-jet-light',
+    id: 4,
     name: 'Jump Jet (Light)',
     category: 'Jump Jet',
     tonnage: 0.5,
     criticalSlots: 1,
-    effectDescription: 'Enables jump movement for light mechs (20–35 tons).',
+    effectDescription: 'Enables jump movement for Light mechs (under 55 tons). Each jet adds one hex of jump range. Must be installed in legs or side torsos.',
     isClan: false,
   },
   {
-    id: 'jump-jet-medium',
+    id: 5,
     name: 'Jump Jet (Medium)',
     category: 'Jump Jet',
     tonnage: 1,
     criticalSlots: 1,
-    effectDescription: 'Enables jump movement for medium mechs (40–55 tons).',
+    effectDescription: 'Enables jump movement for Medium mechs (55–75 tons). Each jet adds one hex of jump range.',
     isClan: false,
   },
   {
-    id: 'jump-jet-heavy',
+    id: 6,
     name: 'Jump Jet (Heavy)',
-    category: 'Jump Jet',
-    tonnage: 1.5,
-    criticalSlots: 1,
-    effectDescription: 'Enables jump movement for heavy mechs (60–75 tons).',
-    isClan: false,
-  },
-  {
-    id: 'jump-jet-assault',
-    name: 'Jump Jet (Assault)',
     category: 'Jump Jet',
     tonnage: 2,
     criticalSlots: 1,
-    effectDescription: 'Enables jump movement for assault mechs (80–100 tons).',
+    effectDescription: 'Enables jump movement for Heavy mechs (75–90 tons). Heavier and more expensive per jet than Medium jets.',
     isClan: false,
   },
   {
-    id: 'guardian-ecm',
+    id: 7,
+    name: 'Jump Jet (Assault)',
+    category: 'Jump Jet',
+    tonnage: 4,
+    criticalSlots: 1,
+    effectDescription: 'Enables jump movement for Assault mechs (90+ tons). Very expensive in tonnage. Only a few Assault chassis support them.',
+    isClan: false,
+  },
+
+  // ── SENSORS / ELECTRONICS ──────────────────────────────────────────────────
+
+  {
+    id: 8,
     name: 'Guardian ECM Suite',
     category: 'Sensor',
     tonnage: 1.5,
     criticalSlots: 2,
-    effectDescription: 'Disrupts enemy electronics. Reduces indirect fire accuracy against nearby allies.',
+    effectDescription: 'Disrupts enemy sensor locks and targeting systems. Reduces enemy accuracy against the equipped mech and nearby allies. Counter to NARC and sensor-guided weapons.',
     isClan: false,
   },
   {
-    id: 'beagle-active-probe',
+    id: 9,
     name: 'Beagle Active Probe',
     category: 'Sensor',
     tonnage: 1.5,
     criticalSlots: 2,
-    effectDescription: 'Extends sensor range. Detects shutdown and hidden units.',
+    effectDescription: 'Extends sensor range and reveals hidden units. Allows detection of enemy mechs before visual range. Useful for scout builds.',
     isClan: false,
   },
   {
-    id: 'clan-active-probe',
+    id: 10,
     name: 'Clan Active Probe',
     category: 'Sensor',
     tonnage: 1,
     criticalSlots: 1,
-    effectDescription: 'Clan-spec active probe. Lighter and more compact than IS variant.',
+    effectDescription: 'Clan-spec Active Probe. Same detection capability as Beagle but lighter and takes fewer slots.',
     isClan: true,
   },
   {
-    id: 'tag-equipment',
+    id: 11,
     name: 'Target Acquisition Gear (TAG)',
     category: 'Sensor',
     tonnage: 1,
     criticalSlots: 1,
-    effectDescription: 'Designates target for allied indirect fire. Improves missile accuracy.',
+    effectDescription: 'Marks targets for semi-guided munitions. Required to enable indirect LRM fire from allied mechs without direct line of sight.',
     isClan: false,
   },
+
+  // ── MOBILITY UPGRADES ──────────────────────────────────────────────────────
+
   {
-    id: 'masc',
+    id: 12,
     name: 'MASC',
-    category: 'Actuator',
+    category: 'Other',
     tonnage: 2,
     criticalSlots: 2,
-    effectDescription: 'Myomer Accelerator Signal Circuitry. Temporarily boosts sprint speed. Risk of leg damage.',
+    effectDescription: 'Myomer Accelerator Signal Circuitry. Allows the mech to sprint at significantly increased speed for a limited duration. Risk of leg damage on extended use.',
     isClan: false,
   },
   {
-    id: 'clan-masc',
+    id: 13,
     name: 'Clan MASC',
-    category: 'Actuator',
-    tonnage: 1.5,
-    criticalSlots: 2,
-    effectDescription: 'Clan-spec MASC. Lighter than IS variant. Same speed boost and leg damage risk.',
+    category: 'Other',
+    tonnage: 1,
+    criticalSlots: 1,
+    effectDescription: 'Clan-spec MASC. Same sprint boost as IS version but lighter and more compact. More reliable than IS variant.',
+    isClan: true,
+  },
+
+  // ── STRUCTURE & ARMOR ──────────────────────────────────────────────────────
+
+  {
+    id: 14,
+    name: 'Endo-Steel Structure',
+    category: 'Structure',
+    tonnage: 0,
+    criticalSlots: 14,
+    effectDescription: 'Reduces the weight of the mech\'s internal structure by 50%, freeing tonnage for weapons and equipment. Costs 14 critical slots distributed across the mech.',
+    isClan: false,
+  },
+  {
+    id: 15,
+    name: 'Ferro-Fibrous Armor',
+    category: 'Armor',
+    tonnage: 0,
+    criticalSlots: 14,
+    effectDescription: 'Increases armor protection by approximately 12% for the same tonnage as standard armor. Costs 14 critical slots. Best used on mechs with spare slot capacity.',
+    isClan: false,
+  },
+  {
+    id: 16,
+    name: 'Clan Endo-Steel',
+    category: 'Structure',
+    tonnage: 0,
+    criticalSlots: 7,
+    effectDescription: 'Clan-spec Endo-Steel. Same 50% structure weight reduction but uses only 7 critical slots versus 14 for IS version. Major slot advantage.',
     isClan: true,
   },
   {
-    id: 'ferro-fibrous-armor',
-    name: 'Ferro-Fibrous Armor',
-    category: 'Other',
+    id: 17,
+    name: 'Clan Ferro-Fibrous',
+    category: 'Armor',
     tonnage: 0,
-    criticalSlots: 14,
-    effectDescription: '12% more armor per ton than standard. Requires 14 critical slots across the mech.',
+    criticalSlots: 7,
+    effectDescription: 'Clan-spec Ferro-Fibrous. Same 12% armor bonus but uses only 7 critical slots versus 14 for IS version.',
+    isClan: true,
+  },
+
+  // ── GYRO UPGRADES ──────────────────────────────────────────────────────────
+
+  {
+    id: 18,
+    name: 'Gyro Upgrade',
+    category: 'Other',
+    tonnage: 1,
+    criticalSlots: 1,
+    effectDescription: 'Improves mech stability and resistance to knockdown. Reduces the effectiveness of enemy stability damage. Installed in the centre torso gyro slot.',
     isClan: false,
   },
+
+  // ── LEG UPGRADES ───────────────────────────────────────────────────────────
+
   {
-    id: 'endo-steel-structure',
-    name: 'Endo-Steel Structure',
-    category: 'Other',
-    tonnage: 0,
-    criticalSlots: 14,
-    effectDescription: 'Halves internal structure weight. Requires 14 critical slots across the mech.',
+    id: 19,
+    name: 'Leg Upgrade',
+    category: 'Actuator',
+    tonnage: 1,
+    criticalSlots: 1,
+    effectDescription: 'Improves sprint speed and reduces chance of leg damage from difficult terrain. Installed in leg actuator slots.',
     isClan: false,
   },
 ];
-
-export default EQUIPMENT;

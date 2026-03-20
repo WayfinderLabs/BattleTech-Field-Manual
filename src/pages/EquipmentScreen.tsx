@@ -1,11 +1,13 @@
 import { useMemo } from "react";
-import EQUIPMENT, { type Equipment } from "@/data/equipment";
+import { EQUIPMENT, type Equipment } from "@/data/equipment";
 
 const CATEGORY_COLORS: Record<Equipment["category"], string> = {
   "Heat Sink": "bg-[hsl(0,84%,60%)] text-white",
   "Jump Jet": "bg-[hsl(142,71%,45%)] text-white",
   Sensor: "bg-[hsl(217,91%,60%)] text-white",
   Actuator: "bg-[hsl(24,94%,53%)] text-white",
+  Structure: "bg-[hsl(280,60%,50%)] text-white",
+  Armor: "bg-[hsl(48,96%,53%)] text-black",
   Other: "bg-[hsl(220,9%,46%)] text-white",
 };
 
@@ -14,6 +16,8 @@ const SECTION_ORDER: Equipment["category"][] = [
   "Jump Jet",
   "Sensor",
   "Actuator",
+  "Structure",
+  "Armor",
   "Other",
 ];
 
@@ -22,6 +26,8 @@ const SECTION_LABELS: Record<Equipment["category"], string> = {
   "Jump Jet": "JUMP JETS",
   Sensor: "SENSORS",
   Actuator: "ACTUATORS",
+  Structure: "STRUCTURE",
+  Armor: "ARMOR",
   Other: "OTHER",
 };
 
