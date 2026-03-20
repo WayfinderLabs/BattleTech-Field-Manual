@@ -1,11 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
-import WEAPONS from "@/data/weapons";
+import { WEAPONS } from "@/data/weapons";
 
 const WeaponDetailScreen = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const weapon = WEAPONS.find((w) => w.id === id);
+  const weapon = WEAPONS.find((w) => w.id === Number(id));
 
   if (!weapon) {
     return (
