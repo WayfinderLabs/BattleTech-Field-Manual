@@ -23,6 +23,7 @@ const WeaponDetailScreen = () => {
   const stats = [
     { label: "CATEGORY", value: weapon.category },
     { label: "DAMAGE", value: weapon.damage },
+    { label: "STABILITY DMG", value: weapon.stabilityDamage },
     { label: "HEAT", value: weapon.heat },
     { label: "TONNAGE", value: weapon.tonnage },
     { label: "CRITICAL SLOTS", value: weapon.criticalSlots },
