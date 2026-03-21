@@ -18,7 +18,7 @@ export const EQUIPMENT: Equipment[] = [
     category: 'Heat Sink',
     tonnage: 1,
     criticalSlots: 1,
-    effectDescription: 'Dissipates 3 heat per turn. Standard heat management equipment. Every mech starts with 10 built into the engine.',
+    effectDescription: 'Dissipates 3 heat per turn. Standard heat management. Every mech starts with 10 built into the engine at no extra cost.',
     isClan: false,
   },
   {
@@ -27,7 +27,7 @@ export const EQUIPMENT: Equipment[] = [
     category: 'Heat Sink',
     tonnage: 1,
     criticalSlots: 3,
-    effectDescription: 'Dissipates 6 heat per turn — double the efficiency of a Single Heat Sink. Takes 3 critical slots. Major upgrade for energy-heavy builds.',
+    effectDescription: 'Dissipates 6 heat per turn — double efficiency of Single Heat Sink. Costs 3 critical slots. LosTech. Major upgrade for energy-heavy builds.',
     isClan: false,
   },
   {
@@ -36,7 +36,7 @@ export const EQUIPMENT: Equipment[] = [
     category: 'Heat Sink',
     tonnage: 1,
     criticalSlots: 2,
-    effectDescription: 'Clan-spec Double Heat Sink. Dissipates 6 heat per turn but uses only 2 critical slots instead of 3. Significant slot advantage over IS version.',
+    effectDescription: 'Clan-spec Double Heat Sink. Dissipates 6 heat per turn using only 2 critical slots vs 3 for IS version. Significant slot advantage.',
     isClan: true,
   },
 
@@ -48,7 +48,7 @@ export const EQUIPMENT: Equipment[] = [
     category: 'Jump Jet',
     tonnage: 0.5,
     criticalSlots: 1,
-    effectDescription: 'Enables jump movement for Light mechs (under 55 tons). Each jet adds one hex of jump range. Must be installed in legs or side torsos.',
+    effectDescription: 'Enables jump movement for Light mechs (under 55 tons). Each jet adds one hex of jump range. Install in legs or side torsos.',
     isClan: false,
   },
   {
@@ -66,7 +66,7 @@ export const EQUIPMENT: Equipment[] = [
     category: 'Jump Jet',
     tonnage: 2,
     criticalSlots: 1,
-    effectDescription: 'Enables jump movement for Heavy mechs (75–90 tons). Heavier and more expensive per jet than Medium jets.',
+    effectDescription: 'Enables jump movement for Heavy mechs (75–90 tons). Heavier per jet than Medium class.',
     isClan: false,
   },
   {
@@ -75,7 +75,7 @@ export const EQUIPMENT: Equipment[] = [
     category: 'Jump Jet',
     tonnage: 4,
     criticalSlots: 1,
-    effectDescription: 'Enables jump movement for Assault mechs (90+ tons). Very expensive in tonnage. Only a few Assault chassis support them.',
+    effectDescription: 'Enables jump movement for Assault mechs (90+ tons). Very expensive in tonnage. Only a handful of Assault chassis support them.',
     isClan: false,
   },
 
@@ -105,7 +105,7 @@ export const EQUIPMENT: Equipment[] = [
     category: 'Sensor',
     tonnage: 1,
     criticalSlots: 1,
-    effectDescription: 'Clan-spec Active Probe. Same detection capability as Beagle but lighter and takes fewer slots.',
+    effectDescription: 'Clan-spec Active Probe. Same detection capability as Beagle Active Probe but lighter and fewer slots.',
     isClan: true,
   },
   {
@@ -126,7 +126,7 @@ export const EQUIPMENT: Equipment[] = [
     category: 'Other',
     tonnage: 2,
     criticalSlots: 2,
-    effectDescription: 'Myomer Accelerator Signal Circuitry. Allows the mech to sprint at significantly increased speed for a limited duration. Risk of leg damage on extended use.',
+    effectDescription: 'Myomer Accelerator Signal Circuitry. Allows mech to sprint at significantly increased speed for a limited duration. Risk of leg actuator damage on extended use.',
     isClan: false,
   },
   {
@@ -147,7 +147,7 @@ export const EQUIPMENT: Equipment[] = [
     category: 'Structure',
     tonnage: 0,
     criticalSlots: 14,
-    effectDescription: 'Reduces the weight of the mech\'s internal structure by 50%, freeing tonnage for weapons and equipment. Costs 14 critical slots distributed across the mech.',
+    effectDescription: 'Reduces internal structure weight by 50%, freeing tonnage for weapons and equipment. Costs 14 critical slots distributed across the mech.',
     isClan: false,
   },
   {
@@ -156,7 +156,7 @@ export const EQUIPMENT: Equipment[] = [
     category: 'Armor',
     tonnage: 0,
     criticalSlots: 14,
-    effectDescription: 'Increases armor protection by approximately 12% for the same tonnage as standard armor. Costs 14 critical slots. Best used on mechs with spare slot capacity.',
+    effectDescription: 'Increases armor protection by approximately 12% for the same tonnage as standard armor. Costs 14 critical slots. Best on mechs with spare slot capacity.',
     isClan: false,
   },
   {
@@ -165,7 +165,7 @@ export const EQUIPMENT: Equipment[] = [
     category: 'Structure',
     tonnage: 0,
     criticalSlots: 7,
-    effectDescription: 'Clan-spec Endo-Steel. Same 50% structure weight reduction but uses only 7 critical slots versus 14 for IS version. Major slot advantage.',
+    effectDescription: 'Clan-spec Endo-Steel. Same 50% structure weight reduction using only 7 critical slots vs 14 for IS version. Major slot advantage.',
     isClan: true,
   },
   {
@@ -174,7 +174,7 @@ export const EQUIPMENT: Equipment[] = [
     category: 'Armor',
     tonnage: 0,
     criticalSlots: 7,
-    effectDescription: 'Clan-spec Ferro-Fibrous. Same 12% armor bonus but uses only 7 critical slots versus 14 for IS version.',
+    effectDescription: 'Clan-spec Ferro-Fibrous. Same 12% armor bonus using only 7 critical slots vs 14 for IS version.',
     isClan: true,
   },
 
@@ -186,7 +186,7 @@ export const EQUIPMENT: Equipment[] = [
     category: 'Other',
     tonnage: 1,
     criticalSlots: 1,
-    effectDescription: 'Improves mech stability and resistance to knockdown. Reduces the effectiveness of enemy stability damage. Installed in the centre torso gyro slot.',
+    effectDescription: 'Improves mech stability and resistance to knockdown. Reduces effectiveness of enemy stability damage. Installed in centre torso gyro slot.',
     isClan: false,
   },
 
