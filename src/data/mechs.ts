@@ -25,8 +25,7 @@ export interface Mech {
 }
 
 // Hardpoint notation: B=Ballistic, E=Energy, M=Missile, S=Support
-// e.g. "2B 1E" = 2 Ballistic + 1 Energy hardpoints in that location
-// "—" = no weapon hardpoints in that location
+// e.g. "2B 1E" = 2 Ballistic + 1 Energy | "—" = no weapon hardpoints
 
 export const MECHS: Mech[] = [
 
@@ -44,7 +43,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '1B', rt: '1B', la: '1M', ra: '1M', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'The Locust is a fast, lightly armoured reconnaissance mech. Limited firepower makes it a poor combatant but an excellent scout.',
+    loreDescription: 'Fast reconnaissance mech. Limited firepower but exceptional speed makes it a capable scout and flanker.',
   },
   {
     id: 2,
@@ -58,7 +57,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '1E', rt: '1E', la: '—', ra: '—', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'The Spider combines exceptional jump capability with reasonable speed. Thin armour limits its combat role despite impressive mobility.',
+    loreDescription: 'Exceptional jump capability combined with high speed. Thin armour limits its combat role despite impressive mobility.',
   },
   {
     id: 3,
@@ -72,7 +71,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '2E', rt: '2E', la: '—', ra: '1M', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'One of the most capable Light mechs, the Jenner balances speed, jump jets, and a respectable weapon payload for its weight class.',
+    loreDescription: 'One of the most capable Light mechs in the Inner Sphere. Balances speed, jump jets, and a respectable weapon payload.',
   },
   {
     id: 4,
@@ -86,7 +85,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '—', rt: '1E', la: '—', ra: '1M', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Slow for a Light mech but mounts a PPC, giving it long-range punch well above its weight class.',
+    loreDescription: 'Slow for a Light mech but mounts a PPC, providing long-range punch well above its weight class.',
   },
   {
     id: 5,
@@ -100,7 +99,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '2E', rt: '2E', la: '2S', ra: '2S', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Dedicated incendiary platform. Multiple flamer and support hardpoints make it ideal for heat harassment tactics.',
+    loreDescription: 'Dedicated incendiary platform. Multiple flamer and support hardpoints make it ideal for heat-harassment tactics.',
   },
   {
     id: 6,
@@ -128,7 +127,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '—', rt: '1E', la: '—', ra: '1B', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Extremely slow but carries an AC/10 for its weight class. Derided as the "trash can" of mech design.',
+    loreDescription: 'Extremely slow but mounts an AC/10. Derided as the "trash can" of mech design — but it does the job in urban terrain.',
   },
 
   // ── MEDIUM ─────────────────────────────────────────────────────────────────
@@ -145,7 +144,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '1M', rt: '1E', la: '1E', ra: '1B', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'The primary mech of the Capellan Confederation. Balanced weapons across all categories with jump capability.',
+    loreDescription: 'Primary mech of the Capellan Confederation. Balanced weapon mix across all categories with jump capability.',
   },
   {
     id: 9,
@@ -159,7 +158,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '2E', rt: '2E', la: '—', ra: '—', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Fastest Medium mech but limited hardpoints. Useful for harassment and flanking.',
+    loreDescription: 'Fastest Medium mech. Limited hardpoints but useful for harassment and flanking at high speed.',
   },
   {
     id: 10,
@@ -173,7 +172,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '1B', rt: '2B 1E', la: '1E', ra: '1E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'The Hunchback is built around a devastating AC/20 mounted on its right torso. A close-range brawler.',
+    loreDescription: 'Built around a devastating AC/20 on the right torso. The definitive close-range brawler among Medium mechs.',
   },
   {
     id: 11,
@@ -201,7 +200,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '2M', rt: '2M', la: '1E', ra: '1M', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Missile-boat medium mech. Excellent LRM loadout for a Medium. Works well at standoff range.',
+    loreDescription: 'Missile-boat medium. Excellent LRM payload for a 50-tonner. Performs best at standoff range.',
   },
   {
     id: 13,
@@ -215,7 +214,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '1B', rt: '1B', la: '1M', ra: '2E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Well-rounded medium with jump jets. Used by many different Great Houses. Decent payload for its class.',
+    loreDescription: 'Well-rounded medium with jump jets. Decent payload across all weapon categories. Used by many Great Houses.',
   },
   {
     id: 14,
@@ -229,7 +228,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '—', rt: '1B', la: '2E', ra: '2E 1M', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Reliable all-rounder with jump jets. Good energy hardpoints in the arms.',
+    loreDescription: 'Reliable all-rounder with jump jets. Good energy hardpoints in both arms.',
   },
   {
     id: 15,
@@ -243,7 +242,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '2M', rt: '1E', la: '—', ra: '1E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'A mainstay Medium mech prized for its balance of firepower, speed and jump capability.',
+    loreDescription: 'Mainstay Medium prized for balance of firepower, speed and jump capability.',
   },
   {
     id: 16,
@@ -271,27 +270,10 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '1E', rt: '1B', la: '1E', ra: '1B', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Agile medium with jump jets. Carries a mix of ballistic and energy weapons.',
+    loreDescription: 'Agile medium with jump jets. Carries a mix of ballistic and energy weapons across both arms.',
   },
-
-  // ── HEAVY ──────────────────────────────────────────────────────────────────
-
   {
     id: 18,
-    name: 'Dragon DRG-1N',
-    chassisClass: 'Heavy',
-    tonnage: 60,
-    maxArmor: 384,
-    speedWalk: 5,
-    speedSprint: 8,
-    jumpJetsMax: 0,
-    hardpoints: { hd: '—', ct: '—', lt: '—', rt: '1B', la: '1M', ra: '2E', ll: '—', rl: '—' },
-    isClan: false,
-    dlcSource: 'Base',
-    loreDescription: 'Fast Heavy mech used widely by the Draconis Combine. More mobile than most Heavies but modest firepower.',
-  },
-  {
-    id: 19,
     name: 'Blackjack BJ-1',
     chassisClass: 'Medium',
     tonnage: 45,
@@ -302,7 +284,24 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '1B', rt: '1B', la: '1E', ra: '1E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Jump-capable medium with twin AC/2 mounts. Excels at long-range harassment.',
+    loreDescription: 'Jump-capable medium with twin AC/2 mounts. Excels at long-range harassment from elevated positions.',
+  },
+
+  // ── HEAVY ──────────────────────────────────────────────────────────────────
+
+  {
+    id: 19,
+    name: 'Dragon DRG-1N',
+    chassisClass: 'Heavy',
+    tonnage: 60,
+    maxArmor: 384,
+    speedWalk: 5,
+    speedSprint: 8,
+    jumpJetsMax: 0,
+    hardpoints: { hd: '—', ct: '—', lt: '—', rt: '1B', la: '1M', ra: '2E', ll: '—', rl: '—' },
+    isClan: false,
+    dlcSource: 'Base',
+    loreDescription: 'Fast Heavy mech used widely by the Draconis Combine. More mobile than most Heavies at the cost of modest firepower.',
   },
   {
     id: 20,
@@ -316,7 +315,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '2M', rt: '2M', la: '1E', ra: '1E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Classic missile-boat heavy. Dual LRM racks dominate at long range. A staple of any lance.',
+    loreDescription: 'Classic missile-boat heavy. Dual LRM racks dominate at long range. A staple of any fire-support lance.',
   },
   {
     id: 21,
@@ -330,7 +329,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '2B', rt: '2B', la: '1E', ra: '1E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Anti-air and fire-support platform. Four ballistic hardpoints allow devastating autocannon loadouts.',
+    loreDescription: 'Anti-air and fire-support platform. Four ballistic hardpoints allow devastating quad-autocannon loadouts.',
   },
   {
     id: 22,
@@ -344,7 +343,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '1M', rt: '1M', la: '2E', ra: '2E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Fast and jump-capable Heavy. Excellent energy hardpoints and above-average speed for its tonnage.',
+    loreDescription: 'Fast and jump-capable Heavy. Excellent energy hardpoints and above-average speed for its weight class.',
   },
   {
     id: 23,
@@ -358,7 +357,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '1B 1E', rt: '1B', la: '1M', ra: '2E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Well-balanced heavy with jump jets and good weapon mix across all locations.',
+    loreDescription: 'Well-balanced heavy with jump jets and a good mix of weapon hardpoints across all locations.',
   },
   {
     id: 24,
@@ -386,7 +385,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '1E', lt: '2E', rt: '2E', la: '—', ra: '1M', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Jump-capable energy brawler. Excellent energy hardpoints and high speed for a 70-ton mech.',
+    loreDescription: 'Jump-capable energy brawler. Excellent energy hardpoints and high speed for a 70-ton chassis.',
   },
   {
     id: 26,
@@ -400,7 +399,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '1E', rt: '2B', la: '1M', ra: '1B 1E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'A heavy brawler with good ballistic hardpoints. The right torso can mount dual autocannons.',
+    loreDescription: 'Heavy brawler with strong ballistic hardpoints. Right torso can mount dual autocannons effectively.',
   },
   {
     id: 27,
@@ -428,7 +427,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '1B 1E', rt: '1B 1E', la: '—', ra: '—', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Anti-aircraft and fire-support mech. Dual arm mounts with both ballistic and energy hardpoints.',
+    loreDescription: 'Anti-aircraft and fire-support mech. Dual arm mounts each carry both ballistic and energy hardpoints.',
   },
 
   // ── ASSAULT ────────────────────────────────────────────────────────────────
@@ -445,7 +444,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '2M 2E', rt: '2M 2E', la: '—', ra: '—', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Torso-heavy assault mech with massive missile and energy payload. Slow but devastating at range.',
+    loreDescription: 'Torso-heavy assault mech with massive missile and energy payload. Slow but devastating at long range.',
   },
   {
     id: 30,
@@ -473,7 +472,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '2M', rt: '1B 1E', la: '1M', ra: '1E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Jump-capable assault mech. The Gauss Rifle variant (732B) is a campaign reward. Rare jump jets for an Assault.',
+    loreDescription: 'Rare jump-capable assault mech. The 732B campaign reward variant mounts a Gauss Rifle.',
   },
   {
     id: 32,
@@ -487,11 +486,11 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '1E', rt: '1B', la: '1E', ra: '2E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Fast for an Assault but considered under-armed for its weight. High speed compensates for limited hardpoints.',
+    loreDescription: 'Fast for an Assault class but considered under-armed for its weight. High mobility compensates for limited hardpoints.',
   },
   {
     id: 33,
-    name: 'King Crab KGC-000',
+    name: 'King Crab KGC-0000',
     chassisClass: 'Assault',
     tonnage: 100,
     maxArmor: 640,
@@ -501,7 +500,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '1E 1M', rt: '1E', la: '2B', ra: '2B', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Maximum tonnage assault with devastating dual-arm ballistic hardpoints. The definitive AC/20 platform.',
+    loreDescription: 'Maximum-tonnage assault with devastating dual-arm ballistic hardpoints. The definitive dual-AC/20 platform.',
   },
   {
     id: 34,
@@ -515,7 +514,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '2M', rt: '1B 1E', la: '1M 1E', ra: '1B 1E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'The most feared mech in the Inner Sphere. Iconic assault platform with hardpoints across all weapon types.',
+    loreDescription: 'Most feared mech in the Inner Sphere. Iconic assault platform with hardpoints across all weapon types.',
   },
   {
     id: 35,
@@ -529,7 +528,7 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '1E', ct: '—', lt: '1M 1E', rt: '1B', la: '1M', ra: '1E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Base',
-    loreDescription: 'Command mech with a head-mounted energy hardpoint. Faster than most Assaults.',
+    loreDescription: 'Command mech with a unique head-mounted energy hardpoint. Faster than most Assault chassis.',
   },
   {
     id: 36,
@@ -543,6 +542,6 @@ export const MECHS: Mech[] = [
     hardpoints: { hd: '—', ct: '—', lt: '2B', rt: '2B', la: '1E', ra: '1E', ll: '—', rl: '—' },
     isClan: false,
     dlcSource: 'Heavy Metal',
-    loreDescription: 'Walking fortress with four ballistic hardpoints. Extremely slow but can mount four AC/20s. Built for sustained fire support.',
+    loreDescription: 'Walking fortress with four ballistic hardpoints. Extremely slow but capable of mounting four AC/20s for sustained devastation.',
   },
 ];
