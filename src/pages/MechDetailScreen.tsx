@@ -35,8 +35,7 @@ const MechDetailScreen = () => {
   const stats = [
     { label: "TONNAGE", value: `${mech.tonnage}T` },
     { label: "MAX ARMOR", value: mech.maxArmor },
-    { label: "WALK SPEED", value: mech.speedWalk },
-    { label: "SPRINT SPEED", value: mech.speedSprint },
+    { label: "TOP SPEED", value: `${mech.topSpeed} km/h` },
     { label: "MAX JUMP JETS", value: mech.jumpJetsMax },
     { label: "CLAN", value: mech.isClan ? "YES" : "NO" },
     { label: "DLC SOURCE", value: mech.dlcSource },
