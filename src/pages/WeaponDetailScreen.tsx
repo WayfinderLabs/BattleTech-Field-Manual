@@ -29,6 +29,7 @@ const WeaponDetailScreen = () => {
     { label: "CRITICAL SLOTS", value: weapon.criticalSlots },
     { label: "AMMO / TON", value: weapon.ammoPerTon ?? "N/A" },
     { label: "DLC SOURCE", value: weapon.dlcSource },
+    { label: "INDIRECT FIRE", value: weapon.indirectFire ? "YES" : "NO" },
     { label: "CLAN", value: weapon.isClan ? "YES" : "NO" },
   ];
 
