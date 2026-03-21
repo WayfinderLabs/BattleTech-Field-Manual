@@ -99,9 +99,12 @@ const MechsScreen = () => {
               className="w-full text-left bg-card border border-border rounded-sm p-3 hover:border-primary/60 transition-colors active:scale-[0.98] group"
             >
               <div className="flex items-start justify-between gap-2 mb-2">
-                <span className="text-primary font-mono text-sm uppercase tracking-wider leading-tight">
-                  {m.name}
-                </span>
+                <div>
+                  <span className="text-primary font-mono text-sm uppercase tracking-wider leading-tight">
+                    {m.name}
+                  </span>
+                  <span className="text-muted-foreground font-mono text-[10px] tracking-wider ml-2">{m.variant}</span>
+                </div>
                 <div className="flex gap-1.5 shrink-0 flex-wrap justify-end">
                   <span className={`px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm ${CLASS_COLORS[m.chassisClass]}`}>
                     {m.chassisClass}
