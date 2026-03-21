@@ -48,7 +48,10 @@ const MechDetailScreen = () => {
       </button>
 
       <div className="flex items-center gap-3">
-        <h1 className="text-primary font-mono text-xl uppercase tracking-widest leading-tight">{mech.name}</h1>
+        <div>
+          <h1 className="text-primary font-mono text-xl uppercase tracking-widest leading-tight">{mech.name}</h1>
+          <span className="text-muted-foreground font-mono text-xs tracking-wider">{mech.variant}</span>
+        </div>
         <span className={`px-2 py-0.5 text-[10px] font-mono uppercase rounded-sm shrink-0 ${CLASS_COLORS[mech.chassisClass]}`}>
           {mech.chassisClass}
         </span>
