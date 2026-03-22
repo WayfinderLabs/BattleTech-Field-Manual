@@ -65,7 +65,7 @@ const WeaponDetailScreen = () => {
           {ranges.map((r) => (
             <div key={r.label} className="text-center">
               <div className="bg-primary/20 border-b border-border px-2 py-1.5">
-                <span className="text-[10px] font-mono text-primary tracking-wider">{r.label}</span>
+                <span className="text-badge font-mono text-primary tracking-wider">{r.label}</span>
               </div>
               <div className="bg-card px-2 py-2.5">
                 <span className="text-sm font-mono text-foreground">{r.value}</span>
