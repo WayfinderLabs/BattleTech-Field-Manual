@@ -43,7 +43,7 @@ const MechDetailScreen = () => {
 
   return (
     <div className="py-4 space-y-5">
-      <button onClick={() => navigate("/mechs")} className="flex items-center gap-1 text-primary text-sm font-mono active:scale-[0.97]">
+      <button onClick={() => navigate("/mechs")} className="flex items-center gap-1 text-primary text-body font-mono active:scale-[0.97]">
         <ChevronLeft className="h-4 w-4" /> BACK
       </button>
 
