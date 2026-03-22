@@ -39,6 +39,7 @@ export const useFilters = () => {
 };
 
 export const FilterProvider = ({ children }: { children: ReactNode }) => {
+  const scrollPositions = useRef<Record<string, number>>({});
   // Weapons state
   const [wSearch, setWSearch] = useState("");
   const [wCategory, setWCategory] = useState<WeaponCategoryFilter>("ALL");
