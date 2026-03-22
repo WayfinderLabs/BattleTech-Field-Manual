@@ -111,16 +111,16 @@ const MechsScreen = () => {
                   <span className="text-muted-foreground font-mono text-badge tracking-wider ml-2">{m.variant}</span>
                 </div>
                 <div className="flex gap-1.5 shrink-0 flex-wrap justify-end">
-                  <span className={`px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm ${CLASS_COLORS[m.chassisClass]}`}>
+                  <span className={`px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm ${CLASS_COLORS[m.chassisClass]}`}>
                     {m.chassisClass}
                   </span>
                   {m.isClan && (
-                    <span className="px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm border border-primary text-primary">
+                    <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-primary text-primary">
                       CLAN
                     </span>
                   )}
                   {m.dlcSource !== "Base" && (
-                    <span className="px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm border border-border text-muted-foreground">
+                    <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-border text-muted-foreground">
                       DLC
                     </span>
                   )}
