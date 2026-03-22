@@ -104,7 +104,7 @@ const WeaponsScreen = () => {
               className="w-full text-left bg-card border border-border rounded-sm p-3 hover:border-primary/60 transition-colors active:scale-[0.98] group"
             >
               <div className="flex items-start justify-between gap-2 mb-2">
-                <span className="text-primary font-mono text-sm uppercase tracking-wider leading-tight">
+                <span className="text-primary font-mono text-card-title uppercase tracking-wider leading-tight">
                   {w.name}
                 </span>
                 <div className="flex gap-1.5 shrink-0 flex-wrap justify-end">
