@@ -8,24 +8,27 @@ import EquipmentScreen from "./pages/EquipmentScreen";
 import WeaponDetailScreen from "./pages/WeaponDetailScreen";
 import MechDetailScreen from "./pages/MechDetailScreen";
 import NotFound from "./pages/NotFound";
+import { FilterProvider } from "./contexts/FilterContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<AppShell />}>
-            <Route path="/" element={<WeaponsScreen />} />
-            <Route path="/mechs" element={<MechsScreen />} />
-            <Route path="/equipment" element={<EquipmentScreen />} />
-            <Route path="/weapons/:id" element={<WeaponDetailScreen />} />
-            <Route path="/mechs/:id" element={<MechDetailScreen />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <FilterProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<AppShell />}>
+              <Route path="/" element={<WeaponsScreen />} />
+              <Route path="/mechs" element={<MechsScreen />} />
+              <Route path="/equipment" element={<EquipmentScreen />} />
+              <Route path="/weapons/:id" element={<WeaponDetailScreen />} />
+              <Route path="/mechs/:id" element={<MechDetailScreen />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </FilterProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

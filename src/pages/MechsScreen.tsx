@@ -1,7 +1,8 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { MECHS, type Mech } from "@/data/mechs";
+import { useFilters } from "@/contexts/FilterContext";
 
 const CLASS_COLORS: Record<Mech["chassisClass"], string> = {
   Light: "bg-[hsl(142,71%,45%)] text-white",
@@ -18,17 +19,7 @@ const META_CHIPS: MetaFilter[] = ["CLAN", "DLC"];
 
 const MechsScreen = () => {
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
-  const [classFilter, setClassFilter] = useState<ClassFilter>("ALL");
-  const [metaFilters, setMetaFilters] = useState<Set<MetaFilter>>(new Set());
-
-  const toggleMeta = (m: MetaFilter) => {
-    setMetaFilters((prev) => {
-      const next = new Set(prev);
-      next.has(m) ? next.delete(m) : next.add(m);
-      return next;
-    });
-  };
+  const { search, setSearch, classFilter, setClassFilter, metaFilters, toggleMeta } = useFilters().mechs;
 
   const filtered = useMemo(() => {
     return MECHS.filter((m) => {
