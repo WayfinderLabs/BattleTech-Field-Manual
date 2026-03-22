@@ -64,7 +64,7 @@ const EquipmentScreen = () => {
                   className="bg-card border border-border rounded-sm p-3"
                 >
                   <div className="flex items-start justify-between gap-2 mb-1.5">
-                    <span className="text-primary font-mono text-sm uppercase tracking-wider leading-tight">
+                    <span className="text-primary font-mono text-card-title uppercase tracking-wider leading-tight">
                       {eq.name}
                     </span>
                     <div className="flex gap-1.5 shrink-0">
