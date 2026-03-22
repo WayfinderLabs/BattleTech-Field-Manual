@@ -12,10 +12,10 @@ const CLASS_COLORS: Record<Mech["chassisClass"], string> = {
 };
 
 type ClassFilter = Mech["chassisClass"] | "ALL";
-type MetaFilter = "CLAN" | "DLC";
+type MetaFilter = "CLAN" | "DLC" | "LOSTECH";
 
 const CLASS_CHIPS: ClassFilter[] = ["ALL", "Light", "Medium", "Heavy", "Assault"];
-const META_CHIPS: MetaFilter[] = ["CLAN", "DLC"];
+const META_CHIPS: MetaFilter[] = ["CLAN", "DLC", "LOSTECH"];
 
 const MechsScreen = () => {
   const navigate = useNavigate();
