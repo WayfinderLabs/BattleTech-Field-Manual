@@ -38,6 +38,7 @@ const MechDetailScreen = () => {
     { label: "TOP SPEED", value: `${mech.topSpeed} km/h` },
     { label: "MAX JUMP JETS", value: mech.jumpJetsMax },
     { label: "CLAN", value: mech.isClan ? "YES" : "NO" },
+    { label: "LOSTECH", value: mech.isLosTech ? "YES" : "NO" },
     { label: "DLC SOURCE", value: mech.dlcSource },
   ];
 

@@ -120,6 +120,11 @@ const MechsScreen = () => {
                       CLAN
                     </span>
                   )}
+                  {m.isLosTech && (
+                    <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm bg-primary text-primary-foreground">
+                      LOSTECH
+                    </span>
+                  )}
                   {m.dlcSource !== "Base" && (
                     <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-border text-muted-foreground">
                       DLC
