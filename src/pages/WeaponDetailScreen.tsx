@@ -78,8 +78,8 @@ const WeaponDetailScreen = () => {
       {/* Notes */}
       {weapon.notes && (
         <div>
-          <h2 className="text-primary text-xs font-mono tracking-[0.15em] mb-2">// NOTES</h2>
-          <p className="text-muted-foreground text-sm font-sans italic leading-relaxed">{weapon.notes}</p>
+          <h2 className="text-primary text-label font-mono tracking-[0.15em] mb-2">// NOTES</h2>
+          <p className="text-muted-foreground text-body font-sans italic leading-relaxed">{weapon.notes}</p>
         </div>
       )}
     </div>

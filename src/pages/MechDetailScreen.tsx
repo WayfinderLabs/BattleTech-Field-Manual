@@ -84,8 +84,8 @@ const MechDetailScreen = () => {
 
       {mech.loreDescription && (
         <div>
-          <h2 className="text-primary text-xs font-mono tracking-[0.15em] mb-2">// LORE</h2>
-          <p className="text-muted-foreground text-sm font-sans italic leading-relaxed">{mech.loreDescription}</p>
+          <h2 className="text-primary text-label font-mono tracking-[0.15em] mb-2">// LORE</h2>
+          <p className="text-muted-foreground text-body font-sans italic leading-relaxed">{mech.loreDescription}</p>
         </div>
       )}
     </div>

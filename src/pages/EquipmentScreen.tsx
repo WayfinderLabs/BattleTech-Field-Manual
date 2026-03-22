@@ -83,12 +83,12 @@ const EquipmentScreen = () => {
                   </p>
                   <div className="flex gap-3">
                     <div className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
-                      <div className="text-[10px] font-mono text-muted-foreground tracking-wider">TONS</div>
-                      <div className="text-sm font-mono text-foreground">{eq.tonnage}</div>
+                      <div className="text-label font-mono text-muted-foreground tracking-wider">TONS</div>
+                      <div className="text-detail-value font-mono text-foreground">{eq.tonnage}</div>
                     </div>
                     <div className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
-                      <div className="text-[10px] font-mono text-muted-foreground tracking-wider">SLOTS</div>
-                      <div className="text-sm font-mono text-foreground">{eq.criticalSlots}</div>
+                      <div className="text-label font-mono text-muted-foreground tracking-wider">SLOTS</div>
+                      <div className="text-detail-value font-mono text-foreground">{eq.criticalSlots}</div>
                     </div>
                   </div>
                 </div>
