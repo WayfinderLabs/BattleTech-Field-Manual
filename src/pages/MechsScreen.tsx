@@ -26,12 +26,14 @@ const MechsScreen = () => {
   useEffect(() => {
     const saved = filters.scrollPositions.current[scrollKey];
     if (saved) {
-      window.scrollTo(0, saved);
+      requestAnimationFrame(() => window.scrollTo(0, saved));
     }
-    return () => {
-      filters.scrollPositions.current[scrollKey] = window.scrollY;
-    };
   }, []);
+
+  const navigateToDetail = (id: number) => {
+    filters.scrollPositions.current[scrollKey] = window.scrollY;
+    navigate(`/mechs/${id}`);
+  };
 
   const filtered = useMemo(() => {
     return MECHS.filter((m) => {
@@ -98,7 +100,7 @@ const MechsScreen = () => {
           {filtered.map((m) => (
             <button
               key={m.id}
-              onClick={() => navigate(`/mechs/${m.id}`)}
+              onClick={() => navigateToDetail(m.id)}
               className="w-full text-left bg-card border border-border rounded-sm p-3 hover:border-primary/60 transition-colors active:scale-[0.98] group"
             >
               <div className="flex items-start justify-between gap-2 mb-2">
