@@ -108,16 +108,16 @@ const WeaponsScreen = () => {
                   {w.name}
                 </span>
                 <div className="flex gap-1.5 shrink-0 flex-wrap justify-end">
-                  <span className={`px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm ${CATEGORY_COLORS[w.category]}`}>
+                  <span className={`px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm ${CATEGORY_COLORS[w.category]}`}>
                     {w.category}
                   </span>
                   {w.isClan && (
-                    <span className="px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm border border-primary text-primary">
+                    <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-primary text-primary">
                       CLAN
                     </span>
                   )}
                   {w.dlcSource !== "Base" && (
-                    <span className="px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm border border-border text-muted-foreground">
+                    <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-border text-muted-foreground">
                       DLC
                     </span>
                   )}
