@@ -108,7 +108,7 @@ const MechsScreen = () => {
                   <span className="text-primary font-mono text-card-title uppercase tracking-wider leading-tight">
                     {m.name}
                   </span>
-                  <span className="text-muted-foreground font-mono text-[10px] tracking-wider ml-2">{m.variant}</span>
+                  <span className="text-muted-foreground font-mono text-badge tracking-wider ml-2">{m.variant}</span>
                 </div>
                 <div className="flex gap-1.5 shrink-0 flex-wrap justify-end">
                   <span className={`px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm ${CLASS_COLORS[m.chassisClass]}`}>
