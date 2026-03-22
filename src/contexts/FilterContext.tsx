@@ -27,6 +27,7 @@ interface MechsFilterState {
 interface FilterContextType {
   weapons: WeaponsFilterState;
   mechs: MechsFilterState;
+  scrollPositions: MutableRefObject<Record<string, number>>;
 }
 
 const FilterContext = createContext<FilterContextType | null>(null);
