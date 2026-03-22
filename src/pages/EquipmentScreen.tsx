@@ -43,7 +43,7 @@ const EquipmentScreen = () => {
 
   return (
     <div className="py-4 space-y-4">
-      <h2 className="text-primary text-xs font-mono tracking-[0.15em]">// EQUIPMENT REFERENCE</h2>
+      <h2 className="text-primary text-heading font-mono tracking-[0.15em]">// EQUIPMENT REFERENCE</h2>
 
       {SECTION_ORDER.map((cat) => {
         const items = grouped.get(cat);
@@ -52,7 +52,7 @@ const EquipmentScreen = () => {
           <div key={cat}>
             <div className="sticky top-0 z-10 bg-background py-2">
               <div className="border-l-2 border-primary pl-3">
-                <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
+                <span className="text-label font-mono text-muted-foreground uppercase tracking-wider">
                   {SECTION_LABELS[cat]}
                 </span>
               </div>
@@ -64,31 +64,31 @@ const EquipmentScreen = () => {
                   className="bg-card border border-border rounded-sm p-3"
                 >
                   <div className="flex items-start justify-between gap-2 mb-1.5">
-                    <span className="text-primary font-mono text-sm uppercase tracking-wider leading-tight">
+                    <span className="text-primary font-mono text-card-title uppercase tracking-wider leading-tight">
                       {eq.name}
                     </span>
                     <div className="flex gap-1.5 shrink-0">
-                      <span className={`px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm ${CATEGORY_COLORS[eq.category]}`}>
+                      <span className={`px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm ${CATEGORY_COLORS[eq.category]}`}>
                         {eq.category}
                       </span>
                       {eq.isClan && (
-                        <span className="px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm border border-primary text-primary">
+                        <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-primary text-primary">
                           CLAN
                         </span>
                       )}
                     </div>
                   </div>
-                  <p className="text-muted-foreground text-sm font-sans leading-relaxed mb-2">
+                  <p className="text-muted-foreground text-body font-sans leading-relaxed mb-2">
                     {eq.effectDescription}
                   </p>
                   <div className="flex gap-3">
                     <div className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
-                      <div className="text-[10px] font-mono text-muted-foreground tracking-wider">TONS</div>
-                      <div className="text-sm font-mono text-foreground">{eq.tonnage}</div>
+                      <div className="text-label font-mono text-muted-foreground tracking-wider">TONS</div>
+                      <div className="text-detail-value font-mono text-foreground">{eq.tonnage}</div>
                     </div>
                     <div className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
-                      <div className="text-[10px] font-mono text-muted-foreground tracking-wider">SLOTS</div>
-                      <div className="text-sm font-mono text-foreground">{eq.criticalSlots}</div>
+                      <div className="text-label font-mono text-muted-foreground tracking-wider">SLOTS</div>
+                      <div className="text-detail-value font-mono text-foreground">{eq.criticalSlots}</div>
                     </div>
                   </div>
                 </div>

@@ -22,11 +22,11 @@ const MechDetailScreen = () => {
   if (!mech) {
     return (
       <div className="py-4">
-        <button onClick={() => navigate("/mechs")} className="flex items-center gap-1 text-primary text-sm font-mono mb-4 active:scale-[0.97]">
+        <button onClick={() => navigate("/mechs")} className="flex items-center gap-1 text-primary text-body font-mono mb-4 active:scale-[0.97]">
           <ChevronLeft className="h-4 w-4" /> BACK
         </button>
         <div className="border border-border rounded-sm bg-card p-6 text-center">
-          <p className="text-muted-foreground text-sm italic">Mech not found.</p>
+          <p className="text-muted-foreground text-body italic">Mech not found.</p>
         </div>
       </div>
     );
@@ -43,16 +43,16 @@ const MechDetailScreen = () => {
 
   return (
     <div className="py-4 space-y-5">
-      <button onClick={() => navigate("/mechs")} className="flex items-center gap-1 text-primary text-sm font-mono active:scale-[0.97]">
+      <button onClick={() => navigate("/mechs")} className="flex items-center gap-1 text-primary text-body font-mono active:scale-[0.97]">
         <ChevronLeft className="h-4 w-4" /> BACK
       </button>
 
       <div className="flex items-center gap-3">
         <div>
-          <h1 className="text-primary font-mono text-xl uppercase tracking-widest leading-tight">{mech.name}</h1>
-          <span className="text-muted-foreground font-mono text-xs tracking-wider">{mech.variant}</span>
+          <h1 className="text-primary font-mono text-heading uppercase tracking-widest leading-tight">{mech.name}</h1>
+          <span className="text-muted-foreground font-mono text-label tracking-wider">{mech.variant}</span>
         </div>
-        <span className={`px-2 py-0.5 text-[10px] font-mono uppercase rounded-sm shrink-0 ${CLASS_COLORS[mech.chassisClass]}`}>
+        <span className={`px-2 py-0.5 text-badge font-mono uppercase rounded-sm shrink-0 ${CLASS_COLORS[mech.chassisClass]}`}>
           {mech.chassisClass}
         </span>
       </div>
@@ -60,21 +60,21 @@ const MechDetailScreen = () => {
       <div className="border border-border rounded-sm bg-card divide-y divide-border">
         {stats.map((s) => (
           <div key={s.label} className="flex justify-between px-4 py-2.5">
-            <span className="text-xs font-mono text-muted-foreground tracking-wider">{s.label}</span>
-            <span className="text-sm font-mono text-foreground">{s.value}</span>
+            <span className="text-label font-mono text-muted-foreground tracking-wider">{s.label}</span>
+            <span className="text-detail-value font-mono text-foreground">{s.value}</span>
           </div>
         ))}
       </div>
 
       <div>
-        <h2 className="text-primary text-xs font-mono tracking-[0.15em] mb-2">// HARDPOINTS</h2>
+        <h2 className="text-primary text-label font-mono tracking-[0.15em] mb-2">// HARDPOINTS</h2>
         <div className="grid grid-cols-2 gap-px border border-border rounded-sm overflow-hidden bg-border">
           {HARDPOINT_LABELS.map((loc) => (
             <div key={loc} className="bg-card px-3 py-2.5">
-              <div className="text-[10px] font-mono text-primary tracking-wider mb-0.5">
+              <div className="text-badge font-mono text-primary tracking-wider mb-0.5">
                 {HARDPOINT_DISPLAY[loc]}
               </div>
-              <div className="text-sm font-mono text-foreground">
+              <div className="text-detail-value font-mono text-foreground">
                 {mech.hardpoints[loc] || "—"}
               </div>
             </div>
@@ -84,8 +84,8 @@ const MechDetailScreen = () => {
 
       {mech.loreDescription && (
         <div>
-          <h2 className="text-primary text-xs font-mono tracking-[0.15em] mb-2">// LORE</h2>
-          <p className="text-muted-foreground text-sm font-sans italic leading-relaxed">{mech.loreDescription}</p>
+          <h2 className="text-primary text-label font-mono tracking-[0.15em] mb-2">// LORE</h2>
+          <p className="text-muted-foreground text-body font-sans italic leading-relaxed">{mech.loreDescription}</p>
         </div>
       )}
     </div>

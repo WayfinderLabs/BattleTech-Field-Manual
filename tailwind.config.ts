@@ -13,6 +13,14 @@ export default {
       },
     },
     extend: {
+      fontSize: {
+        heading: "var(--fs-heading)",
+        "card-title": "var(--fs-card-title)",
+        body: "var(--fs-body)",
+        "detail-value": "var(--fs-detail-value)",
+        label: "var(--fs-label)",
+        badge: "var(--fs-badge)",
+      },
       fontFamily: {
         mono: ["JetBrains Mono", "ui-monospace", "monospace"],
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],

@@ -47,7 +47,7 @@ const WeaponsScreen = () => {
 
   return (
     <div className="py-4 space-y-4">
-      <h2 className="text-primary text-xs font-mono tracking-[0.15em]">// WEAPONS DATABASE</h2>
+      <h2 className="text-primary text-heading font-mono tracking-[0.15em]">// WEAPONS DATABASE</h2>
 
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -56,7 +56,7 @@ const WeaponsScreen = () => {
           placeholder="Search weapons..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full h-10 pl-9 pr-3 text-sm font-sans bg-card border border-border rounded-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+          className="w-full h-10 pl-9 pr-3 text-body font-sans bg-card border border-border rounded-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
         />
       </div>
 
@@ -65,7 +65,7 @@ const WeaponsScreen = () => {
           <button
             key={chip}
             onClick={() => setCategoryFilter(chip)}
-            className={`shrink-0 px-3 py-1 text-xs font-mono uppercase tracking-wider rounded-sm border transition-colors active:scale-[0.97] ${
+            className={`shrink-0 px-3 py-1 text-label font-mono uppercase tracking-wider rounded-sm border transition-colors active:scale-[0.97] ${
               categoryFilter === chip
                 ? "bg-primary text-primary-foreground border-primary"
                 : "bg-card text-muted-foreground border-border hover:border-primary/50"
@@ -78,7 +78,7 @@ const WeaponsScreen = () => {
           <button
             key={chip}
             onClick={() => toggleMeta(chip)}
-            className={`shrink-0 px-3 py-1 text-xs font-mono uppercase tracking-wider rounded-sm border transition-colors active:scale-[0.97] ${
+            className={`shrink-0 px-3 py-1 text-label font-mono uppercase tracking-wider rounded-sm border transition-colors active:scale-[0.97] ${
               metaFilters.has(chip)
                 ? "bg-primary text-primary-foreground border-primary"
                 : "bg-card text-muted-foreground border-border hover:border-primary/50"
@@ -91,7 +91,7 @@ const WeaponsScreen = () => {
 
       {filtered.length === 0 ? (
         <div className="border border-border rounded-sm bg-card p-10 flex items-center justify-center">
-          <p className="text-muted-foreground text-sm font-sans italic">
+          <p className="text-muted-foreground text-body font-sans italic">
             NO UNITS FOUND — REFINE SEARCH
           </p>
         </div>
@@ -104,20 +104,20 @@ const WeaponsScreen = () => {
               className="w-full text-left bg-card border border-border rounded-sm p-3 hover:border-primary/60 transition-colors active:scale-[0.98] group"
             >
               <div className="flex items-start justify-between gap-2 mb-2">
-                <span className="text-primary font-mono text-sm uppercase tracking-wider leading-tight">
+                <span className="text-primary font-mono text-card-title uppercase tracking-wider leading-tight">
                   {w.name}
                 </span>
                 <div className="flex gap-1.5 shrink-0 flex-wrap justify-end">
-                  <span className={`px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm ${CATEGORY_COLORS[w.category]}`}>
+                  <span className={`px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm ${CATEGORY_COLORS[w.category]}`}>
                     {w.category}
                   </span>
                   {w.isClan && (
-                    <span className="px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm border border-primary text-primary">
+                    <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-primary text-primary">
                       CLAN
                     </span>
                   )}
                   {w.dlcSource !== "Base" && (
-                    <span className="px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm border border-border text-muted-foreground">
+                    <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-border text-muted-foreground">
                       DLC
                     </span>
                   )}
@@ -130,8 +130,8 @@ const WeaponsScreen = () => {
                   { label: "TONS", value: w.tonnage },
                 ].map((stat) => (
                   <div key={stat.label} className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
-                    <div className="text-[10px] font-mono text-muted-foreground tracking-wider">{stat.label}</div>
-                    <div className="text-sm font-mono text-foreground">{stat.value}</div>
+                    <div className="text-label font-mono text-muted-foreground tracking-wider">{stat.label}</div>
+                    <div className="text-detail-value font-mono text-foreground">{stat.value}</div>
                   </div>
                 ))}
               </div>

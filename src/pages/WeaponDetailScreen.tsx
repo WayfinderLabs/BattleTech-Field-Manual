@@ -10,11 +10,11 @@ const WeaponDetailScreen = () => {
   if (!weapon) {
     return (
       <div className="py-4">
-        <button onClick={() => navigate("/")} className="flex items-center gap-1 text-primary text-sm font-mono mb-4 active:scale-[0.97]">
+        <button onClick={() => navigate("/")} className="flex items-center gap-1 text-primary text-body font-mono mb-4 active:scale-[0.97]">
           <ChevronLeft className="h-4 w-4" /> BACK
         </button>
         <div className="border border-border rounded-sm bg-card p-6 text-center">
-          <p className="text-muted-foreground text-sm italic">Weapon not found.</p>
+          <p className="text-muted-foreground text-body italic">Weapon not found.</p>
         </div>
       </div>
     );
@@ -42,33 +42,33 @@ const WeaponDetailScreen = () => {
 
   return (
     <div className="py-4 space-y-5">
-      <button onClick={() => navigate("/")} className="flex items-center gap-1 text-primary text-sm font-mono active:scale-[0.97]">
+      <button onClick={() => navigate("/")} className="flex items-center gap-1 text-primary text-body font-mono active:scale-[0.97]">
         <ChevronLeft className="h-4 w-4" /> BACK
       </button>
 
-      <h1 className="text-primary font-mono text-xl uppercase tracking-widest leading-tight">{weapon.name}</h1>
+      <h1 className="text-primary font-mono text-heading uppercase tracking-widest leading-tight">{weapon.name}</h1>
 
       {/* Stat rows */}
       <div className="border border-border rounded-sm bg-card divide-y divide-border">
         {stats.map((s) => (
           <div key={s.label} className="flex justify-between px-4 py-2.5">
-            <span className="text-xs font-mono text-muted-foreground tracking-wider">{s.label}</span>
-            <span className="text-sm font-mono text-foreground">{s.value}</span>
+            <span className="text-label font-mono text-muted-foreground tracking-wider">{s.label}</span>
+            <span className="text-detail-value font-mono text-foreground">{s.value}</span>
           </div>
         ))}
       </div>
 
       {/* Range table */}
       <div>
-        <h2 className="text-primary text-xs font-mono tracking-[0.15em] mb-2">// RANGE PROFILE</h2>
+        <h2 className="text-primary text-label font-mono tracking-[0.15em] mb-2">// RANGE PROFILE</h2>
         <div className="grid grid-cols-4 border border-border rounded-sm overflow-hidden">
           {ranges.map((r) => (
             <div key={r.label} className="text-center">
               <div className="bg-primary/20 border-b border-border px-2 py-1.5">
-                <span className="text-[10px] font-mono text-primary tracking-wider">{r.label}</span>
+                <span className="text-badge font-mono text-primary tracking-wider">{r.label}</span>
               </div>
               <div className="bg-card px-2 py-2.5">
-                <span className="text-sm font-mono text-foreground">{r.value}</span>
+                <span className="text-detail-value font-mono text-foreground">{r.value}</span>
               </div>
             </div>
           ))}
@@ -78,8 +78,8 @@ const WeaponDetailScreen = () => {
       {/* Notes */}
       {weapon.notes && (
         <div>
-          <h2 className="text-primary text-xs font-mono tracking-[0.15em] mb-2">// NOTES</h2>
-          <p className="text-muted-foreground text-sm font-sans italic leading-relaxed">{weapon.notes}</p>
+          <h2 className="text-primary text-label font-mono tracking-[0.15em] mb-2">// NOTES</h2>
+          <p className="text-muted-foreground text-body font-sans italic leading-relaxed">{weapon.notes}</p>
         </div>
       )}
     </div>
