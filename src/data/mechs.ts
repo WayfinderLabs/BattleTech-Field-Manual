@@ -20,7 +20,6 @@ export interface Mech {
   jumpJetsMax: number;
   hardpoints: MechHardpoints;
   isClan: boolean;
-  isLosTech: false,
   isLosTech: boolean;
   dlcSource: 'Base' | 'Flashpoint' | 'Urban Warfare' | 'Heavy Metal';
   loreDescription: string | null;
