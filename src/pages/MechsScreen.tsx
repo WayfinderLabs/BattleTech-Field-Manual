@@ -26,12 +26,14 @@ const MechsScreen = () => {
   useEffect(() => {
     const saved = filters.scrollPositions.current[scrollKey];
     if (saved) {
-      window.scrollTo(0, saved);
+      requestAnimationFrame(() => window.scrollTo(0, saved));
     }
-    return () => {
-      filters.scrollPositions.current[scrollKey] = window.scrollY;
-    };
   }, []);
+
+  const navigateToDetail = (id: number) => {
+    filters.scrollPositions.current[scrollKey] = window.scrollY;
+    navigate(`/mechs/${id}`);
+  };
 
   const filtered = useMemo(() => {
     return MECHS.filter((m) => {
