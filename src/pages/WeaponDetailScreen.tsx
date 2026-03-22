@@ -33,11 +33,13 @@ const WeaponDetailScreen = () => {
     { label: "CLAN", value: weapon.isClan ? "YES" : "NO" },
   ];
 
+  const formatRange = (val: number) => (val === 0 ? "—" : `${val}m`);
+
   const ranges = [
-    { label: "MIN", value: weapon.minRange },
-    { label: "SHORT", value: weapon.shortRange },
-    { label: "MED", value: weapon.medRange },
-    { label: "LONG", value: weapon.longRange },
+    { label: "MIN", value: formatRange(weapon.minRange) },
+    { label: "SHORT", value: formatRange(weapon.shortRange) },
+    { label: "MED", value: formatRange(weapon.medRange) },
+    { label: "LONG", value: formatRange(weapon.longRange) },
   ];
 
   return (
@@ -73,6 +75,13 @@ const WeaponDetailScreen = () => {
             </div>
           ))}
         </div>
+        {weapon.indirectFire && (
+          <div className="mt-2">
+            <span className="inline-block px-2 py-0.5 text-badge font-mono uppercase tracking-wider rounded-sm border border-primary text-primary">
+              INDIRECT FIRE ✓
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Notes */}
