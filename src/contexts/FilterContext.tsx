@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useRef, useState, type ReactNode, type MutableRefObject } from "react";
 import type { Weapon } from "@/data/weapons";
 import type { Mech } from "@/data/mechs";
 
@@ -27,6 +27,7 @@ interface MechsFilterState {
 interface FilterContextType {
   weapons: WeaponsFilterState;
   mechs: MechsFilterState;
+  scrollPositions: MutableRefObject<Record<string, number>>;
 }
 
 const FilterContext = createContext<FilterContextType | null>(null);
@@ -38,6 +39,7 @@ export const useFilters = () => {
 };
 
 export const FilterProvider = ({ children }: { children: ReactNode }) => {
+  const scrollPositions = useRef<Record<string, number>>({});
   // Weapons state
   const [wSearch, setWSearch] = useState("");
   const [wCategory, setWCategory] = useState<WeaponCategoryFilter>("ALL");
@@ -83,6 +85,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
           metaFilters: mMeta,
           toggleMeta: toggleMMeta,
         },
+        scrollPositions,
       }}
     >
       {children}
