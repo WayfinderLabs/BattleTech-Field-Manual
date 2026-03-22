@@ -67,7 +67,7 @@ const MechDetailScreen = () => {
       </div>
 
       <div>
-        <h2 className="text-primary text-xs font-mono tracking-[0.15em] mb-2">// HARDPOINTS</h2>
+        <h2 className="text-primary text-label font-mono tracking-[0.15em] mb-2">// HARDPOINTS</h2>
         <div className="grid grid-cols-2 gap-px border border-border rounded-sm overflow-hidden bg-border">
           {HARDPOINT_LABELS.map((loc) => (
             <div key={loc} className="bg-card px-3 py-2.5">
