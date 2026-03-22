@@ -130,8 +130,8 @@ const WeaponsScreen = () => {
                   { label: "TONS", value: w.tonnage },
                 ].map((stat) => (
                   <div key={stat.label} className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
-                    <div className="text-[10px] font-mono text-muted-foreground tracking-wider">{stat.label}</div>
-                    <div className="text-sm font-mono text-foreground">{stat.value}</div>
+                    <div className="text-label font-mono text-muted-foreground tracking-wider">{stat.label}</div>
+                    <div className="text-detail-value font-mono text-foreground">{stat.value}</div>
                   </div>
                 ))}
               </div>
