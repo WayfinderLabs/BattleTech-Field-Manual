@@ -19,7 +19,19 @@ const META_CHIPS: MetaFilter[] = ["CLAN", "DLC"];
 
 const WeaponsScreen = () => {
   const navigate = useNavigate();
-  const { search, setSearch, categoryFilter, setCategoryFilter, metaFilters, toggleMeta } = useFilters().weapons;
+  const filters = useFilters();
+  const { search, setSearch, categoryFilter, setCategoryFilter, metaFilters, toggleMeta } = filters.weapons;
+  const scrollKey = "weapons";
+
+  useEffect(() => {
+    const saved = filters.scrollPositions.current[scrollKey];
+    if (saved) {
+      window.scrollTo(0, saved);
+    }
+    return () => {
+      filters.scrollPositions.current[scrollKey] = window.scrollY;
+    };
+  }, []);
 
   const filtered = useMemo(() => {
     return WEAPONS.filter((w) => {

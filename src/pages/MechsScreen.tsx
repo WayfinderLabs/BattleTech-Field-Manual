@@ -19,7 +19,19 @@ const META_CHIPS: MetaFilter[] = ["CLAN", "DLC"];
 
 const MechsScreen = () => {
   const navigate = useNavigate();
-  const { search, setSearch, classFilter, setClassFilter, metaFilters, toggleMeta } = useFilters().mechs;
+  const filters = useFilters();
+  const { search, setSearch, classFilter, setClassFilter, metaFilters, toggleMeta } = filters.mechs;
+  const scrollKey = "mechs";
+
+  useEffect(() => {
+    const saved = filters.scrollPositions.current[scrollKey];
+    if (saved) {
+      window.scrollTo(0, saved);
+    }
+    return () => {
+      filters.scrollPositions.current[scrollKey] = window.scrollY;
+    };
+  }, []);
 
   const filtered = useMemo(() => {
     return MECHS.filter((m) => {
