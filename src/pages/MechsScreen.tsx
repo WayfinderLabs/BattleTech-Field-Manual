@@ -12,10 +12,10 @@ const CLASS_COLORS: Record<Mech["chassisClass"], string> = {
 };
 
 type ClassFilter = Mech["chassisClass"] | "ALL";
-type MetaFilter = "CLAN" | "DLC";
+type MetaFilter = "CLAN" | "DLC" | "LOSTECH";
 
 const CLASS_CHIPS: ClassFilter[] = ["ALL", "Light", "Medium", "Heavy", "Assault"];
-const META_CHIPS: MetaFilter[] = ["CLAN", "DLC"];
+const META_CHIPS: MetaFilter[] = ["CLAN", "DLC", "LOSTECH"];
 
 const MechsScreen = () => {
   const navigate = useNavigate();
@@ -41,6 +41,7 @@ const MechsScreen = () => {
       if (classFilter !== "ALL" && m.chassisClass !== classFilter) return false;
       if (metaFilters.has("CLAN") && !m.isClan) return false;
       if (metaFilters.has("DLC") && m.dlcSource === "Base") return false;
+      if (metaFilters.has("LOSTECH") && !m.isLosTech) return false;
       return true;
     });
   }, [search, classFilter, metaFilters]);
@@ -117,6 +118,11 @@ const MechsScreen = () => {
                   {m.isClan && (
                     <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-primary text-primary">
                       CLAN
+                    </span>
+                  )}
+                  {m.isLosTech && (
+                    <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm bg-primary text-primary-foreground">
+                      LOSTECH
                     </span>
                   )}
                   {m.dlcSource !== "Base" && (

@@ -4,7 +4,7 @@ import type { Mech } from "@/data/mechs";
 
 type WeaponCategoryFilter = Weapon["category"] | "ALL";
 type MechClassFilter = Mech["chassisClass"] | "ALL";
-type MetaFilter = "CLAN" | "DLC";
+type MetaFilter = "CLAN" | "DLC" | "LOSTECH";
 
 interface WeaponsFilterState {
   search: string;
