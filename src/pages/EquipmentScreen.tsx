@@ -68,11 +68,11 @@ const EquipmentScreen = () => {
                       {eq.name}
                     </span>
                     <div className="flex gap-1.5 shrink-0">
-                      <span className={`px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm ${CATEGORY_COLORS[eq.category]}`}>
+                      <span className={`px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm ${CATEGORY_COLORS[eq.category]}`}>
                         {eq.category}
                       </span>
                       {eq.isClan && (
-                        <span className="px-1.5 py-0.5 text-[10px] font-mono uppercase rounded-sm border border-primary text-primary">
+                        <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-primary text-primary">
                           CLAN
                         </span>
                       )}
