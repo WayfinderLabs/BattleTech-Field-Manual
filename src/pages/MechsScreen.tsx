@@ -47,7 +47,7 @@ const MechsScreen = () => {
 
   return (
     <div className="py-4 space-y-4">
-      <h2 className="text-primary text-xs font-mono tracking-[0.15em]">// MECH ROSTER</h2>
+      <h2 className="text-primary text-heading font-mono tracking-[0.15em]">// MECH ROSTER</h2>
 
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
