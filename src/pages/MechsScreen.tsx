@@ -41,6 +41,7 @@ const MechsScreen = () => {
       if (classFilter !== "ALL" && m.chassisClass !== classFilter) return false;
       if (metaFilters.has("CLAN") && !m.isClan) return false;
       if (metaFilters.has("DLC") && m.dlcSource === "Base") return false;
+      if (metaFilters.has("LOSTECH") && !m.isLosTech) return false;
       return true;
     });
   }, [search, classFilter, metaFilters]);
