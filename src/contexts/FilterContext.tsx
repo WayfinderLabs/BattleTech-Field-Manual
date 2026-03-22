@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useRef, useState, type ReactNode, type MutableRefObject } from "react";
 import type { Weapon } from "@/data/weapons";
 import type { Mech } from "@/data/mechs";
 
