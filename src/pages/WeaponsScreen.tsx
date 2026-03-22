@@ -78,7 +78,7 @@ const WeaponsScreen = () => {
           <button
             key={chip}
             onClick={() => toggleMeta(chip)}
-            className={`shrink-0 px-3 py-1 text-xs font-mono uppercase tracking-wider rounded-sm border transition-colors active:scale-[0.97] ${
+            className={`shrink-0 px-3 py-1 text-label font-mono uppercase tracking-wider rounded-sm border transition-colors active:scale-[0.97] ${
               metaFilters.has(chip)
                 ? "bg-primary text-primary-foreground border-primary"
                 : "bg-card text-muted-foreground border-border hover:border-primary/50"
