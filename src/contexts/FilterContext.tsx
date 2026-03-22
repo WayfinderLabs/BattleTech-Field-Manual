@@ -85,6 +85,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
           metaFilters: mMeta,
           toggleMeta: toggleMMeta,
         },
+        scrollPositions,
       }}
     >
       {children}
