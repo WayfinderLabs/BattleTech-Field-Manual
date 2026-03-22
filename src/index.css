@@ -36,6 +36,14 @@
 
     --radius: 0.125rem;
 
+    /* Responsive font sizes: clamp(min, preferred, max) */
+    --fs-heading: clamp(1.125rem, 4.5vw, 1.5rem);
+    --fs-card-title: clamp(0.9375rem, 3.5vw, 1.0625rem);
+    --fs-body: clamp(0.8125rem, 3.2vw, 0.9375rem);
+    --fs-detail-value: clamp(0.875rem, 3.4vw, 1rem);
+    --fs-label: clamp(0.625rem, 2.5vw, 0.6875rem);
+    --fs-badge: clamp(0.5625rem, 2.2vw, 0.625rem);
+
     --sidebar-background: 0 0% 8.6%;
     --sidebar-foreground: 0 0% 54%;
     --sidebar-primary: 25 52% 53%;
