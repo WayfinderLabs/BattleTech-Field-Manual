@@ -60,7 +60,7 @@ const WeaponDetailScreen = () => {
 
       {/* Range table */}
       <div>
-        <h2 className="text-primary text-xs font-mono tracking-[0.15em] mb-2">// RANGE PROFILE</h2>
+        <h2 className="text-primary text-label font-mono tracking-[0.15em] mb-2">// RANGE PROFILE</h2>
         <div className="grid grid-cols-4 border border-border rounded-sm overflow-hidden">
           {ranges.map((r) => (
             <div key={r.label} className="text-center">
