@@ -46,7 +46,7 @@ const WeaponDetailScreen = () => {
         <ChevronLeft className="h-4 w-4" /> BACK
       </button>
 
-      <h1 className="text-primary font-mono text-xl uppercase tracking-widest leading-tight">{weapon.name}</h1>
+      <h1 className="text-primary font-mono text-heading uppercase tracking-widest leading-tight">{weapon.name}</h1>
 
       {/* Stat rows */}
       <div className="border border-border rounded-sm bg-card divide-y divide-border">
