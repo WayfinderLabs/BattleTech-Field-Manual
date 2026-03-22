@@ -26,7 +26,7 @@ const MechDetailScreen = () => {
           <ChevronLeft className="h-4 w-4" /> BACK
         </button>
         <div className="border border-border rounded-sm bg-card p-6 text-center">
-          <p className="text-muted-foreground text-sm italic">Mech not found.</p>
+          <p className="text-muted-foreground text-body italic">Mech not found.</p>
         </div>
       </div>
     );
