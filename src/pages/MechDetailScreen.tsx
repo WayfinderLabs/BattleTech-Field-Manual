@@ -52,7 +52,7 @@ const MechDetailScreen = () => {
           <h1 className="text-primary font-mono text-heading uppercase tracking-widest leading-tight">{mech.name}</h1>
           <span className="text-muted-foreground font-mono text-label tracking-wider">{mech.variant}</span>
         </div>
-        <span className={`px-2 py-0.5 text-[10px] font-mono uppercase rounded-sm shrink-0 ${CLASS_COLORS[mech.chassisClass]}`}>
+        <span className={`px-2 py-0.5 text-badge font-mono uppercase rounded-sm shrink-0 ${CLASS_COLORS[mech.chassisClass]}`}>
           {mech.chassisClass}
         </span>
       </div>
