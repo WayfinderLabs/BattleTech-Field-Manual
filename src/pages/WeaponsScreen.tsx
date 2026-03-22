@@ -91,7 +91,7 @@ const WeaponsScreen = () => {
 
       {filtered.length === 0 ? (
         <div className="border border-border rounded-sm bg-card p-10 flex items-center justify-center">
-          <p className="text-muted-foreground text-sm font-sans italic">
+          <p className="text-muted-foreground text-body font-sans italic">
             NO UNITS FOUND — REFINE SEARCH
           </p>
         </div>
