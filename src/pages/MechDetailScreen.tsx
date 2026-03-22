@@ -60,8 +60,8 @@ const MechDetailScreen = () => {
       <div className="border border-border rounded-sm bg-card divide-y divide-border">
         {stats.map((s) => (
           <div key={s.label} className="flex justify-between px-4 py-2.5">
-            <span className="text-xs font-mono text-muted-foreground tracking-wider">{s.label}</span>
-            <span className="text-sm font-mono text-foreground">{s.value}</span>
+            <span className="text-label font-mono text-muted-foreground tracking-wider">{s.label}</span>
+            <span className="text-detail-value font-mono text-foreground">{s.value}</span>
           </div>
         ))}
       </div>
