@@ -52,7 +52,7 @@ const EquipmentScreen = () => {
           <div key={cat}>
             <div className="sticky top-0 z-10 bg-background py-2">
               <div className="border-l-2 border-primary pl-3">
-                <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
+                <span className="text-label font-mono text-muted-foreground uppercase tracking-wider">
                   {SECTION_LABELS[cat]}
                 </span>
               </div>
