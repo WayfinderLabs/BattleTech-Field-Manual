@@ -24,8 +24,9 @@ const App = () => (
             <Route path="/mechs/:id" element={<MechDetailScreen />} />
           </Route>
           <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </FilterProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

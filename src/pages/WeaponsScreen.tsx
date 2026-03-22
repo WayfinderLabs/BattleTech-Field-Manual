@@ -1,7 +1,8 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { WEAPONS, type Weapon } from "@/data/weapons";
+import { useFilters } from "@/contexts/FilterContext";
 
 const CATEGORY_COLORS: Record<Weapon["category"], string> = {
   Ballistic: "bg-[hsl(220,9%,46%)] text-white",
@@ -18,17 +19,7 @@ const META_CHIPS: MetaFilter[] = ["CLAN", "DLC"];
 
 const WeaponsScreen = () => {
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("ALL");
-  const [metaFilters, setMetaFilters] = useState<Set<MetaFilter>>(new Set());
-
-  const toggleMeta = (m: MetaFilter) => {
-    setMetaFilters((prev) => {
-      const next = new Set(prev);
-      next.has(m) ? next.delete(m) : next.add(m);
-      return next;
-    });
-  };
+  const { search, setSearch, categoryFilter, setCategoryFilter, metaFilters, toggleMeta } = useFilters().weapons;
 
   const filtered = useMemo(() => {
     return WEAPONS.filter((w) => {
@@ -44,7 +35,6 @@ const WeaponsScreen = () => {
     <div className="py-4 space-y-4">
       <h2 className="text-primary text-xs font-mono tracking-[0.15em]">// WEAPONS DATABASE</h2>
 
-      {/* Search */}
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <input
@@ -56,7 +46,6 @@ const WeaponsScreen = () => {
         />
       </div>
 
-      {/* Filter chips */}
       <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
         {CATEGORY_CHIPS.map((chip) => (
           <button
@@ -86,7 +75,6 @@ const WeaponsScreen = () => {
         ))}
       </div>
 
-      {/* Weapon cards */}
       {filtered.length === 0 ? (
         <div className="border border-border rounded-sm bg-card p-10 flex items-center justify-center">
           <p className="text-muted-foreground text-sm font-sans italic">
