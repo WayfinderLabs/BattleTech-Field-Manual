@@ -105,7 +105,7 @@ const MechsScreen = () => {
             >
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div>
-                  <span className="text-primary font-mono text-sm uppercase tracking-wider leading-tight">
+                  <span className="text-primary font-mono text-card-title uppercase tracking-wider leading-tight">
                     {m.name}
                   </span>
                   <span className="text-muted-foreground font-mono text-[10px] tracking-wider ml-2">{m.variant}</span>
