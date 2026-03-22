@@ -43,7 +43,7 @@ const EquipmentScreen = () => {
 
   return (
     <div className="py-4 space-y-4">
-      <h2 className="text-primary text-xs font-mono tracking-[0.15em]">// EQUIPMENT REFERENCE</h2>
+      <h2 className="text-primary text-heading font-mono tracking-[0.15em]">// EQUIPMENT REFERENCE</h2>
 
       {SECTION_ORDER.map((cat) => {
         const items = grouped.get(cat);
