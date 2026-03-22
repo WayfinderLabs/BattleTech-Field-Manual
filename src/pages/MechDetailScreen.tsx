@@ -71,10 +71,10 @@ const MechDetailScreen = () => {
         <div className="grid grid-cols-2 gap-px border border-border rounded-sm overflow-hidden bg-border">
           {HARDPOINT_LABELS.map((loc) => (
             <div key={loc} className="bg-card px-3 py-2.5">
-              <div className="text-[10px] font-mono text-primary tracking-wider mb-0.5">
+              <div className="text-badge font-mono text-primary tracking-wider mb-0.5">
                 {HARDPOINT_DISPLAY[loc]}
               </div>
-              <div className="text-sm font-mono text-foreground">
+              <div className="text-detail-value font-mono text-foreground">
                 {mech.hardpoints[loc] || "—"}
               </div>
             </div>
