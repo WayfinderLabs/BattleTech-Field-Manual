@@ -10,7 +10,7 @@ const WeaponDetailScreen = () => {
   if (!weapon) {
     return (
       <div className="py-4">
-        <button onClick={() => navigate("/")} className="flex items-center gap-1 text-primary text-sm font-mono mb-4 active:scale-[0.97]">
+        <button onClick={() => navigate("/")} className="flex items-center gap-1 text-primary text-body font-mono mb-4 active:scale-[0.97]">
           <ChevronLeft className="h-4 w-4" /> BACK
         </button>
         <div className="border border-border rounded-sm bg-card p-6 text-center">
