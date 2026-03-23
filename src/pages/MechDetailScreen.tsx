@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { MECHS } from "@/data/mechs";
@@ -17,6 +18,10 @@ const HARDPOINT_DISPLAY: Record<string, string> = {
 const MechDetailScreen = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const mech = MECHS.find((m) => m.id === Number(id));
 
   if (!mech) {

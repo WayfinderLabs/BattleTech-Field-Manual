@@ -30,7 +30,7 @@ const BottomNav = () => {
               }`}
             >
               <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 1.5} />
-              <span className="text-[10px] font-mono tracking-wider">{label}</span>
+              <span className="font-mono tracking-wider" style={{ fontSize: 'var(--fs-nav)' }}>{label}</span>
             </button>
           );
         })}
