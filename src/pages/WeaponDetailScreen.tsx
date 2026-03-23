@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { WEAPONS } from "@/data/weapons";
@@ -5,6 +6,10 @@ import { WEAPONS } from "@/data/weapons";
 const WeaponDetailScreen = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const weapon = WEAPONS.find((w) => w.id === Number(id));
 
   if (!weapon) {
