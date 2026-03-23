@@ -20,6 +20,7 @@ export default {
         "detail-value": "var(--fs-detail-value)",
         label: "var(--fs-label)",
         badge: "var(--fs-badge)",
+        nav: "var(--fs-nav)",
       },
       fontFamily: {
         mono: ["JetBrains Mono", "ui-monospace", "monospace"],
