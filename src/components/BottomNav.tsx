@@ -1,10 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { Crosshair, Bot, Wrench } from "lucide-react";
+import { Crosshair, Bot, Wrench, Layers } from "lucide-react";
 
 const tabs = [
   { path: "/", label: "WEAPONS", icon: Crosshair },
   { path: "/mechs", label: "MECHS", icon: Bot },
   { path: "/equipment", label: "EQUIPMENT", icon: Wrench },
+  { path: "/loadout", label: "LOADOUT", icon: Layers },
 ] as const;
 
 const BottomNav = () => {

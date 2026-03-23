@@ -7,6 +7,7 @@ import MechsScreen from "./pages/MechsScreen";
 import EquipmentScreen from "./pages/EquipmentScreen";
 import WeaponDetailScreen from "./pages/WeaponDetailScreen";
 import MechDetailScreen from "./pages/MechDetailScreen";
+import LoadoutBuilderScreen from "./pages/LoadoutBuilderScreen";
 import NotFound from "./pages/NotFound";
 import { FilterProvider } from "./contexts/FilterContext";
 
@@ -24,6 +25,7 @@ const App = () => (
               <Route path="/equipment" element={<EquipmentScreen />} />
               <Route path="/weapons/:id" element={<WeaponDetailScreen />} />
               <Route path="/mechs/:id" element={<MechDetailScreen />} />
+              <Route path="/loadout" element={<LoadoutBuilderScreen />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
