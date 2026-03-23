@@ -25,6 +25,7 @@ const App = () => (
               <Route path="/equipment" element={<EquipmentScreen />} />
               <Route path="/weapons/:id" element={<WeaponDetailScreen />} />
               <Route path="/mechs/:id" element={<MechDetailScreen />} />
+              <Route path="/loadout" element={<LoadoutBuilderScreen />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
