@@ -55,12 +55,16 @@ const BlockingDialog = ({ isOpen, weaponName, mechName, locationKey, reason, onC
           className="font-mono uppercase w-full"
           style={{
             backgroundColor: '#2A2A2A',
-            color: '#8A8A8A',
+            color: '#E0E0E0',
             padding: '10px',
+            minHeight: '44px',
             border: 'none',
             borderRadius: '2px',
             fontSize: 'var(--fs-badge)',
             cursor: 'pointer',
+            pointerEvents: 'auto',
+            position: 'relative',
+            zIndex: 110,
           }}
         >
           GOT IT
