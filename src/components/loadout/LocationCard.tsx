@@ -21,8 +21,9 @@ interface SlotBlock {
 const LocationCard = ({ label, hardpointStr, slots, inventorySlots, onAddWeapon, onRemoveWeapon, hasCritOverflow }: LocationCardProps) => {
   const isEmpty = slots.length === 0;
 
-  // Build flat slot block array
+  // Build flat slot block array — each empty slot is independently interactive
   const blocks: SlotBlock[] = [];
+  const emptySlots: { index: number; type: HardpointType }[] = [];
   if (!isEmpty) {
     let blockIndex = 0;
     for (let i = 0; i < slots.length; i++) {
@@ -38,17 +39,24 @@ const LocationCard = ({ label, hardpointStr, slots, inventorySlots, onAddWeapon,
             blockIndex++;
           }
         }
+      } else {
+        emptySlots.push({ index: i, type: slot.hardpointType });
       }
     }
+    // Distribute empty hardpoint slots into remaining visual blocks
+    let emptyIdx = 0;
     while (blockIndex < inventorySlots) {
-      blocks.push({ type: 'empty' });
+      if (emptyIdx < emptySlots.length) {
+        blocks.push({ type: 'empty', slotIndex: emptySlots[emptyIdx].index, hardpointType: emptySlots[emptyIdx].type });
+        emptyIdx++;
+      } else {
+        blocks.push({ type: 'empty' });
+      }
       blockIndex++;
     }
   }
 
-  // Find first empty hardpoint slot for add button
-  const firstEmptySlotIndex = slots.findIndex(s => !s.weapon);
-  const firstEmptySlot = firstEmptySlotIndex >= 0 ? slots[firstEmptySlotIndex] : null;
+  const hasAnyEmptySlot = slots.some(s => !s.weapon);
 
   return (
     <div
