@@ -355,7 +355,7 @@ export const WEAPONS: Weapon[] = [
   {
     id: 18,
     name: 'Flamer',
-    category: 'Energy',
+    category: 'Support',
     damage: 5,
     stabilityDamage: 0,
     heat: 0,
