@@ -18,7 +18,7 @@ interface SlotBlock {
   hardpointType?: HardpointType;
 }
 
-const LocationCard = ({ label, slots, inventorySlots, onAddWeapon, onRemoveWeapon, hasCritOverflow }: LocationCardProps) => {
+const LocationCard = ({ label, hardpointStr, slots, inventorySlots, onAddWeapon, onRemoveWeapon, hasCritOverflow }: LocationCardProps) => {
   const isEmpty = slots.length === 0;
 
   // Build flat slot block array
