@@ -32,6 +32,25 @@ const WeaponPickerSheet = ({ open, hardpointType, onClose, onSelect }: WeaponPic
           <DrawerTitle className="font-mono uppercase tracking-wider text-primary" style={{ fontSize: 'var(--fs-card-title)' }}>
             SELECT {typeLabel} WEAPON
           </DrawerTitle>
+          {hardpointType && (
+            <div className="flex gap-2 mt-2">
+              <span
+                className="font-mono uppercase"
+                style={{
+                  fontSize: 11,
+                  color: '#8A8A8A',
+                  border: '1px solid #2A2A2A',
+                  borderRadius: 2,
+                  paddingLeft: 6,
+                  paddingRight: 6,
+                  paddingTop: 2,
+                  paddingBottom: 2,
+                }}
+              >
+                {typeLabel}
+              </span>
+            </div>
+          )}
         </DrawerHeader>
         <div className="px-4 pb-2">
           <input

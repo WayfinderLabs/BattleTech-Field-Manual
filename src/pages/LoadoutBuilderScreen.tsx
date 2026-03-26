@@ -149,6 +149,7 @@ const LoadoutBuilderScreen = () => {
               label={LOCATION_LABELS[loc]}
               hardpointStr={selectedMech.hardpoints[loc]}
               slots={state.slots[loc]}
+              inventorySlots={selectedMech.inventorySlots[loc]}
               onAddWeapon={(slotIndex, type) => handleAddWeapon(loc, slotIndex, type)}
               onRemoveWeapon={(slotIndex) => handleRemoveWeapon(loc, slotIndex)}
               hasCritOverflow={validation.some(v => v.code === 'CRIT_OVERFLOW' && v.locationKey === loc)}

@@ -1,27 +1,76 @@
 import type { SlotAssignment, HardpointType } from '@/types/loadout';
-import { HARDPOINT_TYPE_LABELS } from '@/types/loadout';
 
 interface LocationCardProps {
   label: string;
   hardpointStr: string;
   slots: SlotAssignment[];
+  inventorySlots: number;
   onAddWeapon: (slotIndex: number, hardpointType: HardpointType) => void;
   onRemoveWeapon: (slotIndex: number) => void;
   hasCritOverflow?: boolean;
 }
 
-const LocationCard = ({ label, hardpointStr, slots, onAddWeapon, onRemoveWeapon, hasCritOverflow }: LocationCardProps) => {
+interface SlotBlock {
+  type: 'empty' | 'first' | 'continuation';
+  weaponName?: string;
+  slotIndex?: number;
+  hardpointType?: HardpointType;
+}
+
+const LocationCard = ({ label, slots, inventorySlots, onAddWeapon, onRemoveWeapon, hasCritOverflow }: LocationCardProps) => {
   const isEmpty = slots.length === 0;
 
+  // Build flat slot block array
+  const blocks: SlotBlock[] = [];
+  if (!isEmpty) {
+    let blockIndex = 0;
+    for (let i = 0; i < slots.length; i++) {
+      const slot = slots[i];
+      if (slot.weapon) {
+        for (let c = 0; c < slot.weapon.criticalSlots; c++) {
+          if (blockIndex < inventorySlots) {
+            blocks.push({
+              type: c === 0 ? 'first' : 'continuation',
+              weaponName: slot.weapon.name,
+              slotIndex: i,
+            });
+            blockIndex++;
+          }
+        }
+      }
+    }
+    while (blockIndex < inventorySlots) {
+      blocks.push({ type: 'empty' });
+      blockIndex++;
+    }
+  }
+
+  // Find first empty hardpoint slot for add button
+  const firstEmptySlotIndex = slots.findIndex(s => !s.weapon);
+  const firstEmptySlot = firstEmptySlotIndex >= 0 ? slots[firstEmptySlotIndex] : null;
+
   return (
-    <div className={`border rounded-sm p-3 ${isEmpty ? 'opacity-40 border-border' : 'bg-card'}`} style={{ borderColor: hasCritOverflow ? '#E05050' : isEmpty ? undefined : undefined }}>
+    <div
+      className="border rounded-sm p-3"
+      style={{
+        borderColor: hasCritOverflow ? '#E05050' : 'hsl(var(--border))',
+        backgroundColor: isEmpty ? 'transparent' : 'hsl(var(--card))',
+        opacity: isEmpty ? 0.4 : 1,
+      }}
+    >
       <div className="flex items-center justify-between mb-2">
         <span className="font-mono uppercase tracking-wider text-muted-foreground font-semibold" style={{ fontSize: 'var(--fs-card-title)' }}>
           {label}
         </span>
-        <span className="font-mono" style={{ fontSize: 'var(--fs-badge)', color: hasCritOverflow ? '#E05050' : undefined }}>
-          {hardpointStr}
-        </span>
+        {!isEmpty && firstEmptySlot && (
+          <button
+            onClick={() => onAddWeapon(firstEmptySlotIndex, firstEmptySlot.hardpointType)}
+            className="font-mono text-primary hover:text-primary/80 shrink-0"
+            style={{ fontSize: 'var(--fs-badge)' }}
+          >
+            ＋ ADD
+          </button>
+        )}
       </div>
 
       {isEmpty ? (
@@ -29,45 +78,74 @@ const LocationCard = ({ label, hardpointStr, slots, onAddWeapon, onRemoveWeapon,
           NO HARDPOINTS
         </div>
       ) : (
-        <div className="space-y-1.5">
-          {slots.map((slot, i) => (
-            <div key={i} className="flex items-center justify-between gap-2 p-2 border border-border rounded-sm bg-background">
-              {slot.weapon ? (
-                <>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-mono uppercase tracking-wider text-foreground truncate" style={{ fontSize: 'var(--fs-badge)' }}>
-                      {slot.weapon.name}
-                    </div>
-                    <div className="font-mono text-muted-foreground flex gap-2" style={{ fontSize: 'clamp(0.5625rem, 2.2vw, 0.75rem)' }}>
-                      <span className="text-primary">{slot.weapon.damage}D</span>
-                      <span className="text-destructive">{slot.weapon.heat}H</span>
-                      <span>{slot.weapon.tonnage}T</span>
-                    </div>
-                  </div>
+        <div>
+          {blocks.map((block, i) => {
+            if (block.type === 'first') {
+              return (
+                <div
+                  key={i}
+                  className="flex items-center justify-between"
+                  style={{
+                    height: 18,
+                    borderRadius: 2,
+                    marginBottom: 2,
+                    backgroundColor: hasCritOverflow ? '#E05050' : '#C87941',
+                    border: `1px solid ${hasCritOverflow ? '#E05050' : '#C87941'}`,
+                    paddingLeft: 6,
+                    paddingRight: 4,
+                  }}
+                >
+                  <span
+                    className="font-mono uppercase font-semibold"
+                    style={{
+                      fontSize: 10,
+                      color: '#0D0D0D',
+                      overflow: 'hidden',
+                      whiteSpace: 'nowrap',
+                      textOverflow: 'ellipsis',
+                      flex: 1,
+                    }}
+                  >
+                    {block.weaponName}
+                  </span>
                   <button
-                    onClick={() => onRemoveWeapon(i)}
-                    className="text-muted-foreground hover:text-foreground font-mono shrink-0 px-1"
-                    style={{ fontSize: 'var(--fs-body)' }}
+                    onClick={() => block.slotIndex !== undefined && onRemoveWeapon(block.slotIndex)}
+                    className="shrink-0 font-mono"
+                    style={{ fontSize: 10, color: '#0D0D0D', lineHeight: 1 }}
                   >
                     ✕
                   </button>
-                </>
-              ) : (
-                <>
-                  <span className="font-mono uppercase tracking-wider text-muted-foreground" style={{ fontSize: 'var(--fs-badge)' }}>
-                    {HARDPOINT_TYPE_LABELS[slot.hardpointType]} SLOT
-                  </span>
-                  <button
-                    onClick={() => onAddWeapon(i, slot.hardpointType)}
-                    className="font-mono text-primary hover:text-primary/80 shrink-0"
-                    style={{ fontSize: 'var(--fs-badge)' }}
-                  >
-                    ＋ ADD
-                  </button>
-                </>
-              )}
-            </div>
-          ))}
+                </div>
+              );
+            }
+            if (block.type === 'continuation') {
+              return (
+                <div
+                  key={i}
+                  style={{
+                    height: 18,
+                    borderRadius: 2,
+                    marginBottom: 2,
+                    backgroundColor: hasCritOverflow ? '#8A2020' : '#7A4A28',
+                    border: `1px solid ${hasCritOverflow ? '#E05050' : '#7A4A28'}`,
+                  }}
+                />
+              );
+            }
+            // empty
+            return (
+              <div
+                key={i}
+                style={{
+                  height: 18,
+                  borderRadius: 2,
+                  marginBottom: 2,
+                  backgroundColor: '#0D0D0D',
+                  border: '1px solid #2A2A2A',
+                }}
+              />
+            );
+          })}
         </div>
       )}
     </div>
