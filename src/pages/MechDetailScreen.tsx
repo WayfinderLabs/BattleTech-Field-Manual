@@ -16,6 +16,7 @@ const HARDPOINT_DISPLAY: Record<string, string> = {
   hd: "HD", ct: "CT", lt: "LT", rt: "RT", la: "LA", ra: "RA", ll: "LL", rl: "RL",
 };
 
+const MechDetailScreen = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
