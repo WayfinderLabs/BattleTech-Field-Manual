@@ -71,16 +71,8 @@ const LocationCard = ({ label, hardpointStr, slots, inventorySlots, onAddWeapon,
         <span className="font-mono uppercase tracking-wider text-muted-foreground font-semibold" style={{ fontSize: 'var(--fs-card-title)' }}>
           {label}
         </span>
-        {!isEmpty && firstEmptySlot && (
-          <button
-            onClick={() => onAddWeapon(firstEmptySlotIndex, firstEmptySlot.hardpointType)}
-            className="font-mono text-primary hover:text-primary/80 shrink-0"
-            style={{ fontSize: 'var(--fs-badge)' }}
-          >
-            ＋ ADD
-          </button>
-        )}
       </div>
+
 
       {/* Hardpoint type pills */}
       {!isEmpty && (
