@@ -11,7 +11,11 @@ const CLASS_COLORS: Record<string, string> = {
   Assault: "bg-[hsl(0,84%,60%)] text-white",
 };
 
-const MechDetailScreen = () => {
+const HARDPOINT_LABELS = ["hd", "ct", "lt", "rt", "la", "ra", "ll", "rl"] as const;
+const HARDPOINT_DISPLAY: Record<string, string> = {
+  hd: "HD", ct: "CT", lt: "LT", rt: "RT", la: "LA", ra: "RA", ll: "LL", rl: "RL",
+};
+
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
