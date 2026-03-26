@@ -1,4 +1,5 @@
 import type { SlotAssignment, HardpointType } from '@/types/loadout';
+import { HP_PILL_COLORS, parseHardpointTokens } from '@/utils/hardpointPills';
 
 interface LocationCardProps {
   label: string;
@@ -17,7 +18,7 @@ interface SlotBlock {
   hardpointType?: HardpointType;
 }
 
-const LocationCard = ({ label, slots, inventorySlots, onAddWeapon, onRemoveWeapon, hasCritOverflow }: LocationCardProps) => {
+const LocationCard = ({ label, hardpointStr, slots, inventorySlots, onAddWeapon, onRemoveWeapon, hasCritOverflow }: LocationCardProps) => {
   const isEmpty = slots.length === 0;
 
   // Build flat slot block array
@@ -72,6 +73,27 @@ const LocationCard = ({ label, slots, inventorySlots, onAddWeapon, onRemoveWeapo
           </button>
         )}
       </div>
+
+      {/* Hardpoint type pills */}
+      {!isEmpty && (
+        <div className="flex flex-wrap gap-1 mb-2">
+          {(() => {
+            const tokens = parseHardpointTokens(hardpointStr);
+            if (tokens.length === 0) return <span className="font-mono text-muted-foreground" style={{ fontSize: 10 }}>—</span>;
+            return tokens.flatMap((t, ti) =>
+              Array.from({ length: t.count }, (_, i) => (
+                <span
+                  key={`${ti}-${i}`}
+                  className={`px-1 py-0.5 font-mono rounded-sm text-[#E0E0E0] ${HP_PILL_COLORS[t.type] || ""}`}
+                  style={{ fontSize: 10 }}
+                >
+                  {t.type}
+                </span>
+              ))
+            );
+          })()}
+        </div>
+      )}
 
       {isEmpty ? (
         <div className="font-mono text-muted-foreground uppercase tracking-wider text-center py-2" style={{ fontSize: 'var(--fs-badge)' }}>

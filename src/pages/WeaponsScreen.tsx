@@ -7,7 +7,7 @@ import { useFilters } from "@/contexts/FilterContext";
 const CATEGORY_COLORS: Record<Weapon["category"], string> = {
   Ballistic: "bg-[hsl(220,9%,46%)] text-white",
   Energy: "bg-[hsl(217,91%,60%)] text-white",
-  Missile: "bg-[hsl(142,71%,45%)] text-white",
+  Missile: "bg-[hsl(142,71%,45%)] text-black",
   Support: "bg-[hsl(48,96%,53%)] text-black",
 };
 

@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { MECHS } from "@/data/mechs";
+import { HP_PILL_COLORS, parseHardpointTokens } from "@/utils/hardpointPills";
 
 const CLASS_COLORS: Record<string, string> = {
-  Light: "bg-[hsl(142,71%,45%)] text-white",
+  Light: "bg-[hsl(142,71%,45%)] text-black",
   Medium: "bg-[hsl(217,91%,60%)] text-white",
   Heavy: "bg-[hsl(24,94%,53%)] text-white",
   Assault: "bg-[hsl(0,84%,60%)] text-white",
@@ -14,22 +15,6 @@ const HARDPOINT_LABELS = ["hd", "ct", "lt", "rt", "la", "ra", "ll", "rl"] as con
 const HARDPOINT_DISPLAY: Record<string, string> = {
   hd: "HD", ct: "CT", lt: "LT", rt: "RT", la: "LA", ra: "RA", ll: "LL", rl: "RL",
 };
-
-const HP_PILL_COLORS: Record<string, string> = {
-  B: "bg-[hsl(220,9%,46%)]",
-  E: "bg-[hsl(217,91%,60%)]",
-  M: "bg-[hsl(142,71%,45%)]",
-  S: "bg-[hsl(48,96%,53%)] !text-black",
-};
-
-function parseHardpointTokens(str: string): { type: string; count: number }[] {
-  if (!str || str === "—") return [];
-  return str.trim().split(/\s+/).reduce<{ type: string; count: number }[]>((acc, token) => {
-    const m = token.match(/^(\d+)([BEMS])$/);
-    if (m) acc.push({ type: m[2], count: parseInt(m[1], 10) });
-    return acc;
-  }, []);
-}
 
 const MechDetailScreen = () => {
   const { id } = useParams<{ id: string }>();
