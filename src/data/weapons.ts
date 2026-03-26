@@ -29,7 +29,7 @@ export const WEAPONS: Weapon[] = [
   {
     id: 1,
     name: 'Machine Gun',
-    category: 'Ballistic',
+    category: 'Support',
     damage: 15,        // Damage:3 × Shots:5
     stabilityDamage: 0,
     heat: 0,
