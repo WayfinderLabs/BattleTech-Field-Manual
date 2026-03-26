@@ -11,7 +11,6 @@ const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
 
   let tonnageUsed = 0;
   let heatGenerated = 0;
-  let critSlotsUsed = 0;
 
   const allLocations = Object.keys(slots) as LocationKey[];
   for (const loc of allLocations) {
@@ -19,21 +18,17 @@ const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
       if (slot.weapon) {
         tonnageUsed += slot.weapon.tonnage;
         heatGenerated += slot.weapon.heat;
-        critSlotsUsed += slot.weapon.criticalSlots;
       }
     }
   }
 
-  const totalSlots = allLocations.reduce((sum, loc) => sum + slots[loc].length, 0);
-
   const stats = [
     { label: 'TONNAGE', value: `${tonnageUsed} / ${selectedMech.tonnage}t` },
     { label: 'HEAT', value: `${heatGenerated} heat` },
-    { label: 'SLOTS', value: `${critSlotsUsed} / ${totalSlots} slots` },
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-2 p-3 bg-card border border-border rounded-sm">
+    <div className="grid grid-cols-2 gap-2 p-3 bg-card border border-border rounded-sm">
       {stats.map((s) => (
         <div key={s.label} className="text-center">
           <div className="font-mono uppercase tracking-wider" style={{ fontSize: 'var(--fs-badge)', color: (hasOverweight && s.label === 'TONNAGE') ? '#E05050' : undefined }}>
