@@ -5,7 +5,7 @@ import { MECHS, type Mech } from "@/data/mechs";
 import { useFilters } from "@/contexts/FilterContext";
 
 const CLASS_COLORS: Record<Mech["chassisClass"], string> = {
-  Light: "bg-[hsl(142,71%,45%)] text-white",
+  Light: "bg-[hsl(142,71%,45%)] text-black",
   Medium: "bg-[hsl(217,91%,60%)] text-white",
   Heavy: "bg-[hsl(24,94%,53%)] text-white",
   Assault: "bg-[hsl(0,84%,60%)] text-white",
