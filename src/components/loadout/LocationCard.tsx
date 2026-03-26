@@ -21,8 +21,9 @@ interface SlotBlock {
 const LocationCard = ({ label, hardpointStr, slots, inventorySlots, onAddWeapon, onRemoveWeapon, hasCritOverflow }: LocationCardProps) => {
   const isEmpty = slots.length === 0;
 
-  // Build flat slot block array
+  // Build flat slot block array — each empty slot is independently interactive
   const blocks: SlotBlock[] = [];
+  const emptySlots: { index: number; type: HardpointType }[] = [];
   if (!isEmpty) {
     let blockIndex = 0;
     for (let i = 0; i < slots.length; i++) {
@@ -38,17 +39,24 @@ const LocationCard = ({ label, hardpointStr, slots, inventorySlots, onAddWeapon,
             blockIndex++;
           }
         }
+      } else {
+        emptySlots.push({ index: i, type: slot.hardpointType });
       }
     }
+    // Distribute empty hardpoint slots into remaining visual blocks
+    let emptyIdx = 0;
     while (blockIndex < inventorySlots) {
-      blocks.push({ type: 'empty' });
+      if (emptyIdx < emptySlots.length) {
+        blocks.push({ type: 'empty', slotIndex: emptySlots[emptyIdx].index, hardpointType: emptySlots[emptyIdx].type });
+        emptyIdx++;
+      } else {
+        blocks.push({ type: 'empty' });
+      }
       blockIndex++;
     }
   }
 
-  // Find first empty hardpoint slot for add button
-  const firstEmptySlotIndex = slots.findIndex(s => !s.weapon);
-  const firstEmptySlot = firstEmptySlotIndex >= 0 ? slots[firstEmptySlotIndex] : null;
+  const hasAnyEmptySlot = slots.some(s => !s.weapon);
 
   return (
     <div
@@ -63,16 +71,8 @@ const LocationCard = ({ label, hardpointStr, slots, inventorySlots, onAddWeapon,
         <span className="font-mono uppercase tracking-wider text-muted-foreground font-semibold" style={{ fontSize: 'var(--fs-card-title)' }}>
           {label}
         </span>
-        {!isEmpty && firstEmptySlot && (
-          <button
-            onClick={() => onAddWeapon(firstEmptySlotIndex, firstEmptySlot.hardpointType)}
-            className="font-mono text-primary hover:text-primary/80 shrink-0"
-            style={{ fontSize: 'var(--fs-badge)' }}
-          >
-            ＋ ADD
-          </button>
-        )}
       </div>
+
 
       {/* Hardpoint type pills */}
       {!isEmpty && (
@@ -154,7 +154,23 @@ const LocationCard = ({ label, hardpointStr, slots, inventorySlots, onAddWeapon,
                 />
               );
             }
-            // empty
+            // empty — clickable if it has a slot assignment
+            if (block.slotIndex !== undefined && block.hardpointType) {
+              return (
+                <button
+                  key={i}
+                  onClick={() => onAddWeapon(block.slotIndex!, block.hardpointType!)}
+                  className="w-full text-left cursor-pointer"
+                  style={{
+                    height: 18,
+                    borderRadius: 2,
+                    marginBottom: 2,
+                    backgroundColor: '#0D0D0D',
+                    border: '1px solid #2A2A2A',
+                  }}
+                />
+              );
+            }
             return (
               <div
                 key={i}
