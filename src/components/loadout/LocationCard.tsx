@@ -154,7 +154,23 @@ const LocationCard = ({ label, hardpointStr, slots, inventorySlots, onAddWeapon,
                 />
               );
             }
-            // empty
+            // empty — clickable if it has a slot assignment
+            if (block.slotIndex !== undefined && block.hardpointType) {
+              return (
+                <button
+                  key={i}
+                  onClick={() => onAddWeapon(block.slotIndex!, block.hardpointType!)}
+                  className="w-full text-left cursor-pointer"
+                  style={{
+                    height: 18,
+                    borderRadius: 2,
+                    marginBottom: 2,
+                    backgroundColor: '#0D0D0D',
+                    border: '1px solid #2A2A2A',
+                  }}
+                />
+              );
+            }
             return (
               <div
                 key={i}
