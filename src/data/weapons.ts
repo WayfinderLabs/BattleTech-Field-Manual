@@ -203,7 +203,7 @@ export const WEAPONS: Weapon[] = [
   {
     id: 10,
     name: 'Small Pulse Laser',
-    category: 'Energy',
+    category: 'Support',
     damage: 35,
     stabilityDamage: 0,
     heat: 12,
@@ -260,7 +260,7 @@ export const WEAPONS: Weapon[] = [
   {
     id: 13,
     name: 'ER Small Laser',
-    category: 'Energy',
+    category: 'Support',
     damage: 30,
     stabilityDamage: 0,
     heat: 10,
