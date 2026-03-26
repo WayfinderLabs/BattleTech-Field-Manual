@@ -63,7 +63,15 @@ const LoadoutBuilderScreen = () => {
     setState((prev) => {
       const locSlots = [...prev.slots[pickerLocation]];
       locSlots[slotIndex] = { ...locSlots[slotIndex], weapon };
-      return { ...prev, slots: { ...prev.slots, [pickerLocation]: locSlots } };
+      const newState = { ...prev, slots: { ...prev.slots, [pickerLocation]: locSlots } };
+
+      // Auto-close picker if all slots in this location are now full
+      const allFull = newState.slots[pickerLocation].every(s => !!s.weapon);
+      if (allFull) {
+        setTimeout(() => setPickerLocation(null), 0);
+      }
+
+      return newState;
     });
   }, [pickerLocation, state, validation]);
 
