@@ -7,7 +7,7 @@ import { parseHardpoints } from '@/utils/parseHardpoints';
 import { validateLoadout, wouldCreateNewError } from '@/utils/validateLoadout';
 import type { ValidationResult } from '@/utils/validateLoadout';
 import MechPickerSheet from '@/components/loadout/MechPickerSheet';
-import WeaponPickerSheet from '@/components/loadout/WeaponPickerSheet';
+import UnifiedWeaponPicker from '@/components/loadout/UnifiedWeaponPicker';
 import LocationCard from '@/components/loadout/LocationCard';
 import StatsBar from '@/components/loadout/StatsBar';
 import ValidationPanel from '@/components/loadout/ValidationPanel';
@@ -22,8 +22,7 @@ const LoadoutBuilderScreen = () => {
   });
 
   const [mechPickerOpen, setMechPickerOpen] = useState(false);
-  const [weaponPickerOpen, setWeaponPickerOpen] = useState(false);
-  const [activeSlot, setActiveSlot] = useState<{ location: LocationKey; index: number; type: HardpointType } | null>(null);
+  const [pickerLocation, setPickerLocation] = useState<LocationKey | null>(null);
   const [validation, setValidation] = useState<ValidationResult[]>([]);
   const [blockingDialog, setBlockingDialog] = useState<{
     isOpen: boolean;
@@ -34,7 +33,6 @@ const LoadoutBuilderScreen = () => {
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  // Re-validate whenever state changes
   useEffect(() => {
     if (!state.selectedMech) { setValidation([]); return; }
     setValidation(validateLoadout(state.selectedMech, state));
@@ -48,33 +46,26 @@ const LoadoutBuilderScreen = () => {
     setState({ selectedMech: mech, slots: newSlots });
   }, []);
 
-  const handleAddWeapon = useCallback((location: LocationKey, slotIndex: number, hardpointType: HardpointType) => {
-    setActiveSlot({ location, index: slotIndex, type: hardpointType });
-    setWeaponPickerOpen(true);
-  }, []);
+  const handleWeaponAdd = useCallback((weapon: Weapon, slotIndex: number) => {
+    if (!pickerLocation || !state.selectedMech) return;
 
-  const handleWeaponSelected = useCallback((weapon: Weapon) => {
-    if (!activeSlot || !state.selectedMech) return;
-
-    // Check if this would create a new error
-    const check = wouldCreateNewError(weapon, activeSlot.location, state.selectedMech, state, validation);
+    const check = wouldCreateNewError(weapon, pickerLocation, state.selectedMech, state, validation);
     if (check.blocked && check.reason) {
       setBlockingDialog({
         isOpen: true,
         weaponName: weapon.name,
-        locationKey: activeSlot.location,
+        locationKey: pickerLocation,
         reason: check.reason,
       });
       return;
     }
 
     setState((prev) => {
-      const locSlots = [...prev.slots[activeSlot.location]];
-      locSlots[activeSlot.index] = { ...locSlots[activeSlot.index], weapon };
-      return { ...prev, slots: { ...prev.slots, [activeSlot.location]: locSlots } };
+      const locSlots = [...prev.slots[pickerLocation]];
+      locSlots[slotIndex] = { ...locSlots[slotIndex], weapon };
+      return { ...prev, slots: { ...prev.slots, [pickerLocation]: locSlots } };
     });
-    setActiveSlot(null);
-  }, [activeSlot, state, validation]);
+  }, [pickerLocation, state, validation]);
 
   const handleRemoveWeapon = useCallback((location: LocationKey, slotIndex: number) => {
     setState((prev) => {
@@ -150,7 +141,7 @@ const LoadoutBuilderScreen = () => {
               hardpointStr={selectedMech.hardpoints[loc]}
               slots={state.slots[loc]}
               inventorySlots={selectedMech.inventorySlots[loc]}
-              onAddWeapon={(slotIndex, type) => handleAddWeapon(loc, slotIndex, type)}
+              onOpenPicker={() => setPickerLocation(loc)}
               onRemoveWeapon={(slotIndex) => handleRemoveWeapon(loc, slotIndex)}
               hasCritOverflow={validation.some(v => v.code === 'CRIT_OVERFLOW' && v.locationKey === loc)}
             />
@@ -165,13 +156,16 @@ const LoadoutBuilderScreen = () => {
         onSelect={handleSelectMech}
       />
 
-      {/* Weapon Picker */}
-      <WeaponPickerSheet
-        open={weaponPickerOpen}
-        hardpointType={activeSlot?.type ?? null}
-        onClose={() => { setWeaponPickerOpen(false); setActiveSlot(null); }}
-        onSelect={handleWeaponSelected}
-      />
+      {/* Unified Weapon Picker */}
+      {pickerLocation && (
+        <UnifiedWeaponPicker
+          open={!!pickerLocation}
+          locationKey={pickerLocation}
+          slots={state.slots[pickerLocation]}
+          onClose={() => setPickerLocation(null)}
+          onAdd={handleWeaponAdd}
+        />
+      )}
 
       {/* Blocking Dialog */}
       {blockingDialog && (
