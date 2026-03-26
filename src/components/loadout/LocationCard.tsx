@@ -7,18 +7,19 @@ interface LocationCardProps {
   slots: SlotAssignment[];
   onAddWeapon: (slotIndex: number, hardpointType: HardpointType) => void;
   onRemoveWeapon: (slotIndex: number) => void;
+  hasCritOverflow?: boolean;
 }
 
-const LocationCard = ({ label, hardpointStr, slots, onAddWeapon, onRemoveWeapon }: LocationCardProps) => {
+const LocationCard = ({ label, hardpointStr, slots, onAddWeapon, onRemoveWeapon, hasCritOverflow }: LocationCardProps) => {
   const isEmpty = slots.length === 0;
 
   return (
-    <div className={`border border-border rounded-sm p-3 ${isEmpty ? 'opacity-40' : 'bg-card'}`}>
+    <div className={`border rounded-sm p-3 ${isEmpty ? 'opacity-40 border-border' : 'bg-card'}`} style={{ borderColor: hasCritOverflow ? '#E05050' : isEmpty ? undefined : undefined }}>
       <div className="flex items-center justify-between mb-2">
         <span className="font-mono uppercase tracking-wider text-muted-foreground font-semibold" style={{ fontSize: 'var(--fs-card-title)' }}>
           {label}
         </span>
-        <span className="font-mono text-muted-foreground" style={{ fontSize: 'var(--fs-badge)' }}>
+        <span className="font-mono" style={{ fontSize: 'var(--fs-badge)', color: hasCritOverflow ? '#E05050' : undefined }}>
           {hardpointStr}
         </span>
       </div>
