@@ -1,4 +1,5 @@
 import type { SlotAssignment, HardpointType } from '@/types/loadout';
+import { HP_PILL_COLORS, parseHardpointTokens } from '@/utils/hardpointPills';
 
 interface LocationCardProps {
   label: string;
