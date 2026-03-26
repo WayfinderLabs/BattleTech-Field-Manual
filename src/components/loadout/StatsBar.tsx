@@ -2,9 +2,10 @@ import type { LoadoutState, LocationKey } from '@/types/loadout';
 
 interface StatsBarProps {
   state: LoadoutState;
+  hasOverweight?: boolean;
 }
 
-const StatsBar = ({ state }: StatsBarProps) => {
+const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
   const { selectedMech, slots } = state;
   if (!selectedMech) return null;
 
@@ -38,7 +39,7 @@ const StatsBar = ({ state }: StatsBarProps) => {
           <div className="font-mono uppercase tracking-wider text-muted-foreground" style={{ fontSize: 'var(--fs-badge)' }}>
             {s.label}
           </div>
-          <div className="font-mono text-primary font-semibold" style={{ fontSize: 'var(--fs-body)' }}>
+          <div className="font-mono font-semibold" style={{ fontSize: 'var(--fs-body)', color: (hasOverweight && s.label === 'TONNAGE') ? '#E05050' : undefined }}>
             {s.value}
           </div>
         </div>
