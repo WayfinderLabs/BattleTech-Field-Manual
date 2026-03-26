@@ -96,8 +96,19 @@ const MechDetailScreen = () => {
               <div className="text-badge font-mono text-primary tracking-wider mb-0.5">
                 {HARDPOINT_DISPLAY[loc]}
               </div>
-              <div className="text-detail-value font-mono text-foreground">
-                {mech.hardpoints[loc] || "—"}
+              <div className="flex flex-wrap gap-1">
+                {(() => {
+                  const raw = mech.hardpoints[loc] || "—";
+                  const tokens = parseHardpointTokens(raw);
+                  if (tokens.length === 0) return <span className="text-detail-value font-mono text-muted-foreground">—</span>;
+                  return tokens.flatMap((t, ti) =>
+                    Array.from({ length: t.count }, (_, i) => (
+                      <span key={`${ti}-${i}`} className={`px-1 py-0.5 font-mono rounded-sm text-[#E0E0E0] ${HP_PILL_COLORS[t.type] || ""}`} style={{ fontSize: "10px" }}>
+                        {t.type}
+                      </span>
+                    ))
+                  );
+                })()}
               </div>
             </div>
           ))}
