@@ -15,6 +15,22 @@ const HARDPOINT_DISPLAY: Record<string, string> = {
   hd: "HD", ct: "CT", lt: "LT", rt: "RT", la: "LA", ra: "RA", ll: "LL", rl: "RL",
 };
 
+const HP_PILL_COLORS: Record<string, string> = {
+  B: "bg-[hsl(220,9%,46%)]",
+  E: "bg-[hsl(217,91%,60%)]",
+  M: "bg-[hsl(142,71%,45%)]",
+  S: "bg-[hsl(48,96%,53%)] !text-black",
+};
+
+function parseHardpointTokens(str: string): { type: string; count: number }[] {
+  if (!str || str === "—") return [];
+  return str.trim().split(/\s+/).reduce<{ type: string; count: number }[]>((acc, token) => {
+    const m = token.match(/^(\d+)([BEMS])$/);
+    if (m) acc.push({ type: m[2], count: parseInt(m[1], 10) });
+    return acc;
+  }, []);
+}
+
 const MechDetailScreen = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
