@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { X } from 'lucide-react';
 import { WEAPONS, type Weapon } from '@/data/weapons';
 import type { SlotAssignment, HardpointType, LocationKey } from '@/types/loadout';
