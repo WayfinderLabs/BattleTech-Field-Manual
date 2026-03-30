@@ -91,12 +91,22 @@ const UnifiedWeaponPicker = ({ open, locationKey, slots, onClose, onAdd }: Unifi
     });
   }, [filter, search, availableCategories]);
 
+  const flashingCard = useRef<string | null>(null);
+  const [flashId, setFlashId] = useState<string | null>(null);
+
   const handleAdd = (weapon: Weapon) => {
     const hpType = CATEGORY_TO_HP[weapon.category];
-    // Find first empty slot of matching type
     const slotIndex = slots.findIndex(s => s.hardpointType === hpType && !s.weapon);
     if (slotIndex === -1) return;
-    onAdd(weapon, slotIndex);
+
+    // Flash then add
+    setFlashId(weapon.id);
+    flashingCard.current = weapon.id;
+    setTimeout(() => {
+      setFlashId(null);
+      flashingCard.current = null;
+      onAdd(weapon, slotIndex);
+    }, 250);
   };
 
   // Reset filter on open change
