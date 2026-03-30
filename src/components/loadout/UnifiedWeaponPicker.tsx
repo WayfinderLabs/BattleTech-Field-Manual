@@ -209,26 +209,23 @@ const UnifiedWeaponPicker = ({ open, locationKey, slots, onClose, onAdd }: Unifi
           ) : (
             <div className="space-y-2">
               {filtered.map((w) => (
-                <div
+                <button
                   key={w.id}
-                  className="bg-card border border-border rounded-sm p-3"
+                  type="button"
+                  onClick={() => handleAdd(w)}
+                  className="w-full text-left border border-border rounded-sm p-3 cursor-pointer min-h-[44px]"
+                  style={{
+                    backgroundColor: flashId === w.id ? 'rgba(200, 121, 65, 0.18)' : 'hsl(var(--card))',
+                    transition: flashId === w.id ? 'background-color 150ms ease-in' : 'background-color 100ms ease-out',
+                  }}
                 >
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <span className="text-primary font-mono uppercase tracking-wider leading-tight" style={{ fontSize: 'var(--fs-card-title)' }}>
                       {w.name}
                     </span>
-                    <div className="flex gap-1.5 shrink-0 items-center">
-                      <span className={`px-1.5 py-0.5 font-mono uppercase rounded-sm ${CATEGORY_COLORS[w.category]}`} style={{ fontSize: 'var(--fs-badge)' }}>
-                        {w.category}
-                      </span>
-                      <button
-                        onClick={() => handleAdd(w)}
-                        className="px-2 py-1 font-mono uppercase tracking-wider rounded-sm border border-primary text-primary hover:bg-primary/10 transition-colors"
-                        style={{ fontSize: 'var(--fs-badge)' }}
-                      >
-                        ADD
-                      </button>
-                    </div>
+                    <span className={`px-1.5 py-0.5 font-mono uppercase rounded-sm shrink-0 ${CATEGORY_COLORS[w.category]}`} style={{ fontSize: 'var(--fs-badge)' }}>
+                      {w.category}
+                    </span>
                   </div>
                   <div className="flex gap-3">
                     {[
@@ -243,7 +240,7 @@ const UnifiedWeaponPicker = ({ open, locationKey, slots, onClose, onAdd }: Unifi
                       </div>
                     ))}
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           )}
