@@ -91,8 +91,8 @@ const UnifiedWeaponPicker = ({ open, locationKey, slots, onClose, onAdd }: Unifi
     });
   }, [filter, search, availableCategories]);
 
-  const flashingCard = useRef<string | null>(null);
-  const [flashId, setFlashId] = useState<string | null>(null);
+  const flashingCard = useRef<number | null>(null);
+  const [flashId, setFlashId] = useState<number | null>(null);
 
   const handleAdd = (weapon: Weapon) => {
     const hpType = CATEGORY_TO_HP[weapon.category];
