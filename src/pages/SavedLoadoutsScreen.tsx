@@ -20,7 +20,7 @@ const SavedLoadoutsScreen = () => {
   const [deleteTarget, setDeleteTarget] = useState<SavedLoadout | null>(null);
   const [loadTarget, setLoadTarget] = useState<SavedLoadout | null>(null);
 
-  const getMech = (mechId: string) => mechs.find(m => m.id.toString() === mechId);
+  const getMech = (mechId: string) => MECHS.find(m => m.id.toString() === mechId);
 
   const handleDelete = () => {
     if (!deleteTarget) return;
