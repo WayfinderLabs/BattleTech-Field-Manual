@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import type { Mech } from '@/data/mechs';
 import type { Weapon } from '@/data/weapons';
-import type { LoadoutState, LocationKey, HardpointType } from '@/types/loadout';
-import { LOCATION_LABELS, EMPTY_SLOTS } from '@/types/loadout';
+import type { LoadoutState, LocationKey, HardpointType, SlotItem } from '@/types/loadout';
+import { LOCATION_LABELS, EMPTY_SLOTS, EMPTY_EQUIPMENT } from '@/types/loadout';
 import { parseHardpoints } from '@/utils/parseHardpoints';
 import { validateLoadout, wouldCreateNewError } from '@/utils/validateLoadout';
 import type { ValidationResult } from '@/utils/validateLoadout';
@@ -19,6 +19,7 @@ const LoadoutBuilderScreen = () => {
   const [state, setState] = useState<LoadoutState>({
     selectedMech: null,
     slots: { ...EMPTY_SLOTS },
+    equipment: { ...EMPTY_EQUIPMENT },
   });
 
   const [mechPickerOpen, setMechPickerOpen] = useState(false);
@@ -26,7 +27,7 @@ const LoadoutBuilderScreen = () => {
   const [validation, setValidation] = useState<ValidationResult[]>([]);
   const [blockingDialog, setBlockingDialog] = useState<{
     isOpen: boolean;
-    weaponName: string;
+    itemName: string;
     locationKey: string;
     reason: 'OVERWEIGHT' | 'CRIT_OVERFLOW';
   } | null>(null);
@@ -43,17 +44,23 @@ const LoadoutBuilderScreen = () => {
     for (const key of LOCATION_KEYS) {
       newSlots[key] = parseHardpoints(mech.hardpoints[key]);
     }
-    setState({ selectedMech: mech, slots: newSlots });
+    setState({ selectedMech: mech, slots: newSlots, equipment: { ...EMPTY_EQUIPMENT } });
   }, []);
 
   const handleWeaponAdd = useCallback((weapon: Weapon, slotIndex: number) => {
     if (!pickerLocation || !state.selectedMech) return;
 
-    const check = wouldCreateNewError(weapon, pickerLocation, state.selectedMech, state, validation);
+    const check = wouldCreateNewError(
+      { kind: 'weapon', data: weapon },
+      pickerLocation,
+      state.selectedMech,
+      state,
+      validation
+    );
     if (check.blocked && check.reason) {
       setBlockingDialog({
         isOpen: true,
-        weaponName: weapon.name,
+        itemName: weapon.name,
         locationKey: pickerLocation,
         reason: check.reason,
       });
@@ -65,7 +72,6 @@ const LoadoutBuilderScreen = () => {
       locSlots[slotIndex] = { ...locSlots[slotIndex], weapon };
       const newState = { ...prev, slots: { ...prev.slots, [pickerLocation]: locSlots } };
 
-      // Auto-close picker if all slots in this location are now full
       const allFull = newState.slots[pickerLocation].every(s => !!s.weapon);
       if (allFull) {
         setTimeout(() => setPickerLocation(null), 0);
@@ -75,11 +81,42 @@ const LoadoutBuilderScreen = () => {
     });
   }, [pickerLocation, state, validation]);
 
+  const handleEquipmentAdd = useCallback((item: SlotItem, loc: LocationKey) => {
+    if (!state.selectedMech) return;
+
+    const check = wouldCreateNewError(item, loc, state.selectedMech, state, validation);
+    if (check.blocked && check.reason) {
+      const name = item.data.name;
+      setBlockingDialog({
+        isOpen: true,
+        itemName: name,
+        locationKey: loc,
+        reason: check.reason,
+      });
+      return;
+    }
+
+    const slotsUsed = item.data.slots;
+    setState((prev) => {
+      const locEquip = [...prev.equipment[loc], { item, slotsUsed }];
+      const newState = { ...prev, equipment: { ...prev.equipment, [loc]: locEquip } };
+      return newState;
+    });
+  }, [state, validation]);
+
   const handleRemoveWeapon = useCallback((location: LocationKey, slotIndex: number) => {
     setState((prev) => {
       const locSlots = [...prev.slots[location]];
       locSlots[slotIndex] = { ...locSlots[slotIndex], weapon: null };
       return { ...prev, slots: { ...prev.slots, [location]: locSlots } };
+    });
+  }, []);
+
+  const handleRemoveEquipment = useCallback((location: LocationKey, equipIndex: number) => {
+    setState((prev) => {
+      const locEquip = [...prev.equipment[location]];
+      locEquip.splice(equipIndex, 1);
+      return { ...prev, equipment: { ...prev.equipment, [location]: locEquip } };
     });
   }, []);
 
@@ -148,9 +185,11 @@ const LoadoutBuilderScreen = () => {
               label={LOCATION_LABELS[loc]}
               hardpointStr={selectedMech.hardpoints[loc]}
               slots={state.slots[loc]}
+              equipment={state.equipment[loc]}
               inventorySlots={selectedMech.inventorySlots[loc]}
               onOpenPicker={() => setPickerLocation(loc)}
               onRemoveWeapon={(slotIndex) => handleRemoveWeapon(loc, slotIndex)}
+              onRemoveEquipment={(equipIndex) => handleRemoveEquipment(loc, equipIndex)}
               hasCritOverflow={validation.some(v => v.code === 'CRIT_OVERFLOW' && v.locationKey === loc)}
             />
           ))}
@@ -164,14 +203,19 @@ const LoadoutBuilderScreen = () => {
         onSelect={handleSelectMech}
       />
 
-      {/* Unified Weapon Picker */}
-      {pickerLocation && (
+      {/* Unified Item Picker */}
+      {pickerLocation && selectedMech && (
         <UnifiedWeaponPicker
           open={!!pickerLocation}
           locationKey={pickerLocation}
           slots={state.slots[pickerLocation]}
+          equipment={state.equipment[pickerLocation]}
+          inventorySlots={selectedMech.inventorySlots[pickerLocation]}
+          mech={selectedMech}
+          allEquipment={state.equipment}
           onClose={() => setPickerLocation(null)}
-          onAdd={handleWeaponAdd}
+          onAddWeapon={handleWeaponAdd}
+          onAddEquipment={(item) => handleEquipmentAdd(item, pickerLocation)}
         />
       )}
 
@@ -179,7 +223,7 @@ const LoadoutBuilderScreen = () => {
       {blockingDialog && (
         <BlockingDialog
           isOpen={blockingDialog.isOpen}
-          weaponName={blockingDialog.weaponName}
+          weaponName={blockingDialog.itemName}
           mechName={selectedMech?.name ?? ''}
           locationKey={blockingDialog.locationKey}
           reason={blockingDialog.reason}
