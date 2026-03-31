@@ -36,7 +36,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_AC2',
     name: 'AC/2 Ammo',
-    ammoId: 'Ammunition_AC2',
+    ammoId: 'AC',
     capacity: 25,
     tonnage: 1,
     slots: 1,
@@ -46,7 +46,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_AC5',
     name: 'AC/5 Ammo',
-    ammoId: 'Ammunition_AC5',
+    ammoId: 'AC',
     capacity: 15,
     tonnage: 1,
     slots: 1,
@@ -56,7 +56,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_AC10',
     name: 'AC/10 Ammo',
-    ammoId: 'Ammunition_AC10',
+    ammoId: 'AC',
     capacity: 8,
     tonnage: 1,
     slots: 1,
@@ -66,7 +66,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_AC20',
     name: 'AC/20 Ammo',
-    ammoId: 'Ammunition_AC20',
+    ammoId: 'AC',
     capacity: 5,
     tonnage: 1,
     slots: 1,
@@ -76,7 +76,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_LRM',
     name: 'LRM Ammo',
-    ammoId: 'Ammunition_LRM',
+    ammoId: 'LRM',
     capacity: 120,
     tonnage: 1,
     slots: 1,
@@ -86,7 +86,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_SRM',
     name: 'SRM Ammo',
-    ammoId: 'Ammunition_SRM',
+    ammoId: 'SRM',
     capacity: 100,
     tonnage: 1,
     slots: 1,
@@ -96,7 +96,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_GAUSS',
     name: 'Gauss Ammo',
-    ammoId: 'Ammunition_GAUSS',
+    ammoId: 'Gauss',
     capacity: 8,
     tonnage: 1,
     slots: 1,
@@ -106,7 +106,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_MG',
     name: 'MG Ammo',
-    ammoId: 'Ammunition_MG',
+    ammoId: 'MG',
     capacity: 200,
     tonnage: 1,
     slots: 1,
@@ -116,7 +116,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_MG_Half',
     name: 'MG Ammo (Half)',
-    ammoId: 'Ammunition_MG',
+    ammoId: 'MG',
     capacity: 100,
     tonnage: 0.5,
     slots: 1,
