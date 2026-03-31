@@ -11,7 +11,7 @@ import {
   AlertDialogFooter,
 } from '@/components/ui/alert-dialog';
 import { useSavedLoadouts } from '@/hooks/useSavedLoadouts';
-import { mechs } from '@/data/mechs';
+import { MECHS } from '@/data/mechs';
 import type { SavedLoadout } from '@/types/savedLoadout';
 
 const SavedLoadoutsScreen = () => {
