@@ -1,14 +1,75 @@
 import type { Mech } from '@/data/mechs';
 import type { Weapon } from '@/data/weapons';
-import type { LoadoutState, LocationKey } from '@/types/loadout';
+import type { LoadoutState, LocationKey, SlotItem, EquipmentSlot } from '@/types/loadout';
 
 export type ValidationSeverity = 'ERROR' | 'WARNING';
 
 export interface ValidationResult {
   severity: ValidationSeverity;
-  code: 'OVERWEIGHT' | 'CRIT_OVERFLOW' | 'AMMO_DEPENDENCY';
+  code: 'OVERWEIGHT' | 'CRIT_OVERFLOW' | 'AMMO_DEPENDENCY' | 'JUMP_JET_EXCEEDED';
   message: string;
   locationKey?: LocationKey;
+}
+
+/** Get tonnage of any slot item */
+function itemTonnage(item: SlotItem): number {
+  return item.data.tonnage;
+}
+
+/** Get critical slots of any slot item */
+function itemSlots(item: SlotItem): number {
+  if (item.kind === 'weapon') return item.data.criticalSlots;
+  return item.data.slots;
+}
+
+/** Collect all weapons from loadout state */
+function collectWeapons(state: LoadoutState): Weapon[] {
+  const weapons: Weapon[] = [];
+  const locationKeys = Object.keys(state.slots) as LocationKey[];
+  for (const key of locationKeys) {
+    for (const slot of state.slots[key]) {
+      if (slot.weapon) weapons.push(slot.weapon);
+    }
+  }
+  return weapons;
+}
+
+/** Collect all equipment items from loadout state */
+function collectEquipment(state: LoadoutState): SlotItem[] {
+  const items: SlotItem[] = [];
+  const locationKeys = Object.keys(state.equipment) as LocationKey[];
+  for (const key of locationKeys) {
+    for (const eq of state.equipment[key]) {
+      if (eq.item) items.push(eq.item);
+    }
+  }
+  return items;
+}
+
+/** Count total jump jets across all locations */
+function countJumpJets(state: LoadoutState): number {
+  let count = 0;
+  const locationKeys = Object.keys(state.equipment) as LocationKey[];
+  for (const key of locationKeys) {
+    for (const eq of state.equipment[key]) {
+      if (eq.item?.kind === 'jumpJet') count++;
+    }
+  }
+  return count;
+}
+
+/** Collect all ammo IDs assigned in the loadout */
+function collectAmmoIds(state: LoadoutState): Set<string> {
+  const ids = new Set<string>();
+  const locationKeys = Object.keys(state.equipment) as LocationKey[];
+  for (const key of locationKeys) {
+    for (const eq of state.equipment[key]) {
+      if (eq.item?.kind === 'ammo') {
+        ids.add(eq.item.data.ammoId);
+      }
+    }
+  }
+  return ids;
 }
 
 export function validateLoadout(
@@ -17,17 +78,13 @@ export function validateLoadout(
 ): ValidationResult[] {
   const results: ValidationResult[] = [];
   const locationKeys = Object.keys(state.slots) as LocationKey[];
+  const allWeapons = collectWeapons(state);
+  const allEquipment = collectEquipment(state);
 
-  // Collect all equipped weapons
-  const allWeapons: Weapon[] = [];
-  for (const key of locationKeys) {
-    for (const slot of state.slots[key]) {
-      if (slot.weapon) allWeapons.push(slot.weapon);
-    }
-  }
-
-  // 1. OVERWEIGHT
-  const tonnageUsed = allWeapons.reduce((sum, w) => sum + w.tonnage, 0);
+  // 1. OVERWEIGHT — sum weapons + equipment tonnage
+  const weaponTonnage = allWeapons.reduce((sum, w) => sum + w.tonnage, 0);
+  const equipTonnage = allEquipment.reduce((sum, item) => sum + itemTonnage(item), 0);
+  const tonnageUsed = weaponTonnage + equipTonnage;
   if (tonnageUsed > mech.tonnage) {
     results.push({
       severity: 'ERROR',
@@ -36,10 +93,14 @@ export function validateLoadout(
     });
   }
 
-  // 2. CRIT SLOT OVERFLOW — checked per location
+  // 2. CRIT SLOT OVERFLOW — per location (weapons + equipment)
   for (const key of locationKeys) {
-    const weapons = state.slots[key].filter(s => s.weapon).map(s => s.weapon!);
-    const slotsUsed = weapons.reduce((sum, w) => sum + w.criticalSlots, 0);
+    const weaponSlots = state.slots[key]
+      .filter(s => s.weapon)
+      .reduce((sum, s) => sum + s.weapon!.criticalSlots, 0);
+    const equipSlots = state.equipment[key]
+      .reduce((sum, eq) => sum + eq.slotsUsed, 0);
+    const slotsUsed = weaponSlots + equipSlots;
     const slotsAvailable = mech.inventorySlots[key];
     if (slotsUsed > slotsAvailable) {
       results.push({
@@ -51,24 +112,38 @@ export function validateLoadout(
     }
   }
 
-  // 3. AMMO DEPENDENCY — warn once if any Ballistic or Missile weapon present
-  const hasAmmoWeapon = allWeapons.some(
-    w => w.category === 'Ballistic' || w.category === 'Missile'
-  );
-  if (hasAmmoWeapon) {
+  // 3. AMMO DEPENDENCY — per weapon with ammoType, resolved if matching bin exists
+  const assignedAmmoIds = collectAmmoIds(state);
+  const checkedAmmoTypes = new Set<string>();
+  for (const w of allWeapons) {
+    if (w.ammoType && !checkedAmmoTypes.has(w.ammoType)) {
+      checkedAmmoTypes.add(w.ammoType);
+      if (!assignedAmmoIds.has(w.ammoType)) {
+        results.push({
+          severity: 'WARNING',
+          code: 'AMMO_DEPENDENCY',
+          message: `${w.name} requires ammo — no matching ammo bin assigned`,
+        });
+      }
+    }
+  }
+
+  // 4. JUMP JET CAP EXCEEDED
+  const jjCount = countJumpJets(state);
+  if (jjCount > mech.jumpJetsMax) {
     results.push({
       severity: 'WARNING',
-      code: 'AMMO_DEPENDENCY',
-      message: 'Ballistic or Missile weapons equipped — ammo bins not yet tracked',
+      code: 'JUMP_JET_EXCEEDED',
+      message: `Jump jet limit exceeded — ${jjCount} installed, max ${mech.jumpJetsMax}`,
     });
   }
 
   return results;
 }
 
-// Helper: would adding this weapon to this location create a NEW error?
+// Helper: would adding this item to this location create a NEW error?
 export function wouldCreateNewError(
-  weapon: Weapon,
+  item: SlotItem,
   locationKey: LocationKey,
   mech: Mech,
   state: LoadoutState,
@@ -79,6 +154,9 @@ export function wouldCreateNewError(
     v => v.code === 'CRIT_OVERFLOW' && v.locationKey === locationKey
   );
 
+  const addTonnage = itemTonnage(item);
+  const addSlots = itemSlots(item);
+
   // Check overweight
   if (!alreadyOverweight) {
     let currentTonnage = 0;
@@ -87,17 +165,25 @@ export function wouldCreateNewError(
         if (s.weapon) currentTonnage += s.weapon.tonnage;
       }
     }
-    if (currentTonnage + weapon.tonnage > mech.tonnage) {
+    for (const eqs of Object.values(state.equipment)) {
+      for (const eq of eqs) {
+        if (eq.item) currentTonnage += itemTonnage(eq.item);
+      }
+    }
+    if (currentTonnage + addTonnage > mech.tonnage) {
       return { blocked: true, reason: 'OVERWEIGHT' };
     }
   }
 
   // Check crit overflow
   if (!alreadyOverflow) {
-    const currentSlots = state.slots[locationKey]
+    const weaponSlots = state.slots[locationKey]
       .filter(s => s.weapon)
       .reduce((sum, s) => sum + s.weapon!.criticalSlots, 0);
-    if (currentSlots + weapon.criticalSlots > mech.inventorySlots[locationKey]) {
+    const equipSlots = state.equipment[locationKey]
+      .reduce((sum, eq) => sum + eq.slotsUsed, 0);
+    const currentSlots = weaponSlots + equipSlots;
+    if (currentSlots + addSlots > mech.inventorySlots[locationKey]) {
       return { blocked: true, reason: 'CRIT_OVERFLOW' };
     }
   }
