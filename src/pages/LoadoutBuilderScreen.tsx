@@ -33,9 +33,9 @@ const LoadoutBuilderScreen = () => {
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  useEffect(() => {
-    if (!state.selectedMech) { setValidation([]); return; }
-    setValidation(validateLoadout(state.selectedMech, state));
+  const validation = useMemo<ValidationResult[]>(() => {
+    if (!state.selectedMech) return [];
+    return validateLoadout(state.selectedMech, state);
   }, [state]);
 
   const handleSelectMech = useCallback((mech: Mech) => {
