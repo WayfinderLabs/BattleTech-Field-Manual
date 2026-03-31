@@ -24,7 +24,6 @@ const LoadoutBuilderScreen = () => {
 
   const [mechPickerOpen, setMechPickerOpen] = useState(false);
   const [pickerLocation, setPickerLocation] = useState<LocationKey | null>(null);
-  const [validation, setValidation] = useState<ValidationResult[]>([]);
   const [blockingDialog, setBlockingDialog] = useState<{
     isOpen: boolean;
     itemName: string;
