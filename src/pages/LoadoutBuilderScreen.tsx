@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import type { Mech } from '@/data/mechs';
 import type { Weapon } from '@/data/weapons';
 import type { LoadoutState, LocationKey, HardpointType, SlotItem } from '@/types/loadout';
