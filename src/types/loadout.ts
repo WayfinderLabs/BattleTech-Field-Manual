@@ -1,17 +1,32 @@
 import type { Weapon } from '@/data/weapons';
 import type { Mech } from '@/data/mechs';
+import type { AmmoBin, HeatSink, JumpJet } from '@/data/loadoutEquipment';
 
 export type HardpointType = 'B' | 'E' | 'M' | 'S';
 export type LocationKey = 'hd' | 'ct' | 'lt' | 'rt' | 'la' | 'ra' | 'll' | 'rl';
+
+export type SlotItem =
+  | { kind: 'weapon'; data: Weapon }
+  | { kind: 'ammo'; data: AmmoBin }
+  | { kind: 'heatSink'; data: HeatSink }
+  | { kind: 'jumpJet'; data: JumpJet };
 
 export interface SlotAssignment {
   hardpointType: HardpointType;
   weapon: Weapon | null;
 }
 
+/** A generic inventory slot that can hold any equipment item */
+export interface EquipmentSlot {
+  item: SlotItem | null;
+  /** How many consecutive inventory cells this item occupies (set when filled) */
+  slotsUsed: number;
+}
+
 export interface LoadoutState {
   selectedMech: Mech | null;
   slots: Record<LocationKey, SlotAssignment[]>;
+  equipment: Record<LocationKey, EquipmentSlot[]>;
 }
 
 export const LOCATION_LABELS: Record<LocationKey, string> = {
@@ -34,6 +49,11 @@ export const HARDPOINT_TO_CATEGORY: Record<HardpointType, string> = {
 };
 
 export const EMPTY_SLOTS: Record<LocationKey, SlotAssignment[]> = {
+  hd: [], ct: [], lt: [], rt: [],
+  la: [], ra: [], ll: [], rl: [],
+};
+
+export const EMPTY_EQUIPMENT: Record<LocationKey, EquipmentSlot[]> = {
   hd: [], ct: [], lt: [], rt: [],
   la: [], ra: [], ll: [], rl: [],
 };
