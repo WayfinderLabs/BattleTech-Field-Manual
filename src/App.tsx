@@ -8,6 +8,7 @@ import EquipmentScreen from "./pages/EquipmentScreen";
 import WeaponDetailScreen from "./pages/WeaponDetailScreen";
 import MechDetailScreen from "./pages/MechDetailScreen";
 import LoadoutBuilderScreen from "./pages/LoadoutBuilderScreen";
+import SavedLoadoutsScreen from "./pages/SavedLoadoutsScreen";
 import NotFound from "./pages/NotFound";
 import { FilterProvider } from "./contexts/FilterContext";
 
