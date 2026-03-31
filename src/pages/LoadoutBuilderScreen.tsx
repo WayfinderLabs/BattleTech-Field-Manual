@@ -1,21 +1,30 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Bookmark } from 'lucide-react';
 import type { Mech } from '@/data/mechs';
+import { MECHS } from '@/data/mechs';
 import type { Weapon } from '@/data/weapons';
 import type { LoadoutState, LocationKey, HardpointType, SlotItem } from '@/types/loadout';
 import { LOCATION_LABELS, EMPTY_SLOTS, EMPTY_EQUIPMENT } from '@/types/loadout';
 import { parseHardpoints } from '@/utils/parseHardpoints';
 import { validateLoadout, wouldCreateNewError } from '@/utils/validateLoadout';
 import type { ValidationResult } from '@/utils/validateLoadout';
+import { useSavedLoadouts } from '@/hooks/useSavedLoadouts';
 import MechPickerSheet from '@/components/loadout/MechPickerSheet';
 import UnifiedWeaponPicker from '@/components/loadout/UnifiedWeaponPicker';
 import LocationCard from '@/components/loadout/LocationCard';
 import StatsBar from '@/components/loadout/StatsBar';
 import ValidationPanel from '@/components/loadout/ValidationPanel';
 import BlockingDialog from '@/components/loadout/BlockingDialog';
+import SaveLoadoutSheet from '@/components/loadout/SaveLoadoutSheet';
 
 const LOCATION_KEYS: LocationKey[] = ['hd', 'ct', 'lt', 'rt', 'la', 'ra', 'll', 'rl'];
 
 const LoadoutBuilderScreen = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { saveLoadout, overwriteLoadout, getDuplicateByName } = useSavedLoadouts();
+
   const [state, setState] = useState<LoadoutState>({
     selectedMech: null,
     slots: { ...EMPTY_SLOTS },
@@ -24,6 +33,8 @@ const LoadoutBuilderScreen = () => {
 
   const [mechPickerOpen, setMechPickerOpen] = useState(false);
   const [pickerLocation, setPickerLocation] = useState<LocationKey | null>(null);
+  const [saveSheetOpen, setSaveSheetOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [blockingDialog, setBlockingDialog] = useState<{
     isOpen: boolean;
     itemName: string;
@@ -31,7 +42,46 @@ const LoadoutBuilderScreen = () => {
     reason: 'OVERWEIGHT' | 'CRIT_OVERFLOW';
   } | null>(null);
 
+  // Restore from saved loadout navigation
+  useEffect(() => {
+    const navState = location.state as { restoreLoadout?: any } | null;
+    if (navState?.restoreLoadout) {
+      const saved = navState.restoreLoadout;
+      const mech = MECHS.find(m => m.id.toString() === saved.mechId);
+      if (mech) {
+        // Rebuild slots from saved data - re-parse hardpoints and restore weapons
+        const newSlots = { ...EMPTY_SLOTS } as Record<LocationKey, ReturnType<typeof parseHardpoints>>;
+        for (const key of LOCATION_KEYS) {
+          const parsed = parseHardpoints(mech.hardpoints[key]);
+          // Restore saved weapons into parsed slots
+          if (saved.slots[key]) {
+            for (let i = 0; i < parsed.length && i < saved.slots[key].length; i++) {
+              if (saved.slots[key][i]?.weapon) {
+                parsed[i] = { ...parsed[i], weapon: saved.slots[key][i].weapon };
+              }
+            }
+          }
+          newSlots[key] = parsed;
+        }
+        setState({
+          selectedMech: mech,
+          slots: newSlots,
+          equipment: saved.equipment || { ...EMPTY_EQUIPMENT },
+        });
+      }
+      // Clear the navigation state so refreshing doesn't re-restore
+      navigate('/loadout', { replace: true, state: {} });
+    }
+  }, []);
+
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  // Toast auto-dismiss
+  useEffect(() => {
+    if (!toastMessage) return;
+    const t = setTimeout(() => setToastMessage(null), 2500);
+    return () => clearTimeout(t);
+  }, [toastMessage]);
 
   const validation = useMemo<ValidationResult[]>(() => {
     if (!state.selectedMech) return [];
@@ -119,14 +169,53 @@ const LoadoutBuilderScreen = () => {
     });
   }, []);
 
+  const handleSave = (name: string, notes: string | undefined): 'saved' | 'duplicate_name' => {
+    if (!state.selectedMech) return 'saved';
+    const result = saveLoadout(name, notes, state.selectedMech.id.toString(), state.slots, state.equipment);
+    if (result === 'saved') {
+      setToastMessage('LOADOUT SAVED');
+    }
+    return result;
+  };
+
+  const handleOverwrite = (existingId: string, name: string, notes: string | undefined) => {
+    if (!state.selectedMech) return;
+    overwriteLoadout(existingId, name, notes, state.selectedMech.id.toString(), state.slots, state.equipment);
+    setToastMessage('LOADOUT SAVED');
+  };
+
+  const handleGetDuplicate = (name: string) => {
+    const dup = getDuplicateByName(name);
+    return dup ? { id: dup.id, name: dup.name } : undefined;
+  };
+
   const { selectedMech } = state;
   const hasOverweight = validation.some(v => v.code === 'OVERWEIGHT');
 
   return (
     <div className="space-y-4">
-      <h1 className="font-mono uppercase tracking-wider text-primary font-bold" style={{ fontSize: 'var(--fs-heading)' }}>
-        LOADOUT BUILDER
-      </h1>
+      {/* Toast notification */}
+      {toastMessage && (
+        <div
+          className="fixed top-2 left-1/2 -translate-x-1/2 z-[100] px-4 py-2 rounded-sm font-mono uppercase tracking-wider text-primary-foreground"
+          style={{ backgroundColor: '#C87941', fontSize: 'var(--fs-body)' }}
+        >
+          {toastMessage}
+        </div>
+      )}
+
+      {/* Header with bookmark icon */}
+      <div className="flex items-center justify-between">
+        <h1 className="font-mono uppercase tracking-wider text-primary font-bold" style={{ fontSize: 'var(--fs-heading)' }}>
+          LOADOUT BUILDER
+        </h1>
+        <button
+          onClick={() => navigate('/saved-loadouts')}
+          className="text-muted-foreground hover:text-primary transition-colors p-1"
+        >
+          <Bookmark className="w-5 h-5" />
+        </button>
+      </div>
 
       {/* Mech Selection Panel */}
       <div className="border border-border rounded-sm p-4 bg-card">
@@ -195,6 +284,16 @@ const LoadoutBuilderScreen = () => {
         </div>
       )}
 
+      {/* Save Loadout Button */}
+      <button
+        onClick={() => setSaveSheetOpen(true)}
+        disabled={!selectedMech}
+        className="w-full font-mono uppercase tracking-wider text-primary-foreground bg-primary rounded-sm min-h-[44px] py-2.5 hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+        style={{ fontSize: 'var(--fs-body)' }}
+      >
+        SAVE LOADOUT
+      </button>
+
       {/* Mech Picker */}
       <MechPickerSheet
         open={mechPickerOpen}
@@ -229,6 +328,15 @@ const LoadoutBuilderScreen = () => {
           onClose={() => setBlockingDialog(null)}
         />
       )}
+
+      {/* Save Loadout Sheet */}
+      <SaveLoadoutSheet
+        open={saveSheetOpen}
+        onClose={() => setSaveSheetOpen(false)}
+        onSave={handleSave}
+        onOverwrite={handleOverwrite}
+        getDuplicateId={handleGetDuplicate}
+      />
     </div>
   );
 };
