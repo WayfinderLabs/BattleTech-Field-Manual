@@ -96,7 +96,7 @@ const LoadoutBuilderScreen = () => {
       return;
     }
 
-    const slotsUsed = item.data.slots;
+    const slotsUsed = item.kind === 'weapon' ? item.data.criticalSlots : item.data.slots;
     setState((prev) => {
       const locEquip = [...prev.equipment[loc], { item, slotsUsed }];
       const newState = { ...prev, equipment: { ...prev.equipment, [loc]: locEquip } };
