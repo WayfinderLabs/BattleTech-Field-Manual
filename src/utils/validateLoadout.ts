@@ -114,8 +114,6 @@ export function validateLoadout(
 
   // 3. AMMO DEPENDENCY — per weapon with ammoType, resolved if matching bin exists
   const assignedAmmoIds = collectAmmoIds(state);
-  console.log('[AMMO DEBUG] allWeapons:', allWeapons.map(w => ({ name: w.name, ammoType: w.ammoType })));
-  console.log('[AMMO DEBUG] assignedAmmoIds:', Array.from(assignedAmmoIds));
   const checkedAmmoTypes = new Set<string>();
   for (const w of allWeapons) {
     if (w.ammoType && !checkedAmmoTypes.has(w.ammoType)) {

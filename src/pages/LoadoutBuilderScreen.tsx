@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import type { Mech } from '@/data/mechs';
 import type { Weapon } from '@/data/weapons';
 import type { LoadoutState, LocationKey, HardpointType, SlotItem } from '@/types/loadout';
@@ -24,7 +24,6 @@ const LoadoutBuilderScreen = () => {
 
   const [mechPickerOpen, setMechPickerOpen] = useState(false);
   const [pickerLocation, setPickerLocation] = useState<LocationKey | null>(null);
-  const [validation, setValidation] = useState<ValidationResult[]>([]);
   const [blockingDialog, setBlockingDialog] = useState<{
     isOpen: boolean;
     itemName: string;
@@ -34,9 +33,9 @@ const LoadoutBuilderScreen = () => {
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  useEffect(() => {
-    if (!state.selectedMech) { setValidation([]); return; }
-    setValidation(validateLoadout(state.selectedMech, state));
+  const validation = useMemo<ValidationResult[]>(() => {
+    if (!state.selectedMech) return [];
+    return validateLoadout(state.selectedMech, state);
   }, [state]);
 
   const handleSelectMech = useCallback((mech: Mech) => {
