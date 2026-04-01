@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import TopBar from "./TopBar";
 import BottomNav from "./BottomNav";
+import AdBanner from "./AdBanner";
 
 const AppShell = () => {
   return (
