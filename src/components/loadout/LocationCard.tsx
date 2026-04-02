@@ -167,10 +167,29 @@ const LocationCard = ({
                       whiteSpace: 'nowrap',
                       textOverflow: 'ellipsis',
                       flex: 1,
+                      minWidth: 0,
                     }}
                   >
                     {block.itemName}
                   </span>
+                  {/* Ammo round count annotation for ammo-dependent weapons */}
+                  {!block.isEquipment && block.weapon?.ammoType && (() => {
+                    const binCount = ammoBinCounts[block.weapon!.ammoType!] ?? 0;
+                    const totalRounds = binCount * (block.weapon!.ammoPerTon ?? 0);
+                    return (
+                      <span
+                        className="shrink-0 font-mono uppercase"
+                        style={{
+                          fontSize: 9,
+                          letterSpacing: '0.05em',
+                          color: totalRounds > 0 ? '#8A8A8A' : '#C87941',
+                          marginRight: 4,
+                        }}
+                      >
+                        {totalRounds > 0 ? `${totalRounds} RDS` : 'NO AMMO'}
+                      </span>
+                    );
+                  })()}
                   <button
                     onClick={() => {
                       if (block.isEquipment && block.equipIndex !== undefined) {
