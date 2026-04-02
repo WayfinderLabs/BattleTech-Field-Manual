@@ -37,7 +37,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_AC2',
     name: 'AC/2 Ammo',
-    ammoId: 'AC',
+    ammoId: 'AC2',
     capacity: 25,
     tonnage: 1,
     slots: 1,
@@ -47,7 +47,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_AC5',
     name: 'AC/5 Ammo',
-    ammoId: 'AC',
+    ammoId: 'AC5',
     capacity: 15,
     tonnage: 1,
     slots: 1,
@@ -57,7 +57,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_AC10',
     name: 'AC/10 Ammo',
-    ammoId: 'AC',
+    ammoId: 'AC10',
     capacity: 8,
     tonnage: 1,
     slots: 1,
@@ -67,7 +67,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_AC20',
     name: 'AC/20 Ammo',
-    ammoId: 'AC',
+    ammoId: 'AC20',
     capacity: 5,
     tonnage: 1,
     slots: 1,
