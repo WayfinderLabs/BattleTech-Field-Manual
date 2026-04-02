@@ -58,19 +58,6 @@ function countJumpJets(state: LoadoutState): number {
   return count;
 }
 
-/** Collect all ammo IDs assigned in the loadout */
-function collectAmmoIds(state: LoadoutState): Set<string> {
-  const ids = new Set<string>();
-  const locationKeys = Object.keys(state.equipment) as LocationKey[];
-  for (const key of locationKeys) {
-    for (const eq of state.equipment[key]) {
-      if (eq.item?.kind === 'ammo') {
-        ids.add(eq.item.data.ammoId);
-      }
-    }
-  }
-  return ids;
-}
 
 export function validateLoadout(
   mech: Mech,
