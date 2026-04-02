@@ -23,6 +23,7 @@ export interface Mech {
   isLosTech: boolean;
   dlcSource: 'Base' | 'Flashpoint' | 'Urban Warfare' | 'Heavy Metal';
   loreDescription: string | null;
+  baseHeatDissipation: number;
   inventorySlots: {
     hd: number; ct: number; lt: number; rt: number;
     la: number; ra: number; ll: number; rl: number;

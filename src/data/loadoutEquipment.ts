@@ -20,6 +20,7 @@ export interface HeatSink {
   overheatBonus: number;
   weaponHeatReduction: number;
   isLosTech: boolean;
+  heatReductionPct?: number;
 }
 
 export interface JumpJet {
