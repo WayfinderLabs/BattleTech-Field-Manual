@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { MECHS, type Mech } from '@/data/mechs';
 import {
   Drawer, DrawerContent, DrawerHeader, DrawerTitle,
@@ -12,11 +12,25 @@ interface MechPickerSheetProps {
 
 const MechPickerSheet = ({ open, onClose, onSelect }: MechPickerSheetProps) => {
   const [search, setSearch] = useState('');
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const savedScrollTop = useRef(0);
 
   const filtered = MECHS.filter((m) => {
     const q = search.toLowerCase();
     return m.name.toLowerCase().includes(q) || m.variant.toLowerCase().includes(q);
   });
+
+  const handleScroll = useCallback(() => {
+    if (scrollRef.current) {
+      savedScrollTop.current = scrollRef.current.scrollTop;
+    }
+  }, []);
+
+  const handleAnimationEnd = useCallback(() => {
+    if (open && scrollRef.current) {
+      scrollRef.current.scrollTop = savedScrollTop.current;
+    }
+  }, [open]);
 
   return (
     <Drawer open={open} onOpenChange={(o) => !o && onClose()}>
@@ -36,7 +50,12 @@ const MechPickerSheet = ({ open, onClose, onSelect }: MechPickerSheetProps) => {
             style={{ fontSize: 'var(--fs-body)' }}
           />
         </div>
-        <div className="overflow-y-auto px-4 pb-4 max-h-[60vh]">
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          onTransitionEnd={handleAnimationEnd}
+          className="overflow-y-auto px-4 pb-4 max-h-[60vh]"
+        >
           {filtered.map((mech) => (
             <button
               key={mech.id}
