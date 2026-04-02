@@ -1,4 +1,5 @@
 import type { SlotAssignment, HardpointType, EquipmentSlot } from '@/types/loadout';
+import type { Weapon } from '@/data/weapons';
 import { HP_PILL_COLORS, parseHardpointTokens } from '@/utils/hardpointPills';
 
 interface LocationCardProps {
@@ -11,6 +12,8 @@ interface LocationCardProps {
   onRemoveWeapon: (slotIndex: number) => void;
   onRemoveEquipment: (equipIndex: number) => void;
   hasCritOverflow?: boolean;
+  /** Global count of equipped ammo bins keyed by ammoType */
+  ammoBinCounts?: Record<string, number>;
 }
 
 interface SlotBlock {
@@ -22,6 +25,8 @@ interface SlotBlock {
   equipIndex?: number;
   isEquipment?: boolean;
   equipKind?: string;
+  /** Reference to weapon for ammo annotation */
+  weapon?: Weapon;
 }
 
 /** Color for equipment item blocks */
@@ -33,7 +38,7 @@ const EQUIP_COLORS: Record<string, { first: string; cont: string }> = {
 
 const LocationCard = ({
   label, hardpointStr, slots, equipment, inventorySlots,
-  onOpenPicker, onRemoveWeapon, onRemoveEquipment, hasCritOverflow,
+  onOpenPicker, onRemoveWeapon, onRemoveEquipment, hasCritOverflow, ammoBinCounts = {},
 }: LocationCardProps) => {
   const isEmpty = slots.length === 0 && equipment.length === 0;
   const hasHardpoints = slots.length > 0;
@@ -52,6 +57,7 @@ const LocationCard = ({
             type: c === 0 ? 'first' : 'continuation',
             itemName: slot.weapon.name,
             weaponSlotIndex: i,
+            weapon: c === 0 ? slot.weapon : undefined,
           });
           blockIndex++;
         }
@@ -161,10 +167,29 @@ const LocationCard = ({
                       whiteSpace: 'nowrap',
                       textOverflow: 'ellipsis',
                       flex: 1,
+                      minWidth: 0,
                     }}
                   >
                     {block.itemName}
                   </span>
+                  {/* Ammo round count annotation for ammo-dependent weapons */}
+                  {!block.isEquipment && block.weapon?.ammoType && (() => {
+                    const binCount = ammoBinCounts[block.weapon!.ammoType!] ?? 0;
+                    const totalRounds = binCount * (block.weapon!.ammoPerTon ?? 0);
+                    return (
+                      <span
+                        className="shrink-0 font-mono uppercase"
+                        style={{
+                          fontSize: 9,
+                          letterSpacing: '0.05em',
+                          color: totalRounds > 0 ? '#8A8A8A' : '#C87941',
+                          marginRight: 4,
+                        }}
+                      >
+                        {totalRounds > 0 ? `${totalRounds} RDS` : 'NO AMMO'}
+                      </span>
+                    );
+                  })()}
                   <button
                     onClick={() => {
                       if (block.isEquipment && block.equipIndex !== undefined) {
