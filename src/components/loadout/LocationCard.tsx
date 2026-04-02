@@ -57,6 +57,7 @@ const LocationCard = ({
             type: c === 0 ? 'first' : 'continuation',
             itemName: slot.weapon.name,
             weaponSlotIndex: i,
+            weapon: c === 0 ? slot.weapon : undefined,
           });
           blockIndex++;
         }
