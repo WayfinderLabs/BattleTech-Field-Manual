@@ -64,7 +64,7 @@ const WeaponsScreen = () => {
         {CATEGORY_CHIPS.map((chip) => (
           <button
             key={chip}
-            onClick={() => setCategoryFilter(prev => prev === chip ? 'ALL' : chip)}
+            onClick={() => setCategoryFilter(categoryFilter === chip ? 'ALL' : chip)}
             className={`shrink-0 px-3 py-1 text-label font-mono uppercase tracking-wider rounded-sm border transition-colors active:scale-[0.97] ${
               categoryFilter === chip
                 ? "bg-primary text-primary-foreground border-primary"
