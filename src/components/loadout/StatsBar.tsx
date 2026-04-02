@@ -13,7 +13,9 @@ const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
   let tonnageUsed = 0;
   let rawHeat = 0;
   let dissipation = selectedMech.baseHeatDissipation;
-  let threshold = 30;
+  const BASE_MAX_HEAT = 100;
+  const OVERHEAT_LEVEL = 0.6;
+  let totalMaxHeatBonus = 0;
   let jumpJetCount = 0;
   let reductionMultiplier = 1;
 
@@ -34,7 +36,7 @@ const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
             dissipation += hs.dissipation;
           }
           if (hs.maxHeatBonus) {
-            threshold += hs.maxHeatBonus;
+            totalMaxHeatBonus += hs.maxHeatBonus;
           }
           if (hs.heatReductionPct) {
             reductionMultiplier *= (1 - hs.heatReductionPct / 100);
@@ -48,6 +50,7 @@ const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
   }
 
   const adjustedHeat = Math.floor(rawHeat * reductionMultiplier);
+  const threshold = Math.floor((BASE_MAX_HEAT + totalMaxHeatBonus) * OVERHEAT_LEVEL);
   const hasExchanger = reductionMultiplier < 1;
   const jjMax = selectedMech.jumpJetsMax;
 
@@ -87,7 +90,7 @@ const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
       <div className="grid grid-cols-2 border-t border-border">
         <div className="text-center py-2 px-3 border-r border-border">
           <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
-            HEAT / DISS
+            HEAT / DISSIPATION
           </div>
           <div className="font-mono font-semibold text-sm">
             <span style={{ color: hasExchanger ? '#C87941' : undefined }}>{adjustedHeat}</span>
