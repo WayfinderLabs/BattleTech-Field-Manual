@@ -90,7 +90,7 @@ const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
       <div className="grid grid-cols-2 border-t border-border">
         <div className="text-center py-2 px-3 border-r border-border">
           <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
-            HEAT / DISS
+            HEAT / DISSIPATION
           </div>
           <div className="font-mono font-semibold text-sm">
             <span style={{ color: hasExchanger ? '#C87941' : undefined }}>{adjustedHeat}</span>
