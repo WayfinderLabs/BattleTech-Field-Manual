@@ -36,7 +36,7 @@ const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
             dissipation += hs.dissipation;
           }
           if (hs.maxHeatBonus) {
-            threshold += hs.maxHeatBonus;
+            totalMaxHeatBonus += hs.maxHeatBonus;
           }
           if (hs.heatReductionPct) {
             reductionMultiplier *= (1 - hs.heatReductionPct / 100);
