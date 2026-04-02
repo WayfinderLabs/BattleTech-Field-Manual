@@ -38,7 +38,7 @@ const EQUIP_COLORS: Record<string, { first: string; cont: string }> = {
 
 const LocationCard = ({
   label, hardpointStr, slots, equipment, inventorySlots,
-  onOpenPicker, onRemoveWeapon, onRemoveEquipment, hasCritOverflow,
+  onOpenPicker, onRemoveWeapon, onRemoveEquipment, hasCritOverflow, ammoBinCounts = {},
 }: LocationCardProps) => {
   const isEmpty = slots.length === 0 && equipment.length === 0;
   const hasHardpoints = slots.length > 0;
