@@ -1,4 +1,5 @@
 import type { SlotAssignment, HardpointType, EquipmentSlot } from '@/types/loadout';
+import type { Weapon } from '@/data/weapons';
 import { HP_PILL_COLORS, parseHardpointTokens } from '@/utils/hardpointPills';
 
 interface LocationCardProps {
@@ -11,6 +12,8 @@ interface LocationCardProps {
   onRemoveWeapon: (slotIndex: number) => void;
   onRemoveEquipment: (equipIndex: number) => void;
   hasCritOverflow?: boolean;
+  /** Global count of equipped ammo bins keyed by ammoType */
+  ammoBinCounts?: Record<string, number>;
 }
 
 interface SlotBlock {
