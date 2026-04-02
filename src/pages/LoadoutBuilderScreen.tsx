@@ -296,7 +296,6 @@ const LoadoutBuilderScreen = () => {
           </div>
         );
       })()}
-      )}
 
       {/* Save Loadout Button */}
       <button
