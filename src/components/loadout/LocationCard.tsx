@@ -25,6 +25,8 @@ interface SlotBlock {
   equipIndex?: number;
   isEquipment?: boolean;
   equipKind?: string;
+  /** Reference to weapon for ammo annotation */
+  weapon?: Weapon;
 }
 
 /** Color for equipment item blocks */
