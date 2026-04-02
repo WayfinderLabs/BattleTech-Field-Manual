@@ -23,6 +23,8 @@ export interface Mech {
   isLosTech: boolean;
   dlcSource: 'Base' | 'Flashpoint' | 'Urban Warfare' | 'Heavy Metal';
   loreDescription: string | null;
+  baseHeatDissipation: number;
+
   inventorySlots: {
     hd: number; ct: number; lt: number; rt: number;
     la: number; ra: number; ll: number; rl: number;
@@ -58,6 +60,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Light scout mech with reasonable missile payload for its weight class.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -74,6 +78,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Missile-focused Commando variant.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -90,6 +96,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Fastest mech in the game. Lightest chassis. Minimal firepower but exceptional speed.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -106,6 +114,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Missile-armed Locust variant with energy and support hardpoints in the CT.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -122,6 +132,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Missile-heavy Locust with four missile hardpoints across the arms.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -138,6 +150,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Maximum jump jet capacity. Very limited weapon hardpoints. Pure mobility platform.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -154,6 +168,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Spider variant with ballistic and support arm hardpoints.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -170,6 +186,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Four ballistic hardpoints in the right arm. Slow but packs serious ballistic firepower for a Light.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -186,6 +204,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Energy-heavy UrbanMech variant with four energy hardpoints in the left arm.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -202,6 +222,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Four energy hardpoints in the right arm. Slow for a Light but packs serious energy firepower. Jump capable.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -218,6 +240,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Incendiary specialist. Vast number of support hardpoints for flamers across all torso and arm locations.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -234,6 +258,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Best Light mech overall. Missiles in CT, energy in both arms. Excellent jump capacity.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
 
@@ -253,6 +279,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Jump-capable medium with dual ballistic arm mounts and energy in all torsos. Excels at long-range harassment.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -269,6 +297,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Head-mounted energy hardpoint. Balanced across all weapon categories. Good jump capacity.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -285,6 +315,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Fastest medium mech. Matches Locust speed at 210km/h. Pure energy build potential across torsos.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -301,6 +333,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Three missile hardpoints in left torso. Excellent missile boat for a Medium. Ballistic in right arm.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -317,6 +351,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Three ballistic hardpoints in right torso. Built around the AC/20. Definitive close-range brawler.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -333,6 +369,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Energy-only variant with six right-torso energy hardpoints. Extreme heat build possible.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -349,6 +387,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Fast medium with jump jets. Strong energy loadout in left arm and torso. Single ballistic in right arm.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -365,6 +405,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Jump-capable missile medium. Energy hardpoints in both arms with missile capability.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -381,6 +423,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'SRM specialist. Five missile hardpoints across CT, RT and left arm. Exceptional SRM payload.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -397,6 +441,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Three missile in RT, three energy in RA. Jump capable. Classic medium all-rounder.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -413,6 +459,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Balanced Griffin variant with missile hardpoints split across both torsos.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -429,6 +477,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Head missile hardpoint. Three ballistic in LT. Jump capable. Unusual hardpoint distribution.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -445,6 +495,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Fast medium at 150km/h. Head energy hardpoint. Missiles in LT, ballistic in RA. Jump capable.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
 
@@ -464,6 +516,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Fast Heavy at 150km/h. Missiles in CT, ballistic in RA. More mobile than most Heavies.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -480,6 +534,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Fast 150km/h Heavy with good jump capacity. Energy spread across all arms and torsos.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -496,6 +552,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Classic missile boat. LRM racks in both arms. Strong energy payload in torsos. Jump capable.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -512,6 +570,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Pure missile Catapult. Four missile hardpoints split across both arms.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -528,6 +588,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Four ballistic arm hardpoints. Two energy plus support in each torso. Premier autocannon platform.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -544,6 +606,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Mixed-loadout JagerMech with ballistic and missile hardpoints in each arm.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -560,6 +624,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Three energy in LT, two ballistic in LA, two missile in RT. Excellent overall payload.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -576,6 +642,8 @@ export const MECHS: Mech[] = [
     isLosTech: true,
     dlcSource: 'Base',
     loreDescription: 'Head energy hardpoint. Eight energy hardpoints total. Pure energy platform. LosTech.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -592,6 +660,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Well-balanced heavy. Missiles in LT, ballistic in RT, energy in both arms.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -608,6 +678,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Head missile hardpoint. Nine total hardpoints. Fast and jump-capable for a 70-tonner.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -624,6 +696,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Fast 120km/h Heavy. Balanced across energy and ballistic. Jump capable.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -640,6 +714,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Three ballistic in RT, energy in both arms. Classic Marauder PPC platform.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -656,6 +732,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Balanced hardpoint mix across all categories. Iconic PPC boat chassis.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
 
@@ -675,6 +753,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Six energy and four missile hardpoints. Devastating long-range fire support platform.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -691,6 +771,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Strong energy presence across LT and RT. Dual ballistic in LA. High firepower assault.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -707,6 +789,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Head energy hardpoint. Seven energy hardpoints total. Pure energy assault. Fast for its class.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -723,6 +807,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Fast 120km/h assault. Three ballistic in RA, two missile in LT. Jump capable.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -739,6 +825,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Fast 120km/h assault. Ballistic in LA, strong energy in LT. Jump capable.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -755,6 +843,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Jump-capable assault. Four missile hardpoints across both torsos. Ballistic in RA.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -771,6 +861,8 @@ export const MECHS: Mech[] = [
     isLosTech: true,
     dlcSource: 'Base',
     loreDescription: 'Campaign reward variant. Two ballistic in RA — ideal Gauss Rifle platform. Jump capable.',
+      baseHeatDissipation: 60,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -787,6 +879,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'One ballistic in each arm. Four missile in LT, four energy in RT. Extremely flexible 100-tonner.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -803,6 +897,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Most feared mech in the Inner Sphere. Hardpoints across every category in every location.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -819,6 +915,8 @@ export const MECHS: Mech[] = [
     isLosTech: false,
     dlcSource: 'Base',
     loreDescription: 'Fastest assault at 120km/h. Head energy hardpoint. Considered under-armed for its weight class.',
+      baseHeatDissipation: 30,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
   {
@@ -835,6 +933,8 @@ export const MECHS: Mech[] = [
     isLosTech: true,
     dlcSource: 'Base',
     loreDescription: 'Campaign reward mech given by Kamea after the final mission. Has integral Double Heat Sinks giving 60 base heat dissipation. 13 extra free tons versus the standard Atlas.',
+      baseHeatDissipation: 60,
+
       inventorySlots: STANDARD_INVENTORY_SLOTS,
   },
 ];
