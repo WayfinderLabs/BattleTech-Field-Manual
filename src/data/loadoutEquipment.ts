@@ -198,6 +198,7 @@ export const HEAT_SINKS: HeatSink[] = [
     overheatBonus: 0,
     weaponHeatReduction: 0.9,
     isLosTech: false,
+    heatReductionPct: 10,
   },
   {
     id: 'Gear_HeatSink_Generic_Thermal-Exchanger-II',
@@ -210,6 +211,7 @@ export const HEAT_SINKS: HeatSink[] = [
     overheatBonus: 0,
     weaponHeatReduction: 0.85,
     isLosTech: false,
+    heatReductionPct: 15,
   },
   {
     id: 'Gear_HeatSink_Generic_Thermal-Exchanger-III',
@@ -222,6 +224,7 @@ export const HEAT_SINKS: HeatSink[] = [
     overheatBonus: 0,
     weaponHeatReduction: 0.8,
     isLosTech: false,
+    heatReductionPct: 20,
   },
 ];
 
