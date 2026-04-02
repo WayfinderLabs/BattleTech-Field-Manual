@@ -67,7 +67,7 @@ export const AMMO_BINS: AmmoBin[] = [
   {
     id: 'Ammo_AmmunitionBox_Generic_AC20',
     name: 'AC/20 Ammo',
-    ammoId: 'AC',
+    ammoId: 'AC20',
     capacity: 5,
     tonnage: 1,
     slots: 1,

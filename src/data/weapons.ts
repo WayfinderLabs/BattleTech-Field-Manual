@@ -121,7 +121,7 @@ export const WEAPONS: Weapon[] = [
     tonnage: 14,
     criticalSlots: 4,
     ammoPerTon: 5,
-    ammoType: 'AC',
+    ammoType: 'AC20',
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,

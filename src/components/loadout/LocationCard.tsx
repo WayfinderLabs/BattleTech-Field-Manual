@@ -182,7 +182,7 @@ const LocationCard = ({
                         style={{
                           fontSize: 9,
                           letterSpacing: '0.05em',
-                          color: totalRounds > 0 ? '#8A8A8A' : '#C87941',
+                          color: totalRounds > 0 ? '#FFFFFF' : '#C87941',
                           marginRight: 4,
                         }}
                       >
