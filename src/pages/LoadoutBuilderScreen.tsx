@@ -271,8 +271,8 @@ const LoadoutBuilderScreen = () => {
         for (const loc of LOCATION_KEYS) {
           for (const eq of state.equipment[loc]) {
             if (eq.item && eq.item.kind === 'ammo') {
-              const ammoType = (eq.item.data as any).ammoType as string;
-              if (ammoType) ammoBinCounts[ammoType] = (ammoBinCounts[ammoType] ?? 0) + 1;
+              const ammoId = (eq.item.data as any).ammoId as string;
+              if (ammoId) ammoBinCounts[ammoId] = (ammoBinCounts[ammoId] ?? 0) + 1;
             }
           }
         }

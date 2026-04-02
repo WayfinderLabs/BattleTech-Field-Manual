@@ -112,23 +112,7 @@ export function validateLoadout(
     }
   }
 
-  // 3. AMMO DEPENDENCY — per weapon with ammoType, resolved if matching bin exists
-  const assignedAmmoIds = collectAmmoIds(state);
-  const checkedAmmoTypes = new Set<string>();
-  for (const w of allWeapons) {
-    if (w.ammoType && !checkedAmmoTypes.has(w.ammoType)) {
-      checkedAmmoTypes.add(w.ammoType);
-      if (!assignedAmmoIds.has(w.ammoType)) {
-        results.push({
-          severity: 'WARNING',
-          code: 'AMMO_DEPENDENCY',
-          message: `${w.name} requires ammo — no matching ammo bin assigned`,
-        });
-      }
-    }
-  }
-
-  // 4. JUMP JET CAP EXCEEDED
+  // 3. JUMP JET CAP EXCEEDED
   const jjCount = countJumpJets(state);
   if (jjCount > mech.jumpJetsMax) {
     results.push({
