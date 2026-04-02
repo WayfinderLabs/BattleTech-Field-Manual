@@ -59,18 +59,50 @@ const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
     { label: 'JUMP JETS', value: jjMax === 0 ? 'N/A' : `${jumpJetCount} / ${jjMax}`, warn: jumpJetCount > jjMax, amber: false },
   ];
 
+  const tonnageColor = hasOverweight ? '#E05050' : undefined;
+  const jjColor = jumpJetCount > jjMax ? '#E05050' : undefined;
+
   return (
-    <div className="grid grid-cols-5 gap-2 p-3 bg-card border border-border rounded-sm">
-      {stats.map((s) => (
-        <div key={s.label} className="text-center">
-          <div className="font-mono uppercase tracking-wider" style={{ fontSize: 'var(--fs-badge)', color: s.warn ? '#E05050' : s.amber ? '#C87941' : undefined }}>
-            {s.label}
+    <div className="bg-card border border-border rounded-sm">
+      {/* Row 1 — Primary stats */}
+      <div className="grid grid-cols-2">
+        <div className="text-center py-2 px-3 border-r border-border">
+          <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
+            TONNAGE
           </div>
-          <div className="font-mono font-semibold" style={{ fontSize: 'var(--fs-body)', color: s.warn ? '#E05050' : s.amber ? '#C87941' : undefined }}>
-            {s.value}
+          <div className="font-mono font-semibold text-sm" style={{ color: tonnageColor }}>
+            {tonnageUsed} / {selectedMech.tonnage}t
           </div>
         </div>
-      ))}
+        <div className="text-center py-2 px-3">
+          <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
+            JUMP JETS
+          </div>
+          <div className="font-mono font-semibold text-sm" style={{ color: jjColor }}>
+            {jjMax === 0 ? 'N/A' : `${jumpJetCount} / ${jjMax}`}
+          </div>
+        </div>
+      </div>
+      {/* Row 2 — Heat stats */}
+      <div className="grid grid-cols-2 border-t border-border">
+        <div className="text-center py-2 px-3 border-r border-border">
+          <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
+            HEAT / DISS
+          </div>
+          <div className="font-mono font-semibold text-sm">
+            <span style={{ color: hasExchanger ? '#C87941' : undefined }}>{adjustedHeat}</span>
+            <span> / {dissipation}</span>
+          </div>
+        </div>
+        <div className="text-center py-2 px-3">
+          <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
+            THRESHOLD
+          </div>
+          <div className="font-mono font-semibold text-sm">
+            {threshold}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
