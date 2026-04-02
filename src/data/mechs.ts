@@ -24,7 +24,6 @@ export interface Mech {
   dlcSource: 'Base' | 'Flashpoint' | 'Urban Warfare' | 'Heavy Metal';
   loreDescription: string | null;
   baseHeatDissipation: number;
-  baseHeatDissipation: 30,
 
   inventorySlots: {
     hd: number; ct: number; lt: number; rt: number;
