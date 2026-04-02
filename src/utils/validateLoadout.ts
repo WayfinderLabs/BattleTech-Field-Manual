@@ -6,7 +6,7 @@ export type ValidationSeverity = 'ERROR' | 'WARNING';
 
 export interface ValidationResult {
   severity: ValidationSeverity;
-  code: 'OVERWEIGHT' | 'CRIT_OVERFLOW' | 'AMMO_DEPENDENCY' | 'JUMP_JET_EXCEEDED';
+  code: 'OVERWEIGHT' | 'CRIT_OVERFLOW' | 'JUMP_JET_EXCEEDED';
   message: string;
   locationKey?: LocationKey;
 }
@@ -58,19 +58,6 @@ function countJumpJets(state: LoadoutState): number {
   return count;
 }
 
-/** Collect all ammo IDs assigned in the loadout */
-function collectAmmoIds(state: LoadoutState): Set<string> {
-  const ids = new Set<string>();
-  const locationKeys = Object.keys(state.equipment) as LocationKey[];
-  for (const key of locationKeys) {
-    for (const eq of state.equipment[key]) {
-      if (eq.item?.kind === 'ammo') {
-        ids.add(eq.item.data.ammoId);
-      }
-    }
-  }
-  return ids;
-}
 
 export function validateLoadout(
   mech: Mech,
@@ -112,23 +99,7 @@ export function validateLoadout(
     }
   }
 
-  // 3. AMMO DEPENDENCY — per weapon with ammoType, resolved if matching bin exists
-  const assignedAmmoIds = collectAmmoIds(state);
-  const checkedAmmoTypes = new Set<string>();
-  for (const w of allWeapons) {
-    if (w.ammoType && !checkedAmmoTypes.has(w.ammoType)) {
-      checkedAmmoTypes.add(w.ammoType);
-      if (!assignedAmmoIds.has(w.ammoType)) {
-        results.push({
-          severity: 'WARNING',
-          code: 'AMMO_DEPENDENCY',
-          message: `${w.name} requires ammo — no matching ammo bin assigned`,
-        });
-      }
-    }
-  }
-
-  // 4. JUMP JET CAP EXCEEDED
+  // 3. JUMP JET CAP EXCEEDED
   const jjCount = countJumpJets(state);
   if (jjCount > mech.jumpJetsMax) {
     results.push({
