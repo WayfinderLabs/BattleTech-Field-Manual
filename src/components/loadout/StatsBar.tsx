@@ -50,6 +50,7 @@ const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
   }
 
   const adjustedHeat = Math.floor(rawHeat * reductionMultiplier);
+  const threshold = Math.floor((BASE_MAX_HEAT + totalMaxHeatBonus) * OVERHEAT_LEVEL);
   const hasExchanger = reductionMultiplier < 1;
   const jjMax = selectedMech.jumpJetsMax;
 
