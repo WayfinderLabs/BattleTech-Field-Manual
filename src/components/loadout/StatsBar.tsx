@@ -13,7 +13,9 @@ const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
   let tonnageUsed = 0;
   let rawHeat = 0;
   let dissipation = selectedMech.baseHeatDissipation;
-  let threshold = 30;
+  const BASE_MAX_HEAT = 100;
+  const OVERHEAT_LEVEL = 0.6;
+  let totalMaxHeatBonus = 0;
   let jumpJetCount = 0;
   let reductionMultiplier = 1;
 
