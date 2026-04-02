@@ -6,7 +6,7 @@ export type ValidationSeverity = 'ERROR' | 'WARNING';
 
 export interface ValidationResult {
   severity: ValidationSeverity;
-  code: 'OVERWEIGHT' | 'CRIT_OVERFLOW' | 'AMMO_DEPENDENCY' | 'JUMP_JET_EXCEEDED';
+  code: 'OVERWEIGHT' | 'CRIT_OVERFLOW' | 'JUMP_JET_EXCEEDED';
   message: string;
   locationKey?: LocationKey;
 }
