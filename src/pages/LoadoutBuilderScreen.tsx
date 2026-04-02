@@ -265,23 +265,37 @@ const LoadoutBuilderScreen = () => {
       {selectedMech && <ValidationPanel results={validation} />}
 
       {/* Hardpoint Grid */}
-      {selectedMech && (
-        <div className="grid grid-cols-2 gap-2">
-          {LOCATION_KEYS.map((loc) => (
-            <LocationCard
-              key={loc}
-              label={LOCATION_LABELS[loc]}
-              hardpointStr={selectedMech.hardpoints[loc]}
-              slots={state.slots[loc]}
-              equipment={state.equipment[loc]}
-              inventorySlots={selectedMech.inventorySlots[loc]}
-              onOpenPicker={() => setPickerLocation(loc)}
-              onRemoveWeapon={(slotIndex) => handleRemoveWeapon(loc, slotIndex)}
-              onRemoveEquipment={(equipIndex) => handleRemoveEquipment(loc, equipIndex)}
-              hasCritOverflow={validation.some(v => v.code === 'CRIT_OVERFLOW' && v.locationKey === loc)}
-            />
-          ))}
-        </div>
+      {selectedMech && (() => {
+        // Compute global ammo bin counts by ammoType
+        const ammoBinCounts: Record<string, number> = {};
+        for (const loc of LOCATION_KEYS) {
+          for (const eq of state.equipment[loc]) {
+            if (eq.item && eq.item.kind === 'ammo') {
+              const ammoId = (eq.item.data as any).ammoId as string;
+              ammoBinCounts[ammoId] = (ammoBinCounts[ammoId] ?? 0) + 1;
+            }
+          }
+        }
+        return (
+          <div className="grid grid-cols-2 gap-2">
+            {LOCATION_KEYS.map((loc) => (
+              <LocationCard
+                key={loc}
+                label={LOCATION_LABELS[loc]}
+                hardpointStr={selectedMech.hardpoints[loc]}
+                slots={state.slots[loc]}
+                equipment={state.equipment[loc]}
+                inventorySlots={selectedMech.inventorySlots[loc]}
+                onOpenPicker={() => setPickerLocation(loc)}
+                onRemoveWeapon={(slotIndex) => handleRemoveWeapon(loc, slotIndex)}
+                onRemoveEquipment={(equipIndex) => handleRemoveEquipment(loc, equipIndex)}
+                hasCritOverflow={validation.some(v => v.code === 'CRIT_OVERFLOW' && v.locationKey === loc)}
+                ammoBinCounts={ammoBinCounts}
+              />
+            ))}
+          </div>
+        );
+      })()}
       )}
 
       {/* Save Loadout Button */}
