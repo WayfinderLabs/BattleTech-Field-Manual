@@ -176,10 +176,11 @@ const LocationCard = ({
                   </span>
                   {/* Ammo round count annotation for ammo-dependent weapons */}
                   {!block.isEquipment && block.weapon?.ammoType && (() => {
-                    const binCount = ammoBinCounts[block.weapon!.ammoType!] ?? 0;
-                    const totalRounds = binCount * (block.weapon!.ammoPerTon ?? 0);
+                    const totalRawRounds = ammoBinCapacity[block.weapon!.ammoType!] ?? 0;
                     const weaponCount = ammoWeaponCounts[block.weapon!.ammoType!] ?? 1;
-                    const roundsPerWeapon = weaponCount > 0 ? Math.floor(totalRounds / weaponCount) : 0;
+                    const shotsPerWeapon = weaponCount > 0 && block.weapon!.shotsWhenFired > 0
+                      ? Math.floor(totalRawRounds / (block.weapon!.shotsWhenFired * weaponCount))
+                      : 0;
                     return (
                       <span
                         className="shrink-0 font-mono uppercase"
