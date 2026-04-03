@@ -68,15 +68,16 @@ export function validateLoadout(
   const allWeapons = collectWeapons(state);
   const allEquipment = collectEquipment(state);
 
-  // 1. OVERWEIGHT — sum weapons + equipment tonnage
+  // 1. OVERWEIGHT — sum weapons + equipment tonnage vs available tonnage
   const weaponTonnage = allWeapons.reduce((sum, w) => sum + w.tonnage, 0);
   const equipTonnage = allEquipment.reduce((sum, item) => sum + itemTonnage(item), 0);
   const tonnageUsed = weaponTonnage + equipTonnage;
-  if (tonnageUsed > mech.tonnage) {
+  const availableTonnage = mech.tonnage - mech.initialTonnage;
+  if (tonnageUsed > availableTonnage) {
     results.push({
       severity: 'ERROR',
       code: 'OVERWEIGHT',
-      message: `Loadout exceeds weight limit (${tonnageUsed}t used / ${mech.tonnage}t max)`,
+      message: `Loadout exceeds weight limit (${tonnageUsed}t used / ${availableTonnage}t max)`,
     });
   }
 
