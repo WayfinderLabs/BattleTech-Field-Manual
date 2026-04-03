@@ -7,7 +7,7 @@ interface StatsBarProps {
   hasOverweight?: boolean;
 }
 
-const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
+const StatsBar = ({ state, armorPoints = 0, hasOverweight }: StatsBarProps) => {
   const { selectedMech, slots, equipment } = state;
   if (!selectedMech) return null;
 
