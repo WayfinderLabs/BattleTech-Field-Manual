@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import TopBar from "./TopBar";
 import BottomNav from "./BottomNav";
-import AdBanner from "./AdBanner";
 import InstallPrompt from "./InstallPrompt";
 
 const AppShell = () => {
@@ -16,9 +15,6 @@ const AppShell = () => {
           <Outlet />
         </div>
       </main>
-      <div className="flex-shrink-0">
-        <AdBanner />
-      </div>
       <div className="flex-shrink-0">
         <BottomNav />
       </div>
