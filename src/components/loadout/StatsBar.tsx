@@ -55,8 +55,9 @@ const StatsBar = ({ state, armorPoints = 0, hasOverweight }: StatsBarProps) => {
   const hasExchanger = reductionMultiplier < 1;
   const jjMax = selectedMech.jumpJetsMax;
 
+  const availableTonnage = selectedMech.tonnage - selectedMech.initialTonnage;
   const stats = [
-    { label: 'TONNAGE', value: `${tonnageUsed} / ${selectedMech.tonnage}t`, warn: hasOverweight, amber: false },
+    { label: 'TONNAGE', value: `${tonnageUsed} / ${availableTonnage}t`, warn: hasOverweight, amber: false },
     { label: 'HEAT', value: `${adjustedHeat}`, warn: false, amber: hasExchanger },
     { label: 'DISSIPATION', value: `${dissipation}`, warn: false, amber: false },
     { label: 'THRESHOLD', value: `${threshold}`, warn: false, amber: false },
@@ -75,7 +76,7 @@ const StatsBar = ({ state, armorPoints = 0, hasOverweight }: StatsBarProps) => {
             TONNAGE
           </div>
           <div className="font-mono font-semibold text-sm" style={{ color: tonnageColor }}>
-            {tonnageUsed} / {selectedMech.tonnage}t
+            {tonnageUsed} / {availableTonnage}t
           </div>
         </div>
         <div className="text-center py-2 px-3">
