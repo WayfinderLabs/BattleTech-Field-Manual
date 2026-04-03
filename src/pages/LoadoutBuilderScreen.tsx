@@ -297,6 +297,7 @@ const LoadoutBuilderScreen = () => {
                 onRemoveEquipment={(equipIndex) => handleRemoveEquipment(loc, equipIndex)}
                 hasCritOverflow={validation.some(v => v.code === 'CRIT_OVERFLOW' && v.locationKey === loc)}
                 ammoBinCounts={ammoBinCounts}
+                ammoWeaponCounts={ammoWeaponCounts}
               />
             ))}
           </div>
