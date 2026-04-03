@@ -12,8 +12,8 @@ interface LocationCardProps {
   onRemoveWeapon: (slotIndex: number) => void;
   onRemoveEquipment: (equipIndex: number) => void;
   hasCritOverflow?: boolean;
-  /** Global count of equipped ammo bins keyed by ammoType */
-  ammoBinCounts?: Record<string, number>;
+  /** Global total capacity of equipped ammo bins keyed by ammoType */
+  ammoBinCapacity?: Record<string, number>;
   /** Global count of equipped weapons keyed by ammoType */
   ammoWeaponCounts?: Record<string, number>;
 }
@@ -40,7 +40,7 @@ const EQUIP_COLORS: Record<string, { first: string; cont: string }> = {
 
 const LocationCard = ({
   label, hardpointStr, slots, equipment, inventorySlots,
-  onOpenPicker, onRemoveWeapon, onRemoveEquipment, hasCritOverflow, ammoBinCounts = {}, ammoWeaponCounts = {},
+  onOpenPicker, onRemoveWeapon, onRemoveEquipment, hasCritOverflow, ammoBinCapacity = {}, ammoWeaponCounts = {},
 }: LocationCardProps) => {
   const isEmpty = slots.length === 0 && equipment.length === 0;
   const hasHardpoints = slots.length > 0;
@@ -176,10 +176,11 @@ const LocationCard = ({
                   </span>
                   {/* Ammo round count annotation for ammo-dependent weapons */}
                   {!block.isEquipment && block.weapon?.ammoType && (() => {
-                    const binCount = ammoBinCounts[block.weapon!.ammoType!] ?? 0;
-                    const totalRounds = binCount * (block.weapon!.ammoPerTon ?? 0);
+                    const totalRawRounds = ammoBinCapacity[block.weapon!.ammoType!] ?? 0;
                     const weaponCount = ammoWeaponCounts[block.weapon!.ammoType!] ?? 1;
-                    const roundsPerWeapon = weaponCount > 0 ? Math.floor(totalRounds / weaponCount) : 0;
+                    const shotsPerWeapon = weaponCount > 0 && block.weapon!.shotsWhenFired > 0
+                      ? Math.floor(totalRawRounds / (block.weapon!.shotsWhenFired * weaponCount))
+                      : 0;
                     return (
                       <span
                         className="shrink-0 font-mono uppercase"
@@ -190,7 +191,7 @@ const LocationCard = ({
                           marginRight: 4,
                         }}
                       >
-                        {roundsPerWeapon > 0 ? `${roundsPerWeapon} SHOTS` : 'NO AMMO'}
+                        {shotsPerWeapon > 0 ? `${shotsPerWeapon} SHOTS` : 'NO AMMO'}
                       </span>
                     );
                   })()}
