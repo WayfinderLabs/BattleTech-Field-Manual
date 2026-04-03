@@ -14,6 +14,8 @@ interface LocationCardProps {
   hasCritOverflow?: boolean;
   /** Global count of equipped ammo bins keyed by ammoType */
   ammoBinCounts?: Record<string, number>;
+  /** Global count of equipped weapons keyed by ammoType */
+  ammoWeaponCounts?: Record<string, number>;
 }
 
 interface SlotBlock {
@@ -38,7 +40,7 @@ const EQUIP_COLORS: Record<string, { first: string; cont: string }> = {
 
 const LocationCard = ({
   label, hardpointStr, slots, equipment, inventorySlots,
-  onOpenPicker, onRemoveWeapon, onRemoveEquipment, hasCritOverflow, ammoBinCounts = {},
+  onOpenPicker, onRemoveWeapon, onRemoveEquipment, hasCritOverflow, ammoBinCounts = {}, ammoWeaponCounts = {},
 }: LocationCardProps) => {
   const isEmpty = slots.length === 0 && equipment.length === 0;
   const hasHardpoints = slots.length > 0;
@@ -176,17 +178,19 @@ const LocationCard = ({
                   {!block.isEquipment && block.weapon?.ammoType && (() => {
                     const binCount = ammoBinCounts[block.weapon!.ammoType!] ?? 0;
                     const totalRounds = binCount * (block.weapon!.ammoPerTon ?? 0);
+                    const weaponCount = ammoWeaponCounts[block.weapon!.ammoType!] ?? 1;
+                    const roundsPerWeapon = weaponCount > 0 ? Math.floor(totalRounds / weaponCount) : 0;
                     return (
                       <span
                         className="shrink-0 font-mono uppercase"
                         style={{
                           fontSize: 9,
                           letterSpacing: '0.05em',
-                          color: totalRounds > 0 ? '#FFFFFF' : '#C87941',
+                          color: '#000000',
                           marginRight: 4,
                         }}
                       >
-                        {totalRounds > 0 ? `${totalRounds} RDS` : 'NO AMMO'}
+                        {roundsPerWeapon > 0 ? `${roundsPerWeapon} RDS` : 'NO AMMO'}
                       </span>
                     );
                   })()}

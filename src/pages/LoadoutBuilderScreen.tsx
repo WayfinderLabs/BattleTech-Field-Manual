@@ -266,13 +266,19 @@ const LoadoutBuilderScreen = () => {
 
       {/* Hardpoint Grid */}
       {selectedMech && (() => {
-        // Compute global ammo bin counts by ammoType
+        // Compute global ammo bin counts and weapon counts by ammoType
         const ammoBinCounts: Record<string, number> = {};
+        const ammoWeaponCounts: Record<string, number> = {};
         for (const loc of LOCATION_KEYS) {
           for (const eq of state.equipment[loc]) {
             if (eq.item && eq.item.kind === 'ammo') {
               const ammoId = (eq.item.data as any).ammoId as string;
               if (ammoId) ammoBinCounts[ammoId] = (ammoBinCounts[ammoId] ?? 0) + 1;
+            }
+          }
+          for (const s of state.slots[loc]) {
+            if (s.weapon?.ammoType) {
+              ammoWeaponCounts[s.weapon.ammoType] = (ammoWeaponCounts[s.weapon.ammoType] ?? 0) + 1;
             }
           }
         }
@@ -291,6 +297,7 @@ const LoadoutBuilderScreen = () => {
                 onRemoveEquipment={(equipIndex) => handleRemoveEquipment(loc, equipIndex)}
                 hasCritOverflow={validation.some(v => v.code === 'CRIT_OVERFLOW' && v.locationKey === loc)}
                 ammoBinCounts={ammoBinCounts}
+                ammoWeaponCounts={ammoWeaponCounts}
               />
             ))}
           </div>
