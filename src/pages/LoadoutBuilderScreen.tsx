@@ -95,6 +95,7 @@ const LoadoutBuilderScreen = () => {
       newSlots[key] = parseHardpoints(mech.hardpoints[key]);
     }
     setState({ selectedMech: mech, slots: newSlots, equipment: { ...EMPTY_EQUIPMENT } });
+    setArmorPoints(0);
   }, []);
 
   const handleWeaponAdd = useCallback((weapon: Weapon, slotIndex: number) => {
