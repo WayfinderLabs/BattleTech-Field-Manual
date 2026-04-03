@@ -273,7 +273,8 @@ const LoadoutBuilderScreen = () => {
             if (eq.item) usedTons += eq.item.data.tonnage;
           }
         }
-        const freeTons = selectedMech.tonnage - usedTons;
+        const availableTonnage = selectedMech.tonnage - selectedMech.initialTonnage;
+        const freeTons = availableTonnage - usedTons;
         const handleMaxArmor = () => {
           if (freeTons <= 0) { setArmorPoints(0); return; }
           const maxAffordablePoints = Math.floor(freeTons / 0.0125);
