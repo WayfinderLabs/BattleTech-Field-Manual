@@ -3,14 +3,15 @@ import type { HeatSink } from '@/data/loadoutEquipment';
 
 interface StatsBarProps {
   state: LoadoutState;
+  armorPoints?: number;
   hasOverweight?: boolean;
 }
 
-const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
+const StatsBar = ({ state, armorPoints = 0, hasOverweight }: StatsBarProps) => {
   const { selectedMech, slots, equipment } = state;
   if (!selectedMech) return null;
 
-  let tonnageUsed = 0;
+  let tonnageUsed = armorPoints * 0.0125;
   let rawHeat = 0;
   let dissipation = selectedMech.baseHeatDissipation;
   const BASE_MAX_HEAT = 100;
@@ -105,11 +106,6 @@ const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
             {threshold}
           </div>
         </div>
-      </div>
-      <div className="text-center py-1">
-        <span className="font-mono uppercase tracking-widest" style={{ fontSize: 9, color: '#8A8A8A' }}>
-          ★ SHOTS ASSUME FULL ALPHA STRIKE PER ACTIVATION
-        </span>
       </div>
     </div>
   );
