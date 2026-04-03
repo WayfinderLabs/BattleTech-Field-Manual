@@ -142,7 +142,8 @@ export function wouldCreateNewError(
         if (eq.item) currentTonnage += itemTonnage(eq.item);
       }
     }
-    if (currentTonnage + addTonnage > mech.tonnage) {
+    const availableTonnage = mech.tonnage - mech.initialTonnage;
+    if (currentTonnage + addTonnage > availableTonnage) {
       return { blocked: true, reason: 'OVERWEIGHT' };
     }
   }

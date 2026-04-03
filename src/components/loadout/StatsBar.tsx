@@ -76,7 +76,7 @@ const StatsBar = ({ state, armorPoints = 0, hasOverweight }: StatsBarProps) => {
             TONNAGE
           </div>
           <div className="font-mono font-semibold text-sm" style={{ color: tonnageColor }}>
-            {tonnageUsed} / {selectedMech.tonnage}t
+            {tonnageUsed} / {availableTonnage}t
           </div>
         </div>
         <div className="text-center py-2 px-3">
