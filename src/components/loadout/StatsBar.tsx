@@ -11,7 +11,7 @@ const StatsBar = ({ state, armorPoints = 0, hasOverweight }: StatsBarProps) => {
   const { selectedMech, slots, equipment } = state;
   if (!selectedMech) return null;
 
-  let tonnageUsed = 0;
+  let tonnageUsed = armorPoints * 0.0125;
   let rawHeat = 0;
   let dissipation = selectedMech.baseHeatDissipation;
   const BASE_MAX_HEAT = 100;
