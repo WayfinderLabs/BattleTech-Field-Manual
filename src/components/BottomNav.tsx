@@ -18,7 +18,7 @@ const BottomNav = () => {
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border">
+    <nav className="shrink-0 bg-background border-t border-border z-50">
       <div className="max-w-[480px] mx-auto flex">
         {tabs.map(({ path, label, icon: Icon }) => {
           const active = isActive(path);

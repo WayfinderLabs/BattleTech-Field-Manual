@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 declare global {
   interface Window {
@@ -7,18 +7,40 @@ declare global {
 }
 
 const AdBanner = () => {
+  const [hasAd, setHasAd] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch {
       // adsbygoogle not available yet — silent fail
     }
+
+    // Observe the ins element for ad content
+    const observer = new MutationObserver(() => {
+      if (containerRef.current) {
+        const ins = containerRef.current.querySelector("ins");
+        if (ins && ins.childElementCount > 0) {
+          setHasAd(true);
+        }
+      }
+    });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current, { childList: true, subtree: true });
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   return (
     <div
+      ref={containerRef}
       id="ad-slot-banner"
-      className="fixed bottom-[52px] left-0 right-0 z-40 w-full h-[50px] bg-card border-t border-border overflow-hidden"
+      className={`shrink-0 w-full border-border overflow-hidden transition-all ${
+        hasAd ? "h-[50px] border-t bg-card" : "h-0"
+      }`}
     >
       <ins
         className="adsbygoogle"
