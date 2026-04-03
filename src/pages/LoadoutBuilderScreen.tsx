@@ -267,13 +267,14 @@ const LoadoutBuilderScreen = () => {
       {/* Hardpoint Grid */}
       {selectedMech && (() => {
         // Compute global ammo bin counts and weapon counts by ammoType
-        const ammoBinCounts: Record<string, number> = {};
+        const ammoBinCapacity: Record<string, number> = {};
         const ammoWeaponCounts: Record<string, number> = {};
         for (const loc of LOCATION_KEYS) {
           for (const eq of state.equipment[loc]) {
             if (eq.item && eq.item.kind === 'ammo') {
               const ammoId = (eq.item.data as any).ammoId as string;
-              if (ammoId) ammoBinCounts[ammoId] = (ammoBinCounts[ammoId] ?? 0) + 1;
+              const capacity = (eq.item.data as any).capacity as number ?? 0;
+              if (ammoId) ammoBinCapacity[ammoId] = (ammoBinCapacity[ammoId] ?? 0) + capacity;
             }
           }
           for (const s of state.slots[loc]) {
