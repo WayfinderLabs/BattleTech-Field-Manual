@@ -260,8 +260,53 @@ const LoadoutBuilderScreen = () => {
         )}
       </div>
 
+      {/* Armor Row */}
+      {selectedMech && (() => {
+        // Compute weapon + equipment tonnage (excluding armor)
+        let usedTons = 0;
+        const allLocs = Object.keys(state.slots) as LocationKey[];
+        for (const loc of allLocs) {
+          for (const s of state.slots[loc]) {
+            if (s.weapon) usedTons += s.weapon.tonnage;
+          }
+          for (const eq of state.equipment[loc]) {
+            if (eq.item) usedTons += eq.item.data.tonnage;
+          }
+        }
+        const freeTons = selectedMech.tonnage - usedTons;
+        const handleMaxArmor = () => {
+          if (freeTons <= 0) { setArmorPoints(0); return; }
+          const maxAffordablePoints = Math.floor(freeTons / 0.0125);
+          const capped = Math.min(selectedMech.maxArmor, maxAffordablePoints);
+          const snapped = Math.floor(capped / 5) * 5;
+          setArmorPoints(snapped);
+        };
+        const isMaxed = armorPoints === selectedMech.maxArmor;
+        return (
+          <div className="border border-border rounded-sm px-4 py-2 bg-card flex items-center justify-between">
+            <div className="font-mono" style={{ fontSize: 'var(--fs-badge)' }}>
+              <span className="uppercase tracking-wider" style={{ color: '#8A8A8A' }}>ARMOR </span>
+              <span style={{ color: '#C87941' }}>{armorPoints}</span>
+              <span style={{ color: '#8A8A8A' }}> / {selectedMech.maxArmor}</span>
+            </div>
+            <button
+              onClick={handleMaxArmor}
+              className="font-mono uppercase tracking-wider rounded-sm px-2 py-1 bg-transparent"
+              style={{
+                fontSize: 'var(--fs-badge)',
+                color: '#C87941',
+                border: '1px solid #C87941',
+                opacity: isMaxed ? 0.4 : 1,
+              }}
+            >
+              MAX ARMOR
+            </button>
+          </div>
+        );
+      })()}
+
       {/* Stats Bar */}
-      {selectedMech && <StatsBar state={state} hasOverweight={hasOverweight} />}
+      {selectedMech && <StatsBar state={state} armorPoints={armorPoints} hasOverweight={hasOverweight} />}
 
       {/* Validation Panel */}
       {selectedMech && <ValidationPanel results={validation} />}
