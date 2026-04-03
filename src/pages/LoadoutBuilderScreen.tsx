@@ -30,6 +30,7 @@ const LoadoutBuilderScreen = () => {
     slots: { ...EMPTY_SLOTS },
     equipment: { ...EMPTY_EQUIPMENT },
   });
+  const [armorPoints, setArmorPoints] = useState(0);
 
   const [mechPickerOpen, setMechPickerOpen] = useState(false);
   const [pickerLocation, setPickerLocation] = useState<LocationKey | null>(null);
