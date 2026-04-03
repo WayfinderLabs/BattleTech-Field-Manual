@@ -190,7 +190,7 @@ const LocationCard = ({
                           marginRight: 4,
                         }}
                       >
-                        {roundsPerWeapon > 0 ? `${roundsPerWeapon} RDS` : 'NO AMMO'}
+                        {roundsPerWeapon > 0 ? `${roundsPerWeapon} SHOTS` : 'NO AMMO'}
                       </span>
                     );
                   })()}

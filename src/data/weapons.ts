@@ -13,6 +13,7 @@ export interface Weapon {
   criticalSlots: number;    // InventorySize from game JSON
   ammoPerTon: number | null;
   ammoType?: string;
+  shotsWhenFired: number;   // Rounds consumed from ammo bin per activation
   indirectFire: boolean;
   dlcSource: 'Base' | 'Flashpoint' | 'Urban Warfare' | 'Heavy Metal';
   isClan: boolean;

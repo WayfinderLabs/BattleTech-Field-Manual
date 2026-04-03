@@ -108,7 +108,7 @@ const StatsBar = ({ state, hasOverweight }: StatsBarProps) => {
       </div>
       <div className="text-center py-1">
         <span className="font-mono uppercase tracking-widest" style={{ fontSize: 9, color: '#8A8A8A' }}>
-          ★ STATS ASSUME FULL ALPHA STRIKE PER ACTIVATION
+          ★ SHOTS ASSUME FULL ALPHA STRIKE PER ACTIVATION
         </span>
       </div>
     </div>
