@@ -3,6 +3,7 @@ import type { HeatSink } from '@/data/loadoutEquipment';
 
 interface StatsBarProps {
   state: LoadoutState;
+  armorPoints?: number;
   hasOverweight?: boolean;
 }
 
