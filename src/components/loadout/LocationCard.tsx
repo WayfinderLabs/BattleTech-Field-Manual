@@ -14,6 +14,8 @@ interface LocationCardProps {
   hasCritOverflow?: boolean;
   /** Global count of equipped ammo bins keyed by ammoType */
   ammoBinCounts?: Record<string, number>;
+  /** Global count of equipped weapons keyed by ammoType */
+  ammoWeaponCounts?: Record<string, number>;
 }
 
 interface SlotBlock {
