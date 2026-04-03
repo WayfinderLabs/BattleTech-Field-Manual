@@ -15,6 +15,7 @@ export interface Mech {
   variant: string;
   chassisClass: 'Light' | 'Medium' | 'Heavy' | 'Assault';
   tonnage: number;
+  initialTonnage: number;  // fixed chassis weight (engine + structure + gyro) — not available for loadout
   maxArmor: number;
   topSpeed: number;       // km/h as stored in game
   jumpJetsMax: number;
