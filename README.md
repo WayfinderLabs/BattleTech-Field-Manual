@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# BattleTech-Field-Manual-Companion
 
-TODO: Document your project here
+BattleTech Field Manual — companion app source and game data reference
