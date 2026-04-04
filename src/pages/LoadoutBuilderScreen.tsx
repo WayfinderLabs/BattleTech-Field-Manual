@@ -380,7 +380,7 @@ const LoadoutBuilderScreen = () => {
       })()}
 
       {/* Stats Bar */}
-      {selectedMech && <StatsBar state={state} armorPoints={armorPoints} hasOverweight={hasOverweight} />}
+      {selectedMech && <StatsBar state={state} armorPoints={armorPoints} />}
 
       {/* Strip Buttons */}
       {selectedMech && (
