@@ -108,32 +108,30 @@ const LocationCard = ({
         opacity: (isEmpty && !hasHardpoints && inventorySlots === 0) ? 0.4 : 1,
       }}
     >
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center gap-2 mb-2">
         <span className="font-mono uppercase tracking-wider text-muted-foreground font-semibold" style={{ fontSize: 'var(--fs-card-title)' }}>
           {label}
         </span>
+        {hasHardpoints && (() => {
+          const tokens = parseHardpointTokens(hardpointStr);
+          if (tokens.length === 0) return null;
+          return (
+            <div className="flex flex-wrap gap-1">
+              {tokens.flatMap((t, ti) =>
+                Array.from({ length: t.count }, (_, i) => (
+                  <span
+                    key={`${ti}-${i}`}
+                    className={`px-1 py-0.5 font-mono rounded-sm text-[#E0E0E0] ${HP_PILL_COLORS[t.type] || ""}`}
+                    style={{ fontSize: 10 }}
+                  >
+                    {t.type}
+                  </span>
+                ))
+              )}
+            </div>
+          );
+        })()}
       </div>
-
-      {/* Hardpoint type pills */}
-      {hasHardpoints && (
-        <div className="flex flex-wrap gap-1 mb-2">
-          {(() => {
-            const tokens = parseHardpointTokens(hardpointStr);
-            if (tokens.length === 0) return <span className="font-mono text-muted-foreground" style={{ fontSize: 10 }}>—</span>;
-            return tokens.flatMap((t, ti) =>
-              Array.from({ length: t.count }, (_, i) => (
-                <span
-                  key={`${ti}-${i}`}
-                  className={`px-1 py-0.5 font-mono rounded-sm text-[#E0E0E0] ${HP_PILL_COLORS[t.type] || ""}`}
-                  style={{ fontSize: 10 }}
-                >
-                  {t.type}
-                </span>
-              ))
-            );
-          })()}
-        </div>
-      )}
 
       {inventorySlots === 0 && !hasHardpoints ? (
         <div className="font-mono text-muted-foreground uppercase tracking-wider text-center py-2" style={{ fontSize: 'var(--fs-badge)' }}>
