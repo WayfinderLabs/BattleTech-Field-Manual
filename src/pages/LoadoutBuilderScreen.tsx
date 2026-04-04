@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Bookmark } from 'lucide-react';
 import type { Mech } from '@/data/mechs';
@@ -31,6 +31,9 @@ const LoadoutBuilderScreen = () => {
     equipment: { ...EMPTY_EQUIPMENT },
   });
   const [armorPoints, setArmorPoints] = useState(0);
+  const [editingArmor, setEditingArmor] = useState(false);
+  const [armorInputValue, setArmorInputValue] = useState('');
+  const armorInputRef = useRef<HTMLInputElement>(null);
 
   const [mechPickerOpen, setMechPickerOpen] = useState(false);
   const [pickerLocation, setPickerLocation] = useState<LocationKey | null>(null);
@@ -50,11 +53,9 @@ const LoadoutBuilderScreen = () => {
       const saved = navState.restoreLoadout;
       const mech = MECHS.find(m => m.id.toString() === saved.mechId);
       if (mech) {
-        // Rebuild slots from saved data - re-parse hardpoints and restore weapons
         const newSlots = { ...EMPTY_SLOTS } as Record<LocationKey, ReturnType<typeof parseHardpoints>>;
         for (const key of LOCATION_KEYS) {
           const parsed = parseHardpoints(mech.hardpoints[key]);
-          // Restore saved weapons into parsed slots
           if (saved.slots[key]) {
             for (let i = 0; i < parsed.length && i < saved.slots[key].length; i++) {
               if (saved.slots[key][i]?.weapon) {
@@ -69,8 +70,10 @@ const LoadoutBuilderScreen = () => {
           slots: newSlots,
           equipment: saved.equipment || { ...EMPTY_EQUIPMENT },
         });
+        // Restore armor: use saved value if present, otherwise default to mech maxArmor
+        const restoredArmor = typeof saved.armorPoints === 'number' ? saved.armorPoints : mech.maxArmor;
+        setArmorPoints(restoredArmor);
       }
-      // Clear the navigation state so refreshing doesn't re-restore
       navigate('/loadout', { replace: true, state: {} });
     }
   }, []);
@@ -83,6 +86,13 @@ const LoadoutBuilderScreen = () => {
     const t = setTimeout(() => setToastMessage(null), 2500);
     return () => clearTimeout(t);
   }, [toastMessage]);
+
+  // Focus armor input when editing
+  useEffect(() => {
+    if (editingArmor) {
+      setTimeout(() => armorInputRef.current?.focus(), 50);
+    }
+  }, [editingArmor]);
 
   const validation = useMemo<ValidationResult[]>(() => {
     if (!state.selectedMech) return [];
@@ -173,7 +183,7 @@ const LoadoutBuilderScreen = () => {
 
   const handleSave = (name: string, notes: string | undefined): 'saved' | 'duplicate_name' => {
     if (!state.selectedMech) return 'saved';
-    const result = saveLoadout(name, notes, state.selectedMech.id.toString(), state.slots, state.equipment);
+    const result = saveLoadout(name, notes, state.selectedMech.id.toString(), state.slots, state.equipment, armorPoints);
     if (result === 'saved') {
       setToastMessage('LOADOUT SAVED');
     }
@@ -182,13 +192,45 @@ const LoadoutBuilderScreen = () => {
 
   const handleOverwrite = (existingId: string, name: string, notes: string | undefined) => {
     if (!state.selectedMech) return;
-    overwriteLoadout(existingId, name, notes, state.selectedMech.id.toString(), state.slots, state.equipment);
+    overwriteLoadout(existingId, name, notes, state.selectedMech.id.toString(), state.slots, state.equipment, armorPoints);
     setToastMessage('LOADOUT SAVED');
   };
 
   const handleGetDuplicate = (name: string) => {
     const dup = getDuplicateByName(name);
     return dup ? { id: dup.id, name: dup.name } : undefined;
+  };
+
+  const handleArmorInputCommit = () => {
+    if (!selectedMech) return;
+    const parsed = parseInt(armorInputValue, 10);
+    if (isNaN(parsed)) {
+      setEditingArmor(false);
+      return;
+    }
+    const clamped = Math.max(0, Math.min(selectedMech.maxArmor, parsed));
+    setArmorPoints(clamped);
+    setEditingArmor(false);
+  };
+
+  const handleStripArmor = () => {
+    setArmorPoints(0);
+  };
+
+  const handleStripEquipment = () => {
+    setState((prev) => {
+      if (!prev.selectedMech) return prev;
+      // Clear all weapons from slots (keep hardpoint structure)
+      const newSlots = { ...prev.slots };
+      for (const loc of LOCATION_KEYS) {
+        newSlots[loc] = prev.slots[loc].map(s => ({ ...s, weapon: null }));
+      }
+      return {
+        ...prev,
+        slots: newSlots,
+        equipment: { ...EMPTY_EQUIPMENT },
+      };
+    });
   };
 
   const { selectedMech } = state;
@@ -262,7 +304,6 @@ const LoadoutBuilderScreen = () => {
 
       {/* Armor Row */}
       {selectedMech && (() => {
-        // Compute weapon + equipment tonnage (excluding armor)
         let usedTons = 0;
         const allLocs = Object.keys(state.slots) as LocationKey[];
         for (const loc of allLocs) {
@@ -287,7 +328,36 @@ const LoadoutBuilderScreen = () => {
           <div className="border border-border rounded-sm px-4 py-2 bg-card flex items-center justify-between">
             <div className="font-mono" style={{ fontSize: 'var(--fs-badge)' }}>
               <span className="uppercase tracking-wider" style={{ color: '#8A8A8A' }}>ARMOR </span>
-              <span style={{ color: '#C87941' }}>{armorPoints}</span>
+              {editingArmor ? (
+                <input
+                  ref={armorInputRef}
+                  type="number"
+                  min={0}
+                  max={selectedMech.maxArmor}
+                  value={armorInputValue}
+                  onChange={(e) => setArmorInputValue(e.target.value)}
+                  onBlur={handleArmorInputCommit}
+                  onKeyDown={(e) => { if (e.key === 'Enter') handleArmorInputCommit(); }}
+                  className="font-mono w-16 text-center rounded-sm px-1 py-0.5"
+                  style={{
+                    backgroundColor: '#161616',
+                    border: '1px solid #2A2A2A',
+                    color: '#C87941',
+                    fontSize: 'var(--fs-badge)',
+                    outline: 'none',
+                  }}
+                />
+              ) : (
+                <span
+                  onClick={() => {
+                    setArmorInputValue(armorPoints.toString());
+                    setEditingArmor(true);
+                  }}
+                  style={{ color: '#C87941', cursor: 'pointer', textDecoration: 'underline', textDecorationStyle: 'dotted', textUnderlineOffset: '3px' }}
+                >
+                  {armorPoints}
+                </span>
+              )}
               <span style={{ color: '#8A8A8A' }}> / {selectedMech.maxArmor}</span>
             </div>
             <button
@@ -309,12 +379,31 @@ const LoadoutBuilderScreen = () => {
       {/* Stats Bar */}
       {selectedMech && <StatsBar state={state} armorPoints={armorPoints} hasOverweight={hasOverweight} />}
 
+      {/* Strip Buttons */}
+      {selectedMech && (
+        <div className="flex gap-2">
+          <button
+            onClick={handleStripArmor}
+            className="font-mono uppercase tracking-wider rounded-sm px-2 py-1"
+            style={{ fontSize: 'var(--fs-badge)', color: '#8A8A8A', border: '1px solid #2A2A2A', background: 'transparent' }}
+          >
+            STRIP ARMOUR
+          </button>
+          <button
+            onClick={handleStripEquipment}
+            className="font-mono uppercase tracking-wider rounded-sm px-2 py-1"
+            style={{ fontSize: 'var(--fs-badge)', color: '#8A8A8A', border: '1px solid #2A2A2A', background: 'transparent' }}
+          >
+            STRIP EQUIPMENT
+          </button>
+        </div>
+      )}
+
       {/* Validation Panel */}
       {selectedMech && <ValidationPanel results={validation} />}
 
       {/* Hardpoint Grid */}
       {selectedMech && (() => {
-        // Compute global ammo bin counts and weapon counts by ammoType
         const ammoBinCapacity: Record<string, number> = {};
         const ammoWeaponCounts: Record<string, number> = {};
         for (const loc of LOCATION_KEYS) {

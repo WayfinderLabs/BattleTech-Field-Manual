@@ -19,6 +19,7 @@ const StatsBar = ({ state, armorPoints = 0, hasOverweight }: StatsBarProps) => {
   let totalMaxHeatBonus = 0;
   let jumpJetCount = 0;
   let reductionMultiplier = 1;
+  let totalDamage = 0;
 
   const allLocations = Object.keys(slots) as LocationKey[];
   for (const loc of allLocations) {
@@ -26,6 +27,7 @@ const StatsBar = ({ state, armorPoints = 0, hasOverweight }: StatsBarProps) => {
       if (slot.weapon) {
         tonnageUsed += slot.weapon.tonnage;
         rawHeat += slot.weapon.heat;
+        totalDamage += slot.weapon.damage;
       }
     }
     for (const eq of equipment[loc]) {
@@ -56,57 +58,73 @@ const StatsBar = ({ state, armorPoints = 0, hasOverweight }: StatsBarProps) => {
   const jjMax = selectedMech.jumpJetsMax;
 
   const availableTonnage = selectedMech.tonnage - selectedMech.initialTonnage;
-  const stats = [
-    { label: 'TONNAGE', value: `${tonnageUsed} / ${availableTonnage}t`, warn: hasOverweight, amber: false },
-    { label: 'HEAT', value: `${adjustedHeat}`, warn: false, amber: hasExchanger },
-    { label: 'DISSIPATION', value: `${dissipation}`, warn: false, amber: false },
-    { label: 'THRESHOLD', value: `${threshold}`, warn: false, amber: false },
-    { label: 'JUMP JETS', value: jjMax === 0 ? 'N/A' : `${jumpJetCount} / ${jjMax}`, warn: jumpJetCount > jjMax, amber: false },
-  ];
 
-  const tonnageColor = hasOverweight ? '#E05050' : undefined;
+  // Tonnage color states
+  let tonnageColor: string | undefined;
+  if (hasOverweight) {
+    tonnageColor = '#FF4444';
+  } else if (tonnageUsed < availableTonnage) {
+    tonnageColor = '#FFD700';
+  } else {
+    tonnageColor = '#FFFFFF';
+  }
+
   const jjColor = jumpJetCount > jjMax ? '#E05050' : undefined;
 
   return (
-    <div className="bg-card border border-border rounded-sm">
-      {/* Row 1 — Primary stats */}
-      <div className="grid grid-cols-2">
-        <div className="text-center py-2 px-3 border-r border-border">
-          <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
-            TONNAGE
+    <div>
+      <div className="bg-card border border-border rounded-sm">
+        {/* Row 1 — Primary stats: 3 columns */}
+        <div className="grid grid-cols-3">
+          <div className="text-center py-2 px-3 border-r border-border">
+            <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: tonnageColor }}>
+              TONNAGE
+            </div>
+            <div className="font-mono font-semibold text-sm" style={{ color: tonnageColor }}>
+              {tonnageUsed} / {availableTonnage}t
+            </div>
           </div>
-          <div className="font-mono font-semibold text-sm" style={{ color: tonnageColor }}>
-            {tonnageUsed} / {availableTonnage}t
+          <div className="text-center py-2 px-3 border-r border-border">
+            <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
+              DAMAGE OUTPUT
+            </div>
+            <div className="font-mono font-semibold text-sm" style={{ color: '#C87941' }}>
+              {Math.floor(totalDamage)}
+            </div>
+          </div>
+          <div className="text-center py-2 px-3">
+            <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
+              JUMP JETS
+            </div>
+            <div className="font-mono font-semibold text-sm" style={{ color: jjColor }}>
+              {jjMax === 0 ? 'N/A' : `${jumpJetCount} / ${jjMax}`}
+            </div>
           </div>
         </div>
-        <div className="text-center py-2 px-3">
-          <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
-            JUMP JETS
+        {/* Row 2 — Heat stats */}
+        <div className="grid grid-cols-2 border-t border-border">
+          <div className="text-center py-2 px-3 border-r border-border">
+            <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
+              HEAT / DISSIPATION
+            </div>
+            <div className="font-mono font-semibold text-sm">
+              <span style={{ color: hasExchanger ? '#C87941' : undefined }}>{adjustedHeat}</span>
+              <span> / {dissipation}</span>
+            </div>
           </div>
-          <div className="font-mono font-semibold text-sm" style={{ color: jjColor }}>
-            {jjMax === 0 ? 'N/A' : `${jumpJetCount} / ${jjMax}`}
+          <div className="text-center py-2 px-3">
+            <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
+              HEAT THRESHOLD
+            </div>
+            <div className="font-mono font-semibold text-sm">
+              {threshold}
+            </div>
           </div>
         </div>
       </div>
-      {/* Row 2 — Heat stats */}
-      <div className="grid grid-cols-2 border-t border-border">
-        <div className="text-center py-2 px-3 border-r border-border">
-          <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
-            HEAT / DISSIPATION
-          </div>
-          <div className="font-mono font-semibold text-sm">
-            <span style={{ color: hasExchanger ? '#C87941' : undefined }}>{adjustedHeat}</span>
-            <span> / {dissipation}</span>
-          </div>
-        </div>
-        <div className="text-center py-2 px-3">
-          <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
-            THRESHOLD
-          </div>
-          <div className="font-mono font-semibold text-sm">
-            {threshold}
-          </div>
-        </div>
+      {/* Heat disclaimer */}
+      <div className="font-mono mt-1" style={{ fontSize: '10px', color: '#8A8A8A' }}>
+        * HEAT FROM JUMP JETS NOT INCLUDED
       </div>
     </div>
   );
