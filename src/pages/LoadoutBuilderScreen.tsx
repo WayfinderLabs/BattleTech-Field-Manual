@@ -359,6 +359,9 @@ const LoadoutBuilderScreen = () => {
                 </span>
               )}
               <span style={{ color: '#8A8A8A' }}> / {selectedMech.maxArmor}</span>
+              <div className="font-mono" style={{ fontSize: '11px', color: '#8A8A8A' }}>
+                {Math.round((armorPoints / selectedMech.maxArmor) * 100)}% of max armor
+              </div>
             </div>
             <button
               onClick={handleMaxArmor}
