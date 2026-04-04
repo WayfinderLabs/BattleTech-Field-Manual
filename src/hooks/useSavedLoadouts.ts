@@ -57,7 +57,8 @@ export function useSavedLoadouts() {
     notes: string | undefined,
     mechId: string,
     slots: Record<string, SlotAssignment[]>,
-    equipment: Record<string, EquipmentSlot[]>
+    equipment: Record<string, EquipmentSlot[]>,
+    armorPoints?: number
   ) => {
     const current = readFromStorage();
     const updated = current.map(l => l.id === id ? {
@@ -67,6 +68,7 @@ export function useSavedLoadouts() {
       mechId,
       slots,
       equipment,
+      armorPoints: armorPoints ?? 0,
       savedAt: Date.now(),
     } : l);
     writeToStorage(updated);
