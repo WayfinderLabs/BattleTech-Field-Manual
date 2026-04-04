@@ -384,17 +384,17 @@ const LoadoutBuilderScreen = () => {
 
       {/* Strip Buttons */}
       {selectedMech && (
-        <div className="flex gap-2">
+        <div className="flex w-full gap-2">
           <button
             onClick={handleStripArmor}
-            className="font-mono uppercase tracking-wider rounded-sm px-2 py-1"
+            className="flex-1 font-mono uppercase tracking-wider rounded-sm px-2 py-1"
             style={{ fontSize: 'var(--fs-badge)', color: '#8A8A8A', border: '1px solid #2A2A2A', background: 'transparent' }}
           >
             STRIP ARMOUR
           </button>
           <button
             onClick={handleStripEquipment}
-            className="font-mono uppercase tracking-wider rounded-sm px-2 py-1"
+            className="flex-1 font-mono uppercase tracking-wider rounded-sm px-2 py-1"
             style={{ fontSize: 'var(--fs-badge)', color: '#8A8A8A', border: '1px solid #2A2A2A', background: 'transparent' }}
           >
             STRIP EQUIPMENT
