@@ -27,7 +27,8 @@ export function useSavedLoadouts() {
     notes: string | undefined,
     mechId: string,
     slots: Record<string, SlotAssignment[]>,
-    equipment: Record<string, EquipmentSlot[]>
+    equipment: Record<string, EquipmentSlot[]>,
+    armorPoints?: number
   ): 'saved' | 'duplicate_name' => {
     const trimmed = name.trim();
     const current = readFromStorage();
@@ -41,6 +42,7 @@ export function useSavedLoadouts() {
       mechId,
       slots,
       equipment,
+      armorPoints: armorPoints ?? 0,
       savedAt: Date.now(),
     };
     const updated = [...current, newLoadout];
