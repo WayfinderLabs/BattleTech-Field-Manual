@@ -4,10 +4,9 @@ import type { HeatSink } from '@/data/loadoutEquipment';
 interface StatsBarProps {
   state: LoadoutState;
   armorPoints?: number;
-  hasOverweight?: boolean;
 }
 
-const StatsBar = ({ state, armorPoints = 0, hasOverweight }: StatsBarProps) => {
+const StatsBar = ({ state, armorPoints = 0 }: StatsBarProps) => {
   const { selectedMech, slots, equipment } = state;
   if (!selectedMech) return null;
 
@@ -59,15 +58,12 @@ const StatsBar = ({ state, armorPoints = 0, hasOverweight }: StatsBarProps) => {
 
   const availableTonnage = selectedMech.tonnage - selectedMech.initialTonnage;
 
-  // Tonnage color states
-  let tonnageColor: string | undefined;
-  if (hasOverweight) {
-    tonnageColor = '#FF4444';
-  } else if (tonnageUsed < availableTonnage) {
-    tonnageColor = '#FFD700';
-  } else {
-    tonnageColor = '#FFFFFF';
-  }
+  // Tonnage color states — derived directly from computed values each render
+  const tonnageColor = tonnageUsed > availableTonnage
+    ? '#FF4444'
+    : tonnageUsed < availableTonnage
+      ? '#FFD700'
+      : '#FFFFFF';
 
   const jjColor = jumpJetCount > jjMax ? '#E05050' : undefined;
 
