@@ -2,8 +2,10 @@ import { Outlet } from "react-router-dom";
 import TopBar from "./TopBar";
 import BottomNav from "./BottomNav";
 import InstallPrompt from "./InstallPrompt";
+import { useAdMob } from "@/hooks/useAdMob";
 
 const AppShell = () => {
+  useAdMob();
   return (
     <div className="flex flex-col h-dvh overflow-hidden bg-background">
       <InstallPrompt />
