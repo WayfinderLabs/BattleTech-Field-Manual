@@ -7,5 +7,6 @@ export interface SavedLoadout {
   mechId: string;
   slots: Record<string, SlotAssignment[]>;
   equipment: Record<string, EquipmentSlot[]>;
+  armorPoints?: number;
   savedAt: number;
 }
