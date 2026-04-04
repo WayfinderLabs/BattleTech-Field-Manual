@@ -4,10 +4,9 @@ import type { HeatSink } from '@/data/loadoutEquipment';
 interface StatsBarProps {
   state: LoadoutState;
   armorPoints?: number;
-  hasOverweight?: boolean;
 }
 
-const StatsBar = ({ state, armorPoints = 0, hasOverweight }: StatsBarProps) => {
+const StatsBar = ({ state, armorPoints = 0 }: StatsBarProps) => {
   const { selectedMech, slots, equipment } = state;
   if (!selectedMech) return null;
 
