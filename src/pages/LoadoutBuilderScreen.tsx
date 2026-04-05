@@ -314,7 +314,7 @@ const LoadoutBuilderScreen = () => {
               </div>
             </div>
             <button
-              onClick={() => setMechPickerOpen(true)}
+              onClick={() => guardedNavigate(() => setMechPickerOpen(true))}
               className="font-mono uppercase tracking-wider text-muted-foreground border border-border rounded-sm px-2 py-1 hover:text-foreground transition-colors shrink-0"
               style={{ fontSize: 'var(--fs-badge)' }}
             >
