@@ -45,6 +45,28 @@ const LoadoutBuilderScreen = () => {
     locationKey: string;
     reason: 'OVERWEIGHT' | 'CRIT_OVERFLOW';
   } | null>(null);
+  const [unsavedGuardAction, setUnsavedGuardAction] = useState<(() => void) | null>(null);
+
+  const isDirty = useMemo(() => {
+    if (armorPoints > 0) return true;
+    for (const loc of LOCATION_KEYS) {
+      for (const s of state.slots[loc]) {
+        if (s.weapon) return true;
+      }
+      for (const eq of state.equipment[loc]) {
+        if (eq.item) return true;
+      }
+    }
+    return false;
+  }, [state, armorPoints]);
+
+  const guardedNavigate = useCallback((action: () => void) => {
+    if (isDirty) {
+      setUnsavedGuardAction(() => action);
+    } else {
+      action();
+    }
+  }, [isDirty]);
 
   // Restore from saved loadout navigation
   useEffect(() => {
@@ -292,7 +314,7 @@ const LoadoutBuilderScreen = () => {
               </div>
             </div>
             <button
-              onClick={() => setMechPickerOpen(true)}
+              onClick={() => guardedNavigate(() => setMechPickerOpen(true))}
               className="font-mono uppercase tracking-wider text-muted-foreground border border-border rounded-sm px-2 py-1 hover:text-foreground transition-colors shrink-0"
               style={{ fontSize: 'var(--fs-badge)' }}
             >
@@ -498,6 +520,85 @@ const LoadoutBuilderScreen = () => {
         onOverwrite={handleOverwrite}
         getDuplicateId={handleGetDuplicate}
       />
+
+      {/* Unsaved Changes Guard Dialog */}
+      {unsavedGuardAction && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 100,
+            backgroundColor: 'rgba(0,0,0,0.75)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onClick={() => setUnsavedGuardAction(null)}
+        >
+          <div
+            style={{
+              backgroundColor: '#161616',
+              border: '1px solid #2A2A2A',
+              maxWidth: '340px',
+              width: '90%',
+              padding: '24px',
+              borderRadius: '0',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              className="font-mono uppercase tracking-wider"
+              style={{ color: '#C87941', fontSize: 'var(--fs-badge)', marginBottom: '12px' }}
+            >
+              UNSAVED LOADOUT
+            </div>
+            <div
+              className="font-mono"
+              style={{ color: '#8A8A8A', fontSize: 'var(--fs-badge)', marginBottom: '20px' }}
+            >
+              Navigating away will discard your current loadout. Are you sure?
+            </div>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button
+                onClick={() => setUnsavedGuardAction(null)}
+                className="font-mono uppercase tracking-wider"
+                style={{
+                  flex: 1,
+                  background: 'transparent',
+                  border: '1px solid #2A2A2A',
+                  color: '#8A8A8A',
+                  padding: '10px',
+                  minHeight: '44px',
+                  fontSize: 'var(--fs-badge)',
+                  cursor: 'pointer',
+                }}
+              >
+                STAY
+              </button>
+              <button
+                onClick={() => {
+                  const action = unsavedGuardAction;
+                  setUnsavedGuardAction(null);
+                  action();
+                }}
+                className="font-mono uppercase tracking-wider"
+                style={{
+                  flex: 1,
+                  background: 'transparent',
+                  border: '1px solid #FF4444',
+                  color: '#FF4444',
+                  padding: '10px',
+                  minHeight: '44px',
+                  fontSize: 'var(--fs-badge)',
+                  cursor: 'pointer',
+                }}
+              >
+                DISCARD & CONTINUE
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
