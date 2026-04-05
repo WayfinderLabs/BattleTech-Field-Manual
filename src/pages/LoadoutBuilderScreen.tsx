@@ -45,6 +45,28 @@ const LoadoutBuilderScreen = () => {
     locationKey: string;
     reason: 'OVERWEIGHT' | 'CRIT_OVERFLOW';
   } | null>(null);
+  const [unsavedGuardAction, setUnsavedGuardAction] = useState<(() => void) | null>(null);
+
+  const isDirty = useMemo(() => {
+    if (armorPoints > 0) return true;
+    for (const loc of LOCATION_KEYS) {
+      for (const s of state.slots[loc]) {
+        if (s.weapon) return true;
+      }
+      for (const eq of state.equipment[loc]) {
+        if (eq.item) return true;
+      }
+    }
+    return false;
+  }, [state, armorPoints]);
+
+  const guardedNavigate = useCallback((action: () => void) => {
+    if (isDirty) {
+      setUnsavedGuardAction(() => action);
+    } else {
+      action();
+    }
+  }, [isDirty]);
 
   // Restore from saved loadout navigation
   useEffect(() => {
