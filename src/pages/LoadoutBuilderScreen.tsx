@@ -520,6 +520,85 @@ const LoadoutBuilderScreen = () => {
         onOverwrite={handleOverwrite}
         getDuplicateId={handleGetDuplicate}
       />
+
+      {/* Unsaved Changes Guard Dialog */}
+      {unsavedGuardAction && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 100,
+            backgroundColor: 'rgba(0,0,0,0.75)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onClick={() => setUnsavedGuardAction(null)}
+        >
+          <div
+            style={{
+              backgroundColor: '#161616',
+              border: '1px solid #2A2A2A',
+              maxWidth: '340px',
+              width: '90%',
+              padding: '24px',
+              borderRadius: '0',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              className="font-mono uppercase tracking-wider"
+              style={{ color: '#C87941', fontSize: 'var(--fs-badge)', marginBottom: '12px' }}
+            >
+              UNSAVED LOADOUT
+            </div>
+            <div
+              className="font-mono"
+              style={{ color: '#8A8A8A', fontSize: 'var(--fs-badge)', marginBottom: '20px' }}
+            >
+              Navigating away will discard your current loadout. Are you sure?
+            </div>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button
+                onClick={() => setUnsavedGuardAction(null)}
+                className="font-mono uppercase tracking-wider"
+                style={{
+                  flex: 1,
+                  background: 'transparent',
+                  border: '1px solid #2A2A2A',
+                  color: '#8A8A8A',
+                  padding: '10px',
+                  minHeight: '44px',
+                  fontSize: 'var(--fs-badge)',
+                  cursor: 'pointer',
+                }}
+              >
+                STAY
+              </button>
+              <button
+                onClick={() => {
+                  const action = unsavedGuardAction;
+                  setUnsavedGuardAction(null);
+                  action();
+                }}
+                className="font-mono uppercase tracking-wider"
+                style={{
+                  flex: 1,
+                  background: 'transparent',
+                  border: '1px solid #FF4444',
+                  color: '#FF4444',
+                  padding: '10px',
+                  minHeight: '44px',
+                  fontSize: 'var(--fs-badge)',
+                  cursor: 'pointer',
+                }}
+              >
+                DISCARD & CONTINUE
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
