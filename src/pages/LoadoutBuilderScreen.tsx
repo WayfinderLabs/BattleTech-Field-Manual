@@ -276,7 +276,7 @@ const LoadoutBuilderScreen = () => {
           LOADOUT BUILDER
         </h1>
         <button
-          onClick={() => navigate('/saved-loadouts')}
+          onClick={() => guardedNavigate(() => navigate('/saved-loadouts'))}
           className="text-muted-foreground hover:text-primary transition-colors p-1"
         >
           <Bookmark className="w-5 h-5" />
