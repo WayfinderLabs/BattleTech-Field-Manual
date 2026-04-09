@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { MECHS } from "@/data/mechs";
 import { HP_PILL_COLORS, parseHardpointTokens } from "@/utils/hardpointPills";
+import { useScrollContainer } from "@/contexts/ScrollContext";
 
 const CLASS_COLORS: Record<string, string> = {
   Light: "bg-[hsl(142,71%,45%)] text-black",
@@ -19,9 +20,10 @@ const HARDPOINT_DISPLAY: Record<string, string> = {
 const MechDetailScreen = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const scrollContainer = useScrollContainer();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollContainer.current?.scrollTo(0, 0);
   }, []);
   const mech = MECHS.find((m) => m.id === Number(id));
 
