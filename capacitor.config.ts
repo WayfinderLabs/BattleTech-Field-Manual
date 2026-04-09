@@ -12,7 +12,7 @@ const config: CapacitorConfig = {
   },
   plugins: {
     AdMob: {
-      appId: 'ca-app-pub-6177451660679409~5580272571',
+      appId: process.env.ADMOB_APP_ID,
     },
     SplashScreen: {
       backgroundColor: '#0D0D0D',
