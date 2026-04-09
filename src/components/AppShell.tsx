@@ -1,4 +1,7 @@
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { Capacitor } from "@capacitor/core";
+import { StatusBar, Style } from "@capacitor/status-bar";
 import TopBar from "./TopBar";
 import BottomNav from "./BottomNav";
 import InstallPrompt from "./InstallPrompt";
@@ -6,6 +9,17 @@ import { useAdMob } from "@/hooks/useAdMob";
 
 const AppShell = () => {
   useAdMob();
+
+  useEffect(() => {
+    if (Capacitor.getPlatform() === "android") {
+      try {
+        StatusBar.setBackgroundColor({ color: "#0D0D0D" });
+        StatusBar.setStyle({ style: Style.Dark });
+      } catch (_) {
+        // ignore – status bar plugin may not be available
+      }
+    }
+  }, []);
   return (
     <div className="flex flex-col h-dvh overflow-hidden bg-background">
       <InstallPrompt />
