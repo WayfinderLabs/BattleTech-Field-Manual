@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { WEAPONS, type Weapon } from "@/data/weapons";
 import { useFilters } from "@/contexts/FilterContext";
+import { useScrollContainer } from "@/contexts/ScrollContext";
 
 const CATEGORY_COLORS: Record<Weapon["category"], string> = {
   Ballistic: "bg-[hsl(220,9%,46%)] text-white",
@@ -20,18 +21,19 @@ const META_CHIPS: MetaFilter[] = ["CLAN", "DLC"];
 const WeaponsScreen = () => {
   const navigate = useNavigate();
   const filters = useFilters();
+  const scrollContainer = useScrollContainer();
   const { search, setSearch, categoryFilter, setCategoryFilter, metaFilters, toggleMeta } = filters.weapons;
   const scrollKey = "weapons";
 
   useEffect(() => {
     const saved = filters.scrollPositions.current[scrollKey];
     if (saved) {
-      requestAnimationFrame(() => window.scrollTo(0, saved));
+      requestAnimationFrame(() => scrollContainer.current?.scrollTo(0, saved));
     }
   }, []);
 
   const navigateToDetail = (id: number) => {
-    filters.scrollPositions.current[scrollKey] = window.scrollY;
+    filters.scrollPositions.current[scrollKey] = scrollContainer.current?.scrollTop ?? 0;
     navigate(`/weapons/${id}`);
   };
 

@@ -6,9 +6,11 @@ import TopBar from "./TopBar";
 import BottomNav from "./BottomNav";
 import InstallPrompt from "./InstallPrompt";
 import { useAdMob } from "@/hooks/useAdMob";
+import { ScrollProvider, useScrollContainer } from "@/contexts/ScrollContext";
 
-const AppShell = () => {
+const AppShellInner = () => {
   useAdMob();
+  const scrollContainerRef = useScrollContainer();
 
   useEffect(() => {
     if (Capacitor.getPlatform() === "android") {
@@ -26,7 +28,7 @@ const AppShell = () => {
       <div className="flex-shrink-0">
         <TopBar />
       </div>
-      <main className="flex-1 min-h-0 overflow-y-auto">
+      <main ref={scrollContainerRef} className="flex-1 min-h-0 overflow-y-auto">
         <div className="max-w-[480px] mx-auto px-4 py-4">
           <Outlet />
         </div>
@@ -37,5 +39,11 @@ const AppShell = () => {
     </div>
   );
 };
+
+const AppShell = () => (
+  <ScrollProvider>
+    <AppShellInner />
+  </ScrollProvider>
+);
 
 export default AppShell;
