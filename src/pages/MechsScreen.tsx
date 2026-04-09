@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { MECHS, type Mech } from "@/data/mechs";
 import { useFilters } from "@/contexts/FilterContext";
+import { useScrollContainer } from "@/contexts/ScrollContext";
 
 const CLASS_COLORS: Record<Mech["chassisClass"], string> = {
   Light: "bg-[hsl(142,71%,45%)] text-black",
@@ -20,18 +21,19 @@ const META_CHIPS: MetaFilter[] = ["CLAN", "DLC", "LOSTECH"];
 const MechsScreen = () => {
   const navigate = useNavigate();
   const filters = useFilters();
+  const scrollContainer = useScrollContainer();
   const { search, setSearch, classFilter, setClassFilter, metaFilters, toggleMeta } = filters.mechs;
   const scrollKey = "mechs";
 
   useEffect(() => {
     const saved = filters.scrollPositions.current[scrollKey];
     if (saved) {
-      requestAnimationFrame(() => window.scrollTo(0, saved));
+      requestAnimationFrame(() => scrollContainer.current?.scrollTo(0, saved));
     }
   }, []);
 
   const navigateToDetail = (id: number) => {
-    filters.scrollPositions.current[scrollKey] = window.scrollY;
+    filters.scrollPositions.current[scrollKey] = scrollContainer.current?.scrollTop ?? 0;
     navigate(`/mechs/${id}`);
   };
 
