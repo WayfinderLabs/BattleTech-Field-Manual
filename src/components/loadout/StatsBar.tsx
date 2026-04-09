@@ -14,7 +14,7 @@ const StatsBar = ({ state, armorPoints = 0 }: StatsBarProps) => {
   let rawHeat = 0;
   let dissipation = selectedMech.baseHeatDissipation;
   const BASE_MAX_HEAT = 100;
-  const OVERHEAT_LEVEL = 0.6;
+  
   let totalMaxHeatBonus = 0;
   let jumpJetCount = 0;
   let reductionMultiplier = 1;
@@ -52,7 +52,7 @@ const StatsBar = ({ state, armorPoints = 0 }: StatsBarProps) => {
   }
 
   const adjustedHeat = Math.floor(rawHeat * reductionMultiplier);
-  const threshold = Math.floor((BASE_MAX_HEAT + totalMaxHeatBonus) * OVERHEAT_LEVEL);
+  const shutdown = BASE_MAX_HEAT + totalMaxHeatBonus;
   const hasExchanger = reductionMultiplier < 1;
   const jjMax = selectedMech.jumpJetsMax;
 
@@ -110,10 +110,10 @@ const StatsBar = ({ state, armorPoints = 0 }: StatsBarProps) => {
           </div>
           <div className="text-center py-2 px-3">
             <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
-              HEAT THRESHOLD
+              SHUTDOWN
             </div>
             <div className="font-mono font-semibold text-sm">
-              {threshold}
+              {shutdown}
             </div>
           </div>
         </div>
