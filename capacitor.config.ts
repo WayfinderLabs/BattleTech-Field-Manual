@@ -20,6 +20,10 @@ const config: CapacitorConfig = {
       launchAutoHide: true,
       launchFadeOutDuration: 300,
     },
+    Keyboard: {
+      resize: 'body',
+      style: 'dark',
+    },
   },
 };
 
