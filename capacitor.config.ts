@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   android: {
     buildOptions: {
-      minSdkVersion: 26,
+      minSdkVersion: 24,
       targetSdkVersion: 35,
     }
   },
