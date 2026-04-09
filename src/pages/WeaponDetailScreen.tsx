@@ -44,9 +44,8 @@ const WeaponDetailScreen = () => {
 
   const ranges = [
     { label: "MIN", value: formatRange(weapon.minRange) },
-    { label: "SHORT", value: formatRange(weapon.shortRange) },
-    { label: "MED", value: formatRange(weapon.medRange) },
-    { label: "LONG", value: formatRange(weapon.longRange) },
+    { label: "OPTIMAL", value: formatRange(weapon.shortRange) },
+    { label: "MAX", value: formatRange(weapon.longRange) },
   ];
 
   return (
@@ -70,7 +69,7 @@ const WeaponDetailScreen = () => {
       {/* Range table */}
       <div>
         <h2 className="text-primary text-label font-mono tracking-[0.15em] mb-2">// RANGE PROFILE</h2>
-        <div className="grid grid-cols-4 border border-border rounded-sm overflow-hidden">
+        <div className="grid grid-cols-3 border border-border rounded-sm overflow-hidden">
           {ranges.map((r) => (
             <div key={r.label} className="text-center">
               <div className="bg-primary/20 border-b border-border px-2 py-1.5">
