@@ -19,6 +19,7 @@ import BlockingDialog from '@/components/loadout/BlockingDialog';
 import SaveLoadoutSheet from '@/components/loadout/SaveLoadoutSheet';
 
 const LOCATION_KEYS: LocationKey[] = ['hd', 'ct', 'lt', 'rt', 'la', 'ra', 'll', 'rl'];
+const DISPLAY_ORDER: LocationKey[] = ['hd', 'ct', 'rt', 'lt', 'ra', 'la', 'rl', 'll'];
 
 const LoadoutBuilderScreen = () => {
   const location = useLocation();
@@ -447,7 +448,7 @@ const LoadoutBuilderScreen = () => {
         }
         return (
           <div className="grid grid-cols-2 gap-2">
-            {LOCATION_KEYS.map((loc) => (
+            {DISPLAY_ORDER.map((loc) => (
               <LocationCard
                 key={loc}
                 label={LOCATION_LABELS[loc]}
