@@ -31,11 +31,6 @@ interface SlotBlock {
   weapon?: Weapon;
 }
 
-function getWeaponBonus(notes: string | null | undefined): string {
-  if (!notes) return '';
-  const match = notes.match(/^Manufacturer:[^.]+\.\s*(.+)$/);
-  return match ? match[1].trim() : '';
-}
 
 /** Color for equipment item blocks */
 const EQUIP_COLORS: Record<string, { first: string; cont: string }> = {
