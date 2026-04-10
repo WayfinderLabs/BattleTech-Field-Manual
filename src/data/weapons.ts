@@ -568,7 +568,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Defiance.',
+    notes: 'Manufacturer: Defiance. + 2 Acc.',
   },
   {
     id: 27,
@@ -589,7 +589,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Imperator.',
+    notes: 'Manufacturer: Imperator. + 25% Crit.',
   },
   {
     id: 28,
@@ -610,7 +610,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Kali Yama. +5 damage.',
+    notes: 'Manufacturer: Kali Yama. + 5 Dmg.',
   },
   {
     id: 29,
@@ -631,7 +631,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Mydron. +10 stability damage.',
+    notes: 'Manufacturer: Mydron. + 10 Stb.Dmg.',
   },
   {
     id: 30,
@@ -652,7 +652,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Defiance.',
+    notes: 'Manufacturer: Defiance. + 4 Acc.',
   },
   {
     id: 31,
@@ -673,7 +673,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Federated. +10 stability damage.',
+    notes: 'Manufacturer: Federated. + 25% Crit. + 10 Stb.Dmg.',
   },
   {
     id: 32,
@@ -694,7 +694,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Imperator.',
+    notes: 'Manufacturer: Imperator. + 50% Crit.',
   },
   {
     id: 33,
@@ -715,7 +715,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Kali Yama. +10 damage.',
+    notes: 'Manufacturer: Kali Yama. + 10 Dmg.',
   },
   {
     id: 34,
@@ -736,7 +736,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Mydron. +20 stability damage.',
+    notes: 'Manufacturer: Mydron. + 20 Stb.Dmg.',
   },
   {
     id: 35,
@@ -757,7 +757,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Federated. +20 stability damage.',
+    notes: 'Manufacturer: Federated. + 50% Crit. + 20 Stb.Dmg.',
   },
 
   // ── AC/20 TIER VARIANTS ────────────────────────────────────────────────────
@@ -781,7 +781,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Defiance.',
+    notes: 'Manufacturer: Defiance. + 2 Acc.',
   },
   {
     id: 37,
@@ -802,7 +802,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Federated.',
+    notes: 'Manufacturer: Federated. + 25% Crit.',
   },
   {
     id: 38,
@@ -823,7 +823,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Imperator. +10 damage.',
+    notes: 'Manufacturer: Imperator. + 10 Dmg.',
   },
   {
     id: 39,
@@ -844,7 +844,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Mydron. +10 stability damage.',
+    notes: 'Manufacturer: Mydron. + 10 Stb.Dmg.',
   },
   {
     id: 40,
@@ -865,7 +865,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Defiance.',
+    notes: 'Manufacturer: Defiance. + 4 Acc.',
   },
   {
     id: 41,
@@ -886,7 +886,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Federated.',
+    notes: 'Manufacturer: Federated. + 50% Crit.',
   },
   {
     id: 42,
@@ -907,7 +907,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Imperator. +20 damage.',
+    notes: 'Manufacturer: Imperator. + 20 Dmg.',
   },
   {
     id: 43,
@@ -928,7 +928,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Kali Yama. +10 damage, +10 stability.',
+    notes: 'Manufacturer: Kali Yama. + 10 Dmg. + 10 Stb.Dmg.',
   },
   {
     id: 44,
@@ -949,7 +949,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Mydron. +20 stability damage.',
+    notes: 'Manufacturer: Mydron. + 20 Stb.Dmg.',
   },
   {
     id: 45,
@@ -970,7 +970,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Kali Yama. +20 damage, +20 stability damage.',
+    notes: 'Manufacturer: Kali Yama. + 20 Dmg. + 20 Stb.Dmg.',
   },
 
   // ── AC/2 TIER VARIANTS ─────────────────────────────────────────────────────
@@ -994,7 +994,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Defiance.',
+    notes: 'Manufacturer: Defiance. + 2 Acc.',
   },
   {
     id: 47,
@@ -1015,7 +1015,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Federated.',
+    notes: 'Manufacturer: Federated. + 25% Crit.',
   },
   {
     id: 48,
@@ -1036,7 +1036,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Kali Yama. +5 damage.',
+    notes: 'Manufacturer: Kali Yama. + 5 Dmg.',
   },
   {
     id: 49,
@@ -1057,7 +1057,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Mydron. +10 stability damage.',
+    notes: 'Manufacturer: Mydron. + 10 Stb.Dmg.',
   },
   {
     id: 50,
@@ -1078,7 +1078,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Defiance.',
+    notes: 'Manufacturer: Defiance. + 4 Acc.',
   },
   {
     id: 51,
@@ -1099,7 +1099,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Federated.',
+    notes: 'Manufacturer: Federated. + 50% Crit.',
   },
   {
     id: 52,
@@ -1120,7 +1120,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Imperator.',
+    notes: 'Manufacturer: Imperator. + 2 Acc. + 25% Crit.',
   },
   {
     id: 53,
@@ -1141,7 +1141,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Kali Yama. +10 damage.',
+    notes: 'Manufacturer: Kali Yama. + 10 Dmg.',
   },
   {
     id: 54,
@@ -1162,7 +1162,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Mydron. +20 stability damage.',
+    notes: 'Manufacturer: Mydron. + 20 Stb.Dmg.',
   },
   {
     id: 55,
@@ -1183,7 +1183,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Imperator.',
+    notes: 'Manufacturer: Imperator. + 4 Acc. + 50% Crit.',
   },
 
   // ── AC/5 TIER VARIANTS ─────────────────────────────────────────────────────
@@ -1207,7 +1207,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Defiance.',
+    notes: 'Manufacturer: Defiance. + 2 Acc.',
   },
   {
     id: 57,
@@ -1228,7 +1228,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Federated.',
+    notes: 'Manufacturer: Federated. + 25% Crit.',
   },
   {
     id: 58,
@@ -1249,7 +1249,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Imperator. +10 stability damage.',
+    notes: 'Manufacturer: Imperator. + 10 Stb.Dmg.',
   },
   {
     id: 59,
@@ -1270,7 +1270,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Kali Yama. +5 damage.',
+    notes: 'Manufacturer: Kali Yama. + 5 Dmg.',
   },
   {
     id: 60,
@@ -1291,7 +1291,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Defiance.',
+    notes: 'Manufacturer: Defiance. + 4 Acc.',
   },
   {
     id: 61,
@@ -1312,7 +1312,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Federated.',
+    notes: 'Manufacturer: Federated. + 50% Crit.',
   },
   {
     id: 62,
@@ -1333,7 +1333,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Imperator. +20 stability damage.',
+    notes: 'Manufacturer: Imperator. + 20 Stb.Dmg.',
   },
   {
     id: 63,
@@ -1354,7 +1354,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Kali Yama. +10 damage.',
+    notes: 'Manufacturer: Kali Yama. + 10 Dmg.',
   },
   {
     id: 64,
@@ -1375,7 +1375,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Mydron. +10 stability damage.',
+    notes: 'Manufacturer: Mydron. + 2 Acc. + 10 Stb.Dmg.',
   },
   {
     id: 65,
@@ -1396,7 +1396,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Mydron. +20 stability damage.',
+    notes: 'Manufacturer: Mydron. + 4 Acc. + 20 Stb.Dmg.',
   },
 
   // ── FLAMER TIER VARIANTS ───────────────────────────────────────────────────
@@ -1419,7 +1419,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Hotshot. +5 damage.',
+    notes: 'Manufacturer: Hotshot. * 4 Ammo + 5 Dmg.',
   },
   {
     id: 67,
@@ -1439,7 +1439,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Olympus. Bonus is heat transfer to target, not raw damage.',
+    notes: 'Manufacturer: Olympus. * 4 Ammo + 5 Dmg. (H)',
   },
 
   // ── GAUSS RIFLE TIER VARIANTS ──────────────────────────────────────────────
@@ -1463,7 +1463,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: M7. -2 tons vs base.',
+    notes: 'Manufacturer: SCI. - 2 Tons',
   },
   {
     id: 69,
@@ -1484,7 +1484,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: M9. -2 tons, -1 critical slot vs base.',
+    notes: 'Manufacturer: SCI. - 2 Tons - 1 Slot',
   },
 
   // ── LRM 10 TIER VARIANTS ───────────────────────────────────────────────────
@@ -1508,7 +1508,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Delta. +1 stability damage per missile.',
+    notes: 'Manufacturer: Delta. + 1 Stb.Dmg.',
   },
   {
     id: 71,
@@ -1529,7 +1529,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: LongFire.',
+    notes: 'Manufacturer: LongFire. + 25% Crit.',
   },
   {
     id: 72,
@@ -1550,7 +1550,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Telos. +1 damage per missile.',
+    notes: 'Manufacturer: Telos. + 1 Dmg.',
   },
   {
     id: 73,
@@ -1571,7 +1571,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Delta. +2 stability damage per missile.',
+    notes: 'Manufacturer: Delta. + 2 Stb.Dmg.',
   },
   {
     id: 74,
@@ -1592,7 +1592,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: LongFire.',
+    notes: 'Manufacturer: LongFire. + 50% Crit.',
   },
   {
     id: 75,
@@ -1613,7 +1613,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Telos. +2 damage per missile.',
+    notes: 'Manufacturer: Telos. + 2 Dmg.',
   },
   {
     id: 76,
@@ -1634,7 +1634,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Zeus. +1 stability damage per missile.',
+    notes: 'Manufacturer: Zeus. + 25% Crit. + 1 Stb.Dmg.',
   },
   {
     id: 77,
@@ -1655,7 +1655,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Zeus. +2 stability damage per missile.',
+    notes: 'Manufacturer: Zeus. + 50% Crit. + 2 Stb.Dmg.',
   },
 
   // ── LRM 15 TIER VARIANTS ───────────────────────────────────────────────────
@@ -1679,7 +1679,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Delta. +1 stability damage per missile.',
+    notes: 'Manufacturer: Delta. + 1 Stb.Dmg.',
   },
   {
     id: 79,
@@ -1700,7 +1700,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: LongFire.',
+    notes: 'Manufacturer: LongFire. + 25% Crit.',
   },
   {
     id: 80,
@@ -1721,7 +1721,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Telos. +1 damage per missile.',
+    notes: 'Manufacturer: Telos. + 1 Dmg.',
   },
   {
     id: 81,
@@ -1742,7 +1742,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Delta. +2 stability damage per missile.',
+    notes: 'Manufacturer: Delta. + 2 Stb.Dmg.',
   },
   {
     id: 82,
@@ -1763,7 +1763,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: LongFire.',
+    notes: 'Manufacturer: LongFire. + 50% Crit.',
   },
   {
     id: 83,
@@ -1784,7 +1784,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Telos. +2 damage per missile.',
+    notes: 'Manufacturer: Telos. + 2 Dmg.',
   },
   {
     id: 84,
@@ -1805,7 +1805,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Zeus. +1 stability damage per missile.',
+    notes: 'Manufacturer: Zeus. + 25% Crit. + 1 Stb.Dmg.',
   },
   {
     id: 85,
@@ -1826,7 +1826,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Zeus. +2 stability damage per missile.',
+    notes: 'Manufacturer: Zeus. + 50% Crit. + 2 Stb.Dmg.',
   },
 
   // ── LRM 20 TIER VARIANTS ───────────────────────────────────────────────────
@@ -1850,7 +1850,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Delta. +1 stability damage per missile.',
+    notes: 'Manufacturer: Delta. + 1 Stb.Dmg.',
   },
   {
     id: 87,
@@ -1871,7 +1871,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: LongFire.',
+    notes: 'Manufacturer: LongFire. + 25% Crit.',
   },
   {
     id: 88,
@@ -1892,7 +1892,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Telos. +1 damage per missile.',
+    notes: 'Manufacturer: Telos. + 1 Dmg.',
   },
   {
     id: 89,
@@ -1913,7 +1913,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Delta. +2 stability damage per missile.',
+    notes: 'Manufacturer: Delta. + 2 Stb.Dmg.',
   },
   {
     id: 90,
@@ -1934,7 +1934,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: LongFire.',
+    notes: 'Manufacturer: LongFire. + 50% Crit.',
   },
   {
     id: 91,
@@ -1955,7 +1955,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Telos. +2 damage per missile.',
+    notes: 'Manufacturer: Telos. + 2 Dmg.',
   },
   {
     id: 92,
@@ -1976,7 +1976,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Zeus. +1 stability damage per missile.',
+    notes: 'Manufacturer: Zeus. + 25% Crit. + 1 Stb.Dmg.',
   },
   {
     id: 93,
@@ -1997,7 +1997,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Zeus. +2 stability damage per missile.',
+    notes: 'Manufacturer: Zeus. + 50% Crit. + 2 Stb.Dmg.',
   },
 
   // ── LRM 5 TIER VARIANTS ────────────────────────────────────────────────────
@@ -2021,7 +2021,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Delta. +1 stability damage per missile.',
+    notes: 'Manufacturer: Delta. + 1 Stb.Dmg.',
   },
   {
     id: 95,
@@ -2042,7 +2042,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: LongFire.',
+    notes: 'Manufacturer: LongFire. + 25% Crit.',
   },
   {
     id: 96,
@@ -2063,7 +2063,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Telos. +1 damage per missile.',
+    notes: 'Manufacturer: Telos. + 1 Dmg.',
   },
   {
     id: 97,
@@ -2084,7 +2084,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Delta. +2 stability damage per missile.',
+    notes: 'Manufacturer: Delta. + 2 Stb.Dmg.',
   },
   {
     id: 98,
@@ -2105,7 +2105,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: LongFire.',
+    notes: 'Manufacturer: LongFire. + 50% Crit.',
   },
   {
     id: 99,
@@ -2126,7 +2126,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Telos. +2 damage per missile.',
+    notes: 'Manufacturer: Telos. + 2 Dmg.',
   },
   {
     id: 100,
@@ -2147,7 +2147,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Zeus. +1 stability damage per missile.',
+    notes: 'Manufacturer: Zeus. + 25% Crit. + 1 Stb.Dmg.',
   },
   {
     id: 101,
@@ -2168,7 +2168,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: true,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Zeus. +2 stability damage per missile.',
+    notes: 'Manufacturer: Zeus. + 50% Crit. + 2 Stb.Dmg.',
   },
 
   // ── ER LARGE LASER TIER VARIANTS ───────────────────────────────────────────
@@ -2191,7 +2191,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Blankenburg25. +5 damage.',
+    notes: 'Manufacturer: Blankenburg 25. + 5 Dmg.',
   },
   {
     id: 103,
@@ -2211,7 +2211,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: BlazeFire. +5 damage, -1 ton.',
+    notes: 'Manufacturer: BlazeFire. + 5 Dmg. - 1 Ton',
   },
 
   // ── LARGE PULSE LASER TIER VARIANTS ───────────────────────────────────────
@@ -2234,7 +2234,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Thunderbolt12. +5 damage, -1 ton.',
+    notes: 'Manufacturer: Thunderbolt 12. + 5 Dmg. - 1 Ton',
   },
   {
     id: 105,
@@ -2254,7 +2254,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Exostar. +10 damage, -1 ton.',
+    notes: 'Manufacturer: ExoStar. + 10 Dmg. - 1 Ton',
   },
 
   // ── LARGE LASER TIER VARIANTS ──────────────────────────────────────────────
@@ -2277,7 +2277,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Diverse Optics.',
+    notes: 'Manufacturer: Diverse Optics. + 1 Acc.',
   },
   {
     id: 107,
@@ -2297,7 +2297,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: ExoStar.',
+    notes: 'Manufacturer: ExoStar. + 25% Crit.',
   },
   {
     id: 108,
@@ -2317,7 +2317,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Intek. +5 damage.',
+    notes: 'Manufacturer: Intek. + 5 Dmg.',
   },
   {
     id: 109,
@@ -2337,7 +2337,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Diverse Optics.',
+    notes: 'Manufacturer: Diverse Optics. + 3 Acc.',
   },
   {
     id: 110,
@@ -2357,7 +2357,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: ExoStar.',
+    notes: 'Manufacturer: ExoStar. + 50% Crit.',
   },
   {
     id: 111,
@@ -2377,7 +2377,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Intek. +10 damage.',
+    notes: 'Manufacturer: Intek. + 10 Dmg.',
   },
   {
     id: 112,
@@ -2397,7 +2397,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Magna. +5 damage.',
+    notes: 'Manufacturer: Magna. + 5 Dmg. + 1 Acc.',
   },
   {
     id: 113,
@@ -2417,7 +2417,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Magna. +10 damage.',
+    notes: 'Manufacturer: Magna. + 10 Dmg. + 3 Acc.',
   },
 
   // ── ER MEDIUM LASER TIER VARIANTS ─────────────────────────────────────────
@@ -2440,7 +2440,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: MagnaVI. +5 damage.',
+    notes: 'Manufacturer: Magna VI. + 5 Dmg.',
   },
   {
     id: 115,
@@ -2460,7 +2460,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: BrightBloom. +10 damage.',
+    notes: 'Manufacturer: BrightBloom. + 10 Dmg.',
   },
 
   // ── MEDIUM PULSE LASER TIER VARIANTS ──────────────────────────────────────
@@ -2483,7 +2483,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: RakerIV. +5 damage, -2 heat.',
+    notes: 'Manufacturer: Raker IV. - 2 Heat',
   },
   {
     id: 117,
@@ -2503,7 +2503,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Magna400P. +10 damage, -4 heat.',
+    notes: 'Manufacturer: Magna 400P. - 4 Heat + 1 Acc.',
   },
 
   // ── MEDIUM LASER TIER VARIANTS ────────────────────────────────────────────
@@ -2526,7 +2526,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: ExoStar.',
+    notes: 'Manufacturer: ExoStar. + 25% Crit.',
   },
   {
     id: 119,
@@ -2546,7 +2546,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Intek.',
+    notes: 'Manufacturer: Intek. + 1 Acc.',
   },
   {
     id: 120,
@@ -2566,7 +2566,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Magna. +5 damage.',
+    notes: 'Manufacturer: Magna. + 5 Dmg.',
   },
   {
     id: 121,
@@ -2586,7 +2586,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Diverse Optics.',
+    notes: 'Manufacturer: Diverse Optics. + 1 Acc. + 25% Crit.',
   },
   {
     id: 122,
@@ -2606,7 +2606,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: ExoStar.',
+    notes: 'Manufacturer: ExoStar. + 50% Crit.',
   },
   {
     id: 123,
@@ -2626,7 +2626,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Intek.',
+    notes: 'Manufacturer: Intek. + 3 Acc.',
   },
   {
     id: 124,
@@ -2646,7 +2646,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Magna. +10 damage.',
+    notes: 'Manufacturer: Magna. + 10 Dmg.',
   },
   {
     id: 125,
@@ -2666,7 +2666,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Diverse Optics. Bonus is +3 accuracy and +50% crit chance, not raw damage.',
+    notes: 'Manufacturer: Diverse Optics. + 3 Acc. + 50% Crit.',
   },
 
   // ── ER SMALL LASER TIER VARIANTS ──────────────────────────────────────────
@@ -2689,7 +2689,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Diverse Optics. +5 damage.',
+    notes: 'Manufacturer: Diverse Optics. + 5 Dmg.',
   },
   {
     id: 127,
@@ -2709,7 +2709,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: BlazeFire. +10 damage.',
+    notes: 'Manufacturer: BlazeFire. + 10 Dmg.',
   },
 
   // ── SMALL PULSE LASER TIER VARIANTS ───────────────────────────────────────
@@ -2732,7 +2732,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Maxell. +5 damage, -1 heat.',
+    notes: 'Manufacturer: Maxell Metals. + 5 Dmg. - 1 Heat',
   },
   {
     id: 129,
@@ -2752,7 +2752,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Magna200P. +10 damage, -2 heat.',
+    notes: 'Manufacturer: Firmir. + 10 Dmg. - 2 Heat',
   },
 
   // ── SMALL LASER TIER VARIANTS ─────────────────────────────────────────────
@@ -2775,7 +2775,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Diverse Optics.',
+    notes: 'Manufacturer: Diverse Optics. + 1 Acc.',
   },
   {
     id: 131,
@@ -2795,7 +2795,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: ExoStar.',
+    notes: 'Manufacturer: ExoStar. + 25% Crit.',
   },
   {
     id: 132,
@@ -2815,7 +2815,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Magna. +5 damage.',
+    notes: 'Manufacturer: Magna. + 5 Dmg.',
   },
   {
     id: 133,
@@ -2835,7 +2835,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Diverse Optics.',
+    notes: 'Manufacturer: Diverse Optics. + 3 Acc.',
   },
   {
     id: 134,
@@ -2855,7 +2855,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: ExoStar.',
+    notes: 'Manufacturer: ExoStar. + 50% Crit.',
   },
   {
     id: 135,
@@ -2875,7 +2875,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Intek. +5 damage.',
+    notes: 'Manufacturer: Intek. + 5 Dmg. + 25% Crit.',
   },
   {
     id: 136,
@@ -2895,7 +2895,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Magna. +10 damage.',
+    notes: 'Manufacturer: Magna. + 10 Dmg.',
   },
   {
     id: 137,
@@ -2915,7 +2915,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Intek. +10 damage.',
+    notes: 'Manufacturer: Intek. + 10 Dmg. + 50% Crit.',
   },
 
   // ── MACHINE GUN TIER VARIANTS ─────────────────────────────────────────────
@@ -2939,7 +2939,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Brigadier. Fires 10 projectiles per shot. Double burst rate.',
+    notes: 'Manufacturer: Brigadier. + 5 Shots',
   },
   {
     id: 139,
@@ -2960,7 +2960,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: VMI.',
+    notes: 'Manufacturer: VMI. + 25% Crit.',
   },
   {
     id: 140,
@@ -2981,7 +2981,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Brigadier. 0 tonnage. Double burst rate.',
+    notes: 'Manufacturer: Brigadier. + 5 Shots - 0.5 Ton',
   },
   {
     id: 141,
@@ -3002,7 +3002,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: VMI. 0 tonnage.',
+    notes: 'Manufacturer: VMI. + 50% Crit. - 0.5 Ton',
   },
 
   // ── ER PPC TIER VARIANTS ───────────────────────────────────────────────────
@@ -3025,7 +3025,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: MagnaFirestar. +5 damage, -1 ton.',
+    notes: 'Manufacturer: Magna. + 5 Dmg. - 1 Ton',
   },
   {
     id: 143,
@@ -3045,7 +3045,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: TiegartMagnum. +10 damage, -1 ton.',
+    notes: 'Manufacturer: Tiegart. + 10 Dmg. - 1 Ton',
   },
 
   // ── PPC TIER VARIANTS ──────────────────────────────────────────────────────
@@ -3068,7 +3068,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Ceres Arms. +15 stability damage.',
+    notes: 'Manufacturer: Ceres Arms. + 15 Stb.Dmg.',
   },
   {
     id: 145,
@@ -3088,7 +3088,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Donal. +5 damage.',
+    notes: 'Manufacturer: Donal. + 5 Dmg.',
   },
   {
     id: 146,
@@ -3108,7 +3108,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Tiegart.',
+    notes: 'Manufacturer: Tiegart. + 2 Acc.',
   },
   {
     id: 147,
@@ -3128,7 +3128,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Ceres Arms. +30 stability damage.',
+    notes: 'Manufacturer: Ceres Arms. + 30 Stb.Dmg.',
   },
   {
     id: 148,
@@ -3148,7 +3148,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Donal. +10 damage.',
+    notes: 'Manufacturer: Donal. + 10 Dmg.',
   },
   {
     id: 149,
@@ -3168,7 +3168,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Tiegart.',
+    notes: 'Manufacturer: Tiegart. + 4 Acc.',
   },
 
   // ── SRM 2 TIER VARIANTS ────────────────────────────────────────────────────
@@ -3192,7 +3192,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Holly. +2 damage per missile.',
+    notes: 'Manufacturer: Holly. + 2 Dmg.',
   },
   {
     id: 151,
@@ -3213,7 +3213,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Irian.',
+    notes: 'Manufacturer: Irian. + 25% Crit.',
   },
   {
     id: 152,
@@ -3234,7 +3234,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Holly. +4 damage per missile.',
+    notes: 'Manufacturer: Holly. + 4 Dmg.',
   },
   {
     id: 153,
@@ -3255,7 +3255,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Irian.',
+    notes: 'Manufacturer: Irian. + 50% Crit.',
   },
   {
     id: 154,
@@ -3276,7 +3276,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Valiant. +2 damage per missile, +1 stability per missile.',
+    notes: 'Manufacturer: Valiant. + 2 Dmg. + 1 Stb.Dmg.',
   },
   {
     id: 155,
@@ -3297,7 +3297,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Valiant. +4 damage per missile, +2 stability per missile.',
+    notes: 'Manufacturer: Valiant. + 4 Dmg. + 2 Stb.Dmg.',
   },
 
   // ── SRM 4 TIER VARIANTS ────────────────────────────────────────────────────
@@ -3321,7 +3321,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Holly. +2 damage per missile.',
+    notes: 'Manufacturer: Holly. + 2 Dmg.',
   },
   {
     id: 157,
@@ -3342,7 +3342,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Irian.',
+    notes: 'Manufacturer: Irian. + 25% Crit.',
   },
   {
     id: 158,
@@ -3363,7 +3363,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Holly. +4 damage per missile.',
+    notes: 'Manufacturer: Holly. + 4 Dmg.',
   },
   {
     id: 159,
@@ -3384,7 +3384,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Irian.',
+    notes: 'Manufacturer: Irian. + 50% Crit.',
   },
   {
     id: 160,
@@ -3405,7 +3405,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Valiant. +2 damage per missile, +1 stability per missile.',
+    notes: 'Manufacturer: Valiant. + 2 Dmg. + 1 Stb.Dmg.',
   },
   {
     id: 161,
@@ -3426,7 +3426,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Valiant. +4 damage per missile, +2 stability per missile.',
+    notes: 'Manufacturer: Valiant. + 4 Dmg. + 2 Stb.Dmg.',
   },
 
   // ── SRM 6 TIER VARIANTS ────────────────────────────────────────────────────
@@ -3450,7 +3450,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Holly. +2 damage per missile.',
+    notes: 'Manufacturer: Holly. + 2 Dmg.',
   },
   {
     id: 163,
@@ -3471,7 +3471,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Irian.',
+    notes: 'Manufacturer: Irian. + 25% Crit.',
   },
   {
     id: 164,
@@ -3492,7 +3492,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Holly. +4 damage per missile.',
+    notes: 'Manufacturer: Holly. + 4 Dmg.',
   },
   {
     id: 165,
@@ -3513,7 +3513,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Irian.',
+    notes: 'Manufacturer: Irian. + 50% Crit.',
   },
   {
     id: 166,
@@ -3534,7 +3534,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Valiant. +2 damage per missile, +1 stability per missile.',
+    notes: 'Manufacturer: Valiant. + 2 Dmg. + 1 Stb.Dmg.',
   },
   {
     id: 167,
@@ -3555,7 +3555,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Manufacturer: Valiant. +4 damage per missile, +2 stability per missile.',
+    notes: 'Manufacturer: Valiant. + 4 Dmg. + 2 Stb.Dmg.',
   },
 
 
