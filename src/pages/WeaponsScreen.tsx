@@ -18,12 +18,6 @@ type MetaFilter = "CLAN" | "DLC";
 const CATEGORY_CHIPS: CategoryFilter[] = ["ALL", "Ballistic", "Energy", "Missile", "Support"];
 const META_CHIPS: MetaFilter[] = ["CLAN", "DLC"];
 
-function getWeaponTier(name: string): 0 | 1 | 2 | 3 {
-  if (name.endsWith(' + + +') || name.endsWith(' +++')) return 3;
-  if (name.endsWith(' + +') || name.endsWith(' ++')) return 2;
-  if (name.endsWith(' +')) return 1;
-  return 0;
-}
 
 const WeaponsScreen = () => {
   const navigate = useNavigate();
