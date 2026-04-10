@@ -56,7 +56,7 @@ const WeaponsScreen = () => {
     }).sort((a, b) => {
       const baseA = stripTier(a.name);
       const baseB = stripTier(b.name);
-      if (baseA !== baseB) return baseA.localeCompare(baseB);
+      if (baseA !== baseB) return baseA.localeCompare(baseB, undefined, { numeric: true, sensitivity: 'base' });
       const tierA = getTier(a.name);
       const tierB = getTier(b.name);
       if (tierA !== tierB) return tierA - tierB;
