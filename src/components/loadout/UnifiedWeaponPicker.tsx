@@ -51,6 +51,7 @@ const UnifiedWeaponPicker = ({
   const [tab, setTab] = useState<PickerTab>('WEAPONS');
   const [filter, setFilter] = useState<CategoryFilter>('ALL');
   const [search, setSearch] = useState('');
+  const [tierFilter, setTierFilter] = useState(false);
   const [flashId, setFlashId] = useState<string | number | null>(null);
 
   // Compute used inventory slots
@@ -100,6 +101,8 @@ const UnifiedWeaponPicker = ({
   }, [allCategories]);
 
   // Filtered & sorted weapons
+  const isTierVariant = (name: string) => name.includes('+');
+
   const filteredWeapons = useMemo(() => {
     const stripTier = (name: string) => name.replace(/\s*(\+\s*)+$/, '');
     const getTier = (name: string) => {
@@ -109,6 +112,7 @@ const UnifiedWeaponPicker = ({
     return WEAPONS.filter((w) => {
       if (!availableCategories.has(w.category)) return false;
       if (filter !== 'ALL' && w.category !== filter) return false;
+      if (tierFilter ? !isTierVariant(w.name) : isTierVariant(w.name)) return false;
       if (search && !w.name.toLowerCase().includes(search.toLowerCase())) return false;
       return true;
     }).sort((a, b) => {
@@ -120,7 +124,7 @@ const UnifiedWeaponPicker = ({
       if (tierA !== tierB) return tierA - tierB;
       return a.name.localeCompare(b.name);
     });
-  }, [filter, search, availableCategories]);
+  }, [filter, search, tierFilter, availableCategories]);
 
   // Jump jet availability
   const jjAllowed = JJ_ALLOWED_LOCATIONS.includes(locationKey);
@@ -316,6 +320,17 @@ const UnifiedWeaponPicker = ({
                   </button>
                 );
               })}
+              <button
+                onClick={() => setTierFilter(!tierFilter)}
+                className={`shrink-0 px-3 py-1 font-mono uppercase tracking-wider rounded-sm border transition-colors ${
+                  tierFilter
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'bg-card text-muted-foreground border-border hover:border-primary/50'
+                }`}
+                style={{ fontSize: 'var(--fs-badge)' }}
+              >
+                TIER
+              </button>
             </div>
           )}
         </div>
