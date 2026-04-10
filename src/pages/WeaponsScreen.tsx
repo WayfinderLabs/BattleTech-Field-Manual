@@ -44,38 +44,38 @@ const WeaponsScreen = () => {
   const filtered = useMemo(() => {
     const WEAPON_ORDER: Record<string, number> = {
       // ── BALLISTIC ──────────────────────────────────────
-      'AC/2':          100,
-      'AC/5':          110,
-      'AC/10':         120,
-      'AC/20':         130,
-      'Gauss Rifle':   140,
+      'Ballistic:AC/2':          100,
+      'Ballistic:AC/5':          110,
+      'Ballistic:AC/10':         120,
+      'Ballistic:AC/20':         130,
+      'Ballistic:Gauss Rifle':   140,
       // ── ENERGY ─────────────────────────────────────────
-      'Small Laser':         200,
-      'Medium Laser':        210,
-      'Large Laser':         220,
-      'ER Small Laser':      230,
-      'ER Medium Laser':     240,
-      'ER Large Laser':      250,
-      'Small Pulse Laser':   260,
-      'Medium Pulse Laser':  270,
-      'Large Pulse Laser':   280,
-      'PPC':                 290,
-      'ER PPC':              300,
-      'Flamer':              310,
+      'Energy:Small Laser':         200,
+      'Energy:Medium Laser':        210,
+      'Energy:Large Laser':         220,
+      'Energy:ER Small Laser':      230,
+      'Energy:ER Medium Laser':     240,
+      'Energy:ER Large Laser':      250,
+      'Energy:Small Pulse Laser':   260,
+      'Energy:Medium Pulse Laser':  270,
+      'Energy:Large Pulse Laser':   280,
+      'Energy:PPC':                 290,
+      'Energy:ER PPC':              300,
+      'Energy:Flamer':              310,
       // ── MISSILE ────────────────────────────────────────
-      'SRM 2':    400,
-      'SRM 4':    410,
-      'SRM 6':    420,
-      'LRM 5':    430,
-      'LRM 10':   440,
-      'LRM 15':   450,
-      'LRM 20':   460,
+      'Missile:SRM 2':    400,
+      'Missile:SRM 4':    410,
+      'Missile:SRM 6':    420,
+      'Missile:LRM 5':    430,
+      'Missile:LRM 10':   440,
+      'Missile:LRM 15':   450,
+      'Missile:LRM 20':   460,
       // ── SUPPORT ────────────────────────────────────────
-      'Small Laser':       500,
-      'ER Small Laser':    510,
-      'Small Pulse Laser': 520,
-      'Machine Gun':       530,
-      'Flamer':            540,
+      'Support:Small Laser':       500,
+      'Support:ER Small Laser':    510,
+      'Support:Small Pulse Laser': 520,
+      'Support:Machine Gun':       530,
+      'Support:Flamer':            540,
     };
 
     const stripTier = (name: string) =>
@@ -89,7 +89,7 @@ const WeaponsScreen = () => {
 
     const getSortKey = (w: Weapon): number => {
       const base = stripTier(w.name);
-      return WEAPON_ORDER[base] ?? 999;
+      return WEAPON_ORDER[`${w.category}:${base}`] ?? 999;
     };
 
     return WEAPONS.filter((w) => {
