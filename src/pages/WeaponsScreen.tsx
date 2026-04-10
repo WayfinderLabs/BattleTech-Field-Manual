@@ -42,12 +42,54 @@ const WeaponsScreen = () => {
   };
 
   const filtered = useMemo(() => {
+    const WEAPON_ORDER: Record<string, number> = {
+      // ── BALLISTIC ──────────────────────────────────────
+      'Ballistic:AC/2':          100,
+      'Ballistic:AC/5':          110,
+      'Ballistic:AC/10':         120,
+      'Ballistic:AC/20':         130,
+      'Ballistic:Gauss Rifle':   140,
+      // ── ENERGY ─────────────────────────────────────────
+      'Energy:Small Laser':         200,
+      'Energy:Medium Laser':        210,
+      'Energy:Large Laser':         220,
+      'Energy:ER Small Laser':      230,
+      'Energy:ER Medium Laser':     240,
+      'Energy:ER Large Laser':      250,
+      'Energy:Small Pulse Laser':   260,
+      'Energy:Medium Pulse Laser':  270,
+      'Energy:Large Pulse Laser':   280,
+      'Energy:PPC':                 290,
+      'Energy:ER PPC':              300,
+      'Energy:Flamer':              310,
+      // ── MISSILE ────────────────────────────────────────
+      'Missile:SRM 2':    400,
+      'Missile:SRM 4':    410,
+      'Missile:SRM 6':    420,
+      'Missile:LRM 5':    430,
+      'Missile:LRM 10':   440,
+      'Missile:LRM 15':   450,
+      'Missile:LRM 20':   460,
+      // ── SUPPORT ────────────────────────────────────────
+      'Support:Small Laser':       500,
+      'Support:ER Small Laser':    510,
+      'Support:Small Pulse Laser': 520,
+      'Support:Machine Gun':       530,
+      'Support:Flamer':            540,
+    };
+
     const stripTier = (name: string) =>
-      name.replace(/\s*(\+\s*)+$/, "").trim();
+      name.replace(/\s*(\+\s*)+$/, '').trim();
+
     const getTier = (name: string) => {
       const match = name.match(/(\+[\s+]*)+$/);
       if (!match) return 0;
       return (match[0].match(/\+/g) || []).length;
+    };
+
+    const getSortKey = (w: Weapon): number => {
+      const base = stripTier(w.name);
+      return WEAPON_ORDER[`${w.category}:${base}`] ?? 999;
     };
 
     return WEAPONS.filter((w) => {
@@ -58,9 +100,9 @@ const WeaponsScreen = () => {
       if (metaFilters.has("DLC") && w.dlcSource === "Base") return false;
       return true;
     }).sort((a, b) => {
-      const baseA = stripTier(a.name);
-      const baseB = stripTier(b.name);
-      if (baseA !== baseB) return baseA.localeCompare(baseB, undefined, { numeric: true, sensitivity: 'base' });
+      const keyA = getSortKey(a);
+      const keyB = getSortKey(b);
+      if (keyA !== keyB) return keyA - keyB;
       const tierA = getTier(a.name);
       const tierB = getTier(b.name);
       if (tierA !== tierB) return tierA - tierB;
