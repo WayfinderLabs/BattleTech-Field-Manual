@@ -39,12 +39,28 @@ const WeaponsScreen = () => {
   };
 
   const filtered = useMemo(() => {
+    const stripTier = (name: string) =>
+      name.replace(/\s*(\+\s*)+$/, "").trim();
+    const getTier = (name: string) => {
+      const match = name.match(/(\+[\s+]*)+$/);
+      if (!match) return 0;
+      return (match[0].match(/\+/g) || []).length;
+    };
+
     return WEAPONS.filter((w) => {
       if (search && !w.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (categoryFilter !== "ALL" && w.category !== categoryFilter) return false;
       if (metaFilters.has("CLAN") && !w.isClan) return false;
       if (metaFilters.has("DLC") && w.dlcSource === "Base") return false;
       return true;
+    }).sort((a, b) => {
+      const baseA = stripTier(a.name);
+      const baseB = stripTier(b.name);
+      if (baseA !== baseB) return baseA.localeCompare(baseB);
+      const tierA = getTier(a.name);
+      const tierB = getTier(b.name);
+      if (tierA !== tierB) return tierA - tierB;
+      return a.name.localeCompare(b.name);
     });
   }, [search, categoryFilter, metaFilters]);
 
