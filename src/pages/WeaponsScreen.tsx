@@ -18,6 +18,13 @@ type MetaFilter = "CLAN" | "DLC";
 const CATEGORY_CHIPS: CategoryFilter[] = ["ALL", "Ballistic", "Energy", "Missile", "Support"];
 const META_CHIPS: MetaFilter[] = ["CLAN", "DLC"];
 
+function getWeaponTier(name: string): 0 | 1 | 2 | 3 {
+  if (name.endsWith(' +++')) return 3;
+  if (name.endsWith(' ++')) return 2;
+  if (name.endsWith(' +')) return 1;
+  return 0;
+}
+
 const WeaponsScreen = () => {
   const navigate = useNavigate();
   const filters = useFilters();
@@ -106,9 +113,26 @@ const WeaponsScreen = () => {
               className="w-full text-left bg-card border border-border rounded-sm p-3 hover:border-primary/60 transition-colors active:scale-[0.98] group"
             >
               <div className="flex items-start justify-between gap-2 mb-2">
-                <span className="text-primary font-mono text-card-title uppercase tracking-wider leading-tight">
-                  {w.name}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-primary font-mono text-card-title uppercase tracking-wider leading-tight">
+                    {w.name}
+                  </span>
+                  {(() => {
+                    const tier = getWeaponTier(w.name);
+                    if (tier === 0) return null;
+                    return (
+                      <span
+                        className="px-1.5 py-0.5 font-mono text-xs rounded-sm shrink-0"
+                        style={{
+                          backgroundColor: '#2A2A2A',
+                          color: tier === 3 ? '#FFD700' : '#C87941',
+                        }}
+                      >
+                        {'+'.repeat(tier)}
+                      </span>
+                    );
+                  })()}
+                </div>
                 <div className="flex gap-1.5 shrink-0 flex-wrap justify-end">
                   <span className={`px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm ${CATEGORY_COLORS[w.category]}`}>
                     {w.category}
