@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { WEAPONS, type Weapon } from "@/data/weapons";
@@ -15,6 +15,8 @@ const CATEGORY_COLORS: Record<Weapon["category"], string> = {
 type CategoryFilter = Weapon["category"] | "ALL";
 type MetaFilter = "CLAN" | "DLC";
 
+const isTierVariant = (name: string) => name.includes('+');
+
 const CATEGORY_CHIPS: CategoryFilter[] = ["ALL", "Ballistic", "Energy", "Missile", "Support"];
 const META_CHIPS: MetaFilter[] = ["CLAN", "DLC"];
 
@@ -24,6 +26,7 @@ const WeaponsScreen = () => {
   const filters = useFilters();
   const scrollContainer = useScrollContainer();
   const { search, setSearch, categoryFilter, setCategoryFilter, metaFilters, toggleMeta } = filters.weapons;
+  const [tierFilter, setTierFilter] = useState(false);
   const scrollKey = "weapons";
 
   useEffect(() => {
@@ -50,6 +53,7 @@ const WeaponsScreen = () => {
     return WEAPONS.filter((w) => {
       if (search && !w.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (categoryFilter !== "ALL" && w.category !== categoryFilter) return false;
+      if (tierFilter ? !isTierVariant(w.name) : isTierVariant(w.name)) return false;
       if (metaFilters.has("CLAN") && !w.isClan) return false;
       if (metaFilters.has("DLC") && w.dlcSource === "Base") return false;
       return true;
@@ -62,7 +66,7 @@ const WeaponsScreen = () => {
       if (tierA !== tierB) return tierA - tierB;
       return a.name.localeCompare(b.name);
     });
-  }, [search, categoryFilter, metaFilters]);
+  }, [search, categoryFilter, tierFilter, metaFilters]);
 
   return (
     <div className="py-4 space-y-4">
@@ -93,6 +97,16 @@ const WeaponsScreen = () => {
             {chip}
           </button>
         ))}
+        <button
+          onClick={() => setTierFilter(!tierFilter)}
+          className={`shrink-0 px-3 py-1 text-label font-mono uppercase tracking-wider rounded-sm border transition-colors active:scale-[0.97] ${
+            tierFilter
+              ? "bg-primary text-primary-foreground border-primary"
+              : "bg-card text-muted-foreground border-border hover:border-primary/50"
+          }`}
+        >
+          TIER
+        </button>
         {META_CHIPS.map((chip) => (
           <button
             key={chip}
