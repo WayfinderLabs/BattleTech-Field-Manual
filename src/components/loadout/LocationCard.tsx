@@ -31,11 +31,6 @@ interface SlotBlock {
   weapon?: Weapon;
 }
 
-function getWeaponBonus(notes: string | null | undefined): string {
-  if (!notes) return '';
-  const match = notes.match(/^Manufacturer:[^.]+\.\s*(.+)$/);
-  return match ? match[1].trim() : '';
-}
 
 /** Color for equipment item blocks */
 const EQUIP_COLORS: Record<string, { first: string; cont: string }> = {
@@ -178,23 +173,6 @@ const LocationCard = ({
                   >
                     {block.itemName}
                   </span>
-                  {!block.isEquipment && block.weapon && (() => {
-                    const bonus = getWeaponBonus(block.weapon!.notes);
-                    if (!bonus) return null;
-                    return (
-                      <span
-                        className="shrink-0 font-mono"
-                        style={{
-                          fontSize: 9,
-                          color: '#8A8A8A',
-                          marginRight: 4,
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        {bonus}
-                      </span>
-                    );
-                  })()}
                   {/* Ammo round count annotation for ammo-dependent weapons */}
                   {!block.isEquipment && block.weapon?.ammoType && (() => {
                     const totalRawRounds = ammoBinCapacity[block.weapon!.ammoType!] ?? 0;
