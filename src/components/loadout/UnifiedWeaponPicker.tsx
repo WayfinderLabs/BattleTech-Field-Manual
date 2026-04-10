@@ -99,13 +99,26 @@ const UnifiedWeaponPicker = ({
     return cats;
   }, [allCategories]);
 
-  // Filtered weapons
+  // Filtered & sorted weapons
   const filteredWeapons = useMemo(() => {
+    const stripTier = (name: string) => name.replace(/\s*(\+\s*)+$/, '');
+    const getTier = (name: string) => {
+      const m = name.match(/(\+[\s+]*)+$/);
+      return m ? m[0].replace(/\s/g, '').length : 0;
+    };
     return WEAPONS.filter((w) => {
       if (!availableCategories.has(w.category)) return false;
       if (filter !== 'ALL' && w.category !== filter) return false;
       if (search && !w.name.toLowerCase().includes(search.toLowerCase())) return false;
       return true;
+    }).sort((a, b) => {
+      const baseA = stripTier(a.name);
+      const baseB = stripTier(b.name);
+      if (baseA !== baseB) return baseA.localeCompare(baseB, undefined, { numeric: true, sensitivity: 'base' });
+      const tierA = getTier(a.name);
+      const tierB = getTier(b.name);
+      if (tierA !== tierB) return tierA - tierB;
+      return a.name.localeCompare(b.name);
     });
   }, [filter, search, availableCategories]);
 
@@ -326,7 +339,7 @@ const UnifiedWeaponPicker = ({
                         transition: flashId === w.id ? 'background-color 150ms ease-in' : 'background-color 100ms ease-out',
                       }}
                     >
-                      <div className="flex items-start justify-between gap-2 mb-2">
+                      <div className="flex items-start justify-between gap-2 mb-1">
                         <span className="font-mono uppercase tracking-wider leading-tight" style={{ fontSize: 'var(--fs-card-title)', color: '#C87941' }}>
                           {w.name}
                         </span>
@@ -334,6 +347,11 @@ const UnifiedWeaponPicker = ({
                           {w.category}
                         </span>
                       </div>
+                      {w.notes && (
+                        <div className="font-mono mb-2" style={{ fontSize: 'var(--fs-badge)', color: '#8A8A8A' }}>
+                          {w.notes}
+                        </div>
+                      )}
                       <div className="flex gap-3">
                         {[
                           { label: 'DMG', value: w.damage },
