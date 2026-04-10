@@ -42,12 +42,54 @@ const WeaponsScreen = () => {
   };
 
   const filtered = useMemo(() => {
+    const WEAPON_ORDER: Record<string, number> = {
+      // ── BALLISTIC ──────────────────────────────────────
+      'AC/2':          100,
+      'AC/5':          110,
+      'AC/10':         120,
+      'AC/20':         130,
+      'Gauss Rifle':   140,
+      // ── ENERGY ─────────────────────────────────────────
+      'Small Laser':         200,
+      'Medium Laser':        210,
+      'Large Laser':         220,
+      'ER Small Laser':      230,
+      'ER Medium Laser':     240,
+      'ER Large Laser':      250,
+      'Small Pulse Laser':   260,
+      'Medium Pulse Laser':  270,
+      'Large Pulse Laser':   280,
+      'PPC':                 290,
+      'ER PPC':              300,
+      'Flamer':              310,
+      // ── MISSILE ────────────────────────────────────────
+      'SRM 2':    400,
+      'SRM 4':    410,
+      'SRM 6':    420,
+      'LRM 5':    430,
+      'LRM 10':   440,
+      'LRM 15':   450,
+      'LRM 20':   460,
+      // ── SUPPORT ────────────────────────────────────────
+      'Small Laser':       500,
+      'ER Small Laser':    510,
+      'Small Pulse Laser': 520,
+      'Machine Gun':       530,
+      'Flamer':            540,
+    };
+
     const stripTier = (name: string) =>
-      name.replace(/\s*(\+\s*)+$/, "").trim();
+      name.replace(/\s*(\+\s*)+$/, '').trim();
+
     const getTier = (name: string) => {
       const match = name.match(/(\+[\s+]*)+$/);
       if (!match) return 0;
       return (match[0].match(/\+/g) || []).length;
+    };
+
+    const getSortKey = (w: Weapon): number => {
+      const base = stripTier(w.name);
+      return WEAPON_ORDER[base] ?? 999;
     };
 
     return WEAPONS.filter((w) => {
@@ -58,9 +100,9 @@ const WeaponsScreen = () => {
       if (metaFilters.has("DLC") && w.dlcSource === "Base") return false;
       return true;
     }).sort((a, b) => {
-      const baseA = stripTier(a.name);
-      const baseB = stripTier(b.name);
-      if (baseA !== baseB) return baseA.localeCompare(baseB, undefined, { numeric: true, sensitivity: 'base' });
+      const keyA = getSortKey(a);
+      const keyB = getSortKey(b);
+      if (keyA !== keyB) return keyA - keyB;
       const tierA = getTier(a.name);
       const tierB = getTier(b.name);
       if (tierA !== tierB) return tierA - tierB;
