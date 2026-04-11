@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Crosshair, Bot, Wrench, Layers } from "lucide-react";
+import { useLoadoutDirty } from "@/contexts/LoadoutDirtyContext";
 
 const tabs = [
   { path: "/", label: "WEAPONS", icon: Crosshair },
@@ -11,6 +12,7 @@ const tabs = [
 const BottomNav = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { requestNavigate } = useLoadoutDirty();
 
   const isActive = (path: string) => {
     if (path === "/") return location.pathname === "/" || location.pathname.startsWith("/weapons");
@@ -25,7 +27,15 @@ const BottomNav = () => {
           return (
             <button
               key={path}
-              onClick={() => navigate(path)}
+              onClick={() => {
+                const isLoadoutTab = path === '/loadout';
+                const alreadyOnTab = isActive(path);
+                if (isLoadoutTab || alreadyOnTab) {
+                  navigate(path);
+                } else {
+                  requestNavigate(() => navigate(path));
+                }
+              }}
               className={`flex-1 flex flex-col items-center gap-1 py-2.5 transition-colors duration-150 active:scale-[0.97] ${
                 active ? "text-primary" : "text-muted-foreground"
               }`}
