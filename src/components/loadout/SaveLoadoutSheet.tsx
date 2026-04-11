@@ -92,6 +92,7 @@ const SaveLoadoutSheet = ({ open, onClose, onSave, onOverwrite, getDuplicateId }
               <input
                 ref={nameRef}
                 type="text"
+                inputMode="text"
                 value={name}
                 onChange={(e) => { setName(e.target.value.slice(0, 40)); setError(''); }}
                 placeholder="LOADOUT NAME"
