@@ -340,8 +340,7 @@ const LoadoutBuilderScreen = () => {
         const availableTonnage = selectedMech.tonnage - selectedMech.initialTonnage;
         const freeTons = availableTonnage - usedTons;
         const handleMaxArmor = () => {
-          if (freeTons <= 0) { setArmorPoints(0); return; }
-          const maxAffordablePoints = Math.floor(freeTons / 0.0125);
+          const maxAffordablePoints = Math.floor(Math.max(0, freeTons) / 0.0125);
           const capped = Math.min(selectedMech.maxArmor, maxAffordablePoints);
           const snapped = Math.floor(capped / 5) * 5;
           setArmorPoints(snapped);
@@ -393,7 +392,7 @@ const LoadoutBuilderScreen = () => {
                 fontSize: 'var(--fs-badge)',
                 color: '#C87941',
                 border: '1px solid #C87941',
-                opacity: isMaxed ? 0.4 : 1,
+                opacity: 1,
               }}
             >
               MAX ARMOR
