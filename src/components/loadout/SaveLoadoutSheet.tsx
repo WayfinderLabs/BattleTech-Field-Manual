@@ -34,7 +34,10 @@ const SaveLoadoutSheet = ({ open, onClose, onSave, onOverwrite, getDuplicateId }
       setName('');
       setNotes('');
       setError('');
-      setTimeout(() => nameRef.current?.focus(), 100);
+      const timer = setTimeout(() => {
+        nameRef.current?.focus();
+      }, 150);
+      return () => clearTimeout(timer);
     }
   }, [open]);
 
