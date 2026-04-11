@@ -61,6 +61,10 @@
     @apply border-border;
   }
 
+  html, body {
+    overscroll-behavior-y: contain;
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
     -webkit-font-smoothing: antialiased;
