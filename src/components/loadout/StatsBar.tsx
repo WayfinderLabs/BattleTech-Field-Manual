@@ -51,6 +51,18 @@ const StatsBar = ({ state, armorPoints = 0 }: StatsBarProps) => {
     }
   }
 
+  const equippedWeapons = allLocations
+    .flatMap(loc => slots[loc])
+    .map(slot => slot.weapon)
+    .filter((w): w is NonNullable<typeof w> => w !== null && w !== undefined);
+
+  const engagementRange = (() => {
+    if (equippedWeapons.length === 0) return null;
+    const lowBound = Math.max(...equippedWeapons.map(w => w.shortRange));
+    const highBound = Math.min(...equippedWeapons.map(w => w.longRange));
+    return { lowBound, highBound, overlap: lowBound < highBound };
+  })();
+
   const adjustedHeat = Math.floor(rawHeat * reductionMultiplier);
   const shutdown = BASE_MAX_HEAT + totalMaxHeatBonus;
   const hasExchanger = reductionMultiplier < 1;
@@ -58,7 +70,6 @@ const StatsBar = ({ state, armorPoints = 0 }: StatsBarProps) => {
 
   const availableTonnage = selectedMech.tonnage - selectedMech.initialTonnage;
 
-  // Tonnage color states — derived directly from computed values each render
   const tonnageColor = tonnageUsed > availableTonnage
     ? '#FF4444'
     : tonnageUsed < availableTonnage
@@ -115,6 +126,21 @@ const StatsBar = ({ state, armorPoints = 0 }: StatsBarProps) => {
             <div className="font-mono font-semibold text-sm">
               {shutdown}
             </div>
+          </div>
+        </div>
+        {/* Row 3 — Engagement range */}
+        <div className="text-center py-2 px-3 border-t border-border">
+          <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
+            ENGAGEMENT RANGE
+          </div>
+          <div className="font-mono font-semibold text-sm">
+            {!engagementRange ? (
+              <span>—</span>
+            ) : engagementRange.overlap ? (
+              <span>{engagementRange.lowBound}–{engagementRange.highBound}m</span>
+            ) : (
+              <span style={{ color: '#C87941' }}>NO OVERLAP</span>
+            )}
           </div>
         </div>
       </div>
