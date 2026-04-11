@@ -45,6 +45,9 @@ const MechsScreen = () => {
       if (metaFilters.has("DLC") && m.dlcSource === "Base") return false;
       if (metaFilters.has("LOSTECH") && !m.isLosTech) return false;
       return true;
+    }).sort((a, b) => {
+      if (a.tonnage !== b.tonnage) return a.tonnage - b.tonnage;
+      return a.name.localeCompare(b.name);
     });
   }, [search, classFilter, metaFilters]);
 
