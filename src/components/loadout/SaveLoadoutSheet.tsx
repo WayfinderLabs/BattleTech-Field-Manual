@@ -34,7 +34,10 @@ const SaveLoadoutSheet = ({ open, onClose, onSave, onOverwrite, getDuplicateId }
       setName('');
       setNotes('');
       setError('');
-      setTimeout(() => nameRef.current?.focus(), 100);
+      const timer = setTimeout(() => {
+        nameRef.current?.focus();
+      }, 150);
+      return () => clearTimeout(timer);
     }
   }, [open]);
 
@@ -89,6 +92,7 @@ const SaveLoadoutSheet = ({ open, onClose, onSave, onOverwrite, getDuplicateId }
               <input
                 ref={nameRef}
                 type="text"
+                inputMode="text"
                 value={name}
                 onChange={(e) => { setName(e.target.value.slice(0, 40)); setError(''); }}
                 placeholder="LOADOUT NAME"
