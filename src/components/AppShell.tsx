@@ -28,7 +28,7 @@ const AppShellInner = () => {
       <div className="flex-shrink-0">
         <TopBar />
       </div>
-      <main ref={scrollContainerRef} className="flex-1 min-h-0 overflow-y-auto">
+      <main ref={scrollContainerRef} className="flex-1 min-h-0 overflow-y-auto overscroll-y-contain">
         <div className="max-w-[480px] mx-auto px-4 py-4">
           <Outlet />
         </div>
