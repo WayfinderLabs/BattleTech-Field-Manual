@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
+import { useLoadoutDirty } from '@/contexts/LoadoutDirtyContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Bookmark } from 'lucide-react';
 import type { Mech } from '@/data/mechs';
@@ -68,6 +69,13 @@ const LoadoutBuilderScreen = () => {
       action();
     }
   }, [isDirty]);
+
+  const { registerGuard } = useLoadoutDirty();
+
+  useEffect(() => {
+    registerGuard(guardedNavigate);
+    return () => registerGuard(null);
+  }, [guardedNavigate, registerGuard]);
 
   // Restore from saved loadout navigation
   useEffect(() => {
@@ -556,7 +564,7 @@ const LoadoutBuilderScreen = () => {
               className="font-mono"
               style={{ color: '#8A8A8A', fontSize: 'var(--fs-badge)', marginBottom: '20px' }}
             >
-              Navigating away will discard your current loadout. Are you sure?
+              You have weapons or equipment assigned. Your build will still be here when you return.
             </div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button
@@ -585,15 +593,15 @@ const LoadoutBuilderScreen = () => {
                 style={{
                   flex: 1,
                   background: 'transparent',
-                  border: '1px solid #FF4444',
-                  color: '#FF4444',
+                  border: '1px solid #C87941',
+                  color: '#C87941',
                   padding: '10px',
                   minHeight: '44px',
                   fontSize: 'var(--fs-badge)',
                   cursor: 'pointer',
                 }}
               >
-                DISCARD & CONTINUE
+                LEAVE
               </button>
             </div>
           </div>

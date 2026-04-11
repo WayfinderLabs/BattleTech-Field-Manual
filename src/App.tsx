@@ -11,6 +11,7 @@ import LoadoutBuilderScreen from "./pages/LoadoutBuilderScreen";
 import SavedLoadoutsScreen from "./pages/SavedLoadoutsScreen";
 import NotFound from "./pages/NotFound";
 import { FilterProvider } from "./contexts/FilterContext";
+import { LoadoutDirtyProvider } from "./contexts/LoadoutDirtyContext";
 
 const queryClient = new QueryClient();
 
@@ -18,20 +19,22 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <FilterProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route element={<AppShell />}>
-              <Route path="/" element={<WeaponsScreen />} />
-              <Route path="/mechs" element={<MechsScreen />} />
-              <Route path="/equipment" element={<EquipmentScreen />} />
-              <Route path="/weapons/:id" element={<WeaponDetailScreen />} />
-              <Route path="/mechs/:id" element={<MechDetailScreen />} />
-              <Route path="/loadout" element={<LoadoutBuilderScreen />} />
-              <Route path="/saved-loadouts" element={<SavedLoadoutsScreen />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <LoadoutDirtyProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route element={<AppShell />}>
+                <Route path="/" element={<WeaponsScreen />} />
+                <Route path="/mechs" element={<MechsScreen />} />
+                <Route path="/equipment" element={<EquipmentScreen />} />
+                <Route path="/weapons/:id" element={<WeaponDetailScreen />} />
+                <Route path="/mechs/:id" element={<MechDetailScreen />} />
+                <Route path="/loadout" element={<LoadoutBuilderScreen />} />
+                <Route path="/saved-loadouts" element={<SavedLoadoutsScreen />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </LoadoutDirtyProvider>
       </FilterProvider>
     </TooltipProvider>
   </QueryClientProvider>
