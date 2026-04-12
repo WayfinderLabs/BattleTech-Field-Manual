@@ -105,9 +105,60 @@ const LoadoutBuilderScreen = () => {
         const restoredArmor = typeof saved.armorPoints === 'number' ? saved.armorPoints : mech.maxArmor;
         setArmorPoints(restoredArmor);
       }
-      navigate('/loadout', { replace: true, state: {} });
+    navigate('/loadout', { replace: true, state: {} });
     }
   }, []);
+
+  // Restore draft from localStorage on mount (only if no restoreLoadout nav state)
+  useEffect(() => {
+    const navState = location.state as { restoreLoadout?: any } | null;
+    if (navState?.restoreLoadout) return;
+
+    try {
+      const raw = localStorage.getItem('btfm_draft_loadout');
+      if (!raw) return;
+      const draft = JSON.parse(raw);
+      const mech = MECHS.find(m => m.id.toString() === draft.mechId);
+      if (!mech) return;
+      const newSlots = { ...EMPTY_SLOTS } as Record<LocationKey, ReturnType<typeof parseHardpoints>>;
+      for (const key of LOCATION_KEYS) {
+        const parsed = parseHardpoints(mech.hardpoints[key]);
+        if (draft.slots[key]) {
+          for (let i = 0; i < parsed.length && i < draft.slots[key].length; i++) {
+            if (draft.slots[key][i]?.weapon) {
+              parsed[i] = { ...parsed[i], weapon: draft.slots[key][i].weapon };
+            }
+          }
+        }
+        newSlots[key] = parsed;
+      }
+      setState({
+        selectedMech: mech,
+        slots: newSlots,
+        equipment: draft.equipment || { ...EMPTY_EQUIPMENT },
+      });
+      if (typeof draft.armorPoints === 'number') {
+        setArmorPoints(draft.armorPoints);
+      }
+    } catch {}
+  }, []);
+
+  // Persist draft to localStorage on every state change
+  useEffect(() => {
+    if (!state.selectedMech) {
+      localStorage.removeItem('btfm_draft_loadout');
+      return;
+    }
+    try {
+      const draft = {
+        mechId: state.selectedMech.id.toString(),
+        slots: state.slots,
+        equipment: state.equipment,
+        armorPoints,
+      };
+      localStorage.setItem('btfm_draft_loadout', JSON.stringify(draft));
+    } catch {}
+  }, [state, armorPoints]);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
