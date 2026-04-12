@@ -18,6 +18,9 @@ const MechPickerSheet = ({ open, onClose, onSelect }: MechPickerSheetProps) => {
   const filtered = MECHS.filter((m) => {
     const q = search.toLowerCase();
     return m.name.toLowerCase().includes(q) || m.variant.toLowerCase().includes(q);
+  }).sort((a, b) => {
+    if (a.tonnage !== b.tonnage) return a.tonnage - b.tonnage;
+    return a.name.localeCompare(b.name);
   });
 
   const handleScroll = useCallback(() => {
