@@ -72,14 +72,14 @@ const WeaponDetailScreen = () => {
     }
   };
 
-  const stats = [
+  const stats: { label: string; value: string | number }[] = [
     { label: "CATEGORY", value: weapon.category },
     { label: "DAMAGE", value: weapon.damage },
     { label: "STABILITY DMG", value: weapon.stabilityDamage },
     { label: "HEAT", value: weapon.heat },
     { label: "TONNAGE", value: weapon.tonnage },
     { label: "CRITICAL SLOTS", value: weapon.criticalSlots },
-    { label: "AMMO / TON", value: weapon.ammoPerTon ?? "N/A" },
+    ...(weapon.ammoPerTon !== null ? [{ label: "AMMO / TON", value: weapon.ammoPerTon }] : []),
     { label: "DLC SOURCE", value: weapon.dlcSource },
     { label: "INDIRECT FIRE", value: weapon.indirectFire ? "YES" : "NO" },
     { label: "CLAN", value: weapon.isClan ? "YES" : "NO" },
