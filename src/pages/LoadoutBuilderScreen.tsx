@@ -320,6 +320,107 @@ const LoadoutBuilderScreen = () => {
   const { selectedMech } = state;
   const hasOverweight = validation.some(v => v.code === 'OVERWEIGHT');
 
+  const buildShareText = () => {
+    if (!selectedMech) return '';
+    // Compute stats for share
+    let tonnageUsed = armorPoints * 0.0125;
+    let rawHeat = 0;
+    let shareDissipation = selectedMech.baseHeatDissipation;
+    let totalDamage = 0;
+    let jumpJetCount = 0;
+    let totalMaxHeatBonus = 0;
+    let reductionMultiplier = 1;
+    const BASE_MAX_HEAT = 100;
+
+    for (const loc of LOCATION_KEYS) {
+      for (const s of state.slots[loc]) {
+        if (s.weapon) {
+          tonnageUsed += s.weapon.tonnage;
+          rawHeat += s.weapon.heat;
+          totalDamage += s.weapon.damage;
+        }
+      }
+      for (const eq of state.equipment[loc]) {
+        if (eq.item) {
+          tonnageUsed += eq.item.data.tonnage;
+          if (eq.item.kind === 'heatSink') {
+            const hs = eq.item.data as HeatSink;
+            if (hs.subType === 'Standard') shareDissipation += hs.dissipation;
+            if (hs.maxHeatBonus) totalMaxHeatBonus += hs.maxHeatBonus;
+            if (hs.heatReductionPct) reductionMultiplier *= (1 - hs.heatReductionPct / 100);
+          }
+          if (eq.item.kind === 'jumpJet') jumpJetCount++;
+        }
+      }
+    }
+
+    const adjustedHeat = Math.floor(rawHeat * reductionMultiplier);
+    const shutdown = BASE_MAX_HEAT + totalMaxHeatBonus;
+    const availableTonnage = selectedMech.tonnage - selectedMech.initialTonnage;
+    const jjMax = selectedMech.jumpJetsMax;
+
+    // Engagement range
+    const equippedWeapons = LOCATION_KEYS
+      .flatMap(loc => state.slots[loc])
+      .map(s => s.weapon)
+      .filter((w): w is NonNullable<typeof w> => w !== null && w !== undefined);
+    let engagementStr = '—';
+    if (equippedWeapons.length > 0) {
+      const lowBound = Math.max(...equippedWeapons.map(w => w.shortRange));
+      const highBound = Math.min(...equippedWeapons.map(w => w.longRange));
+      engagementStr = lowBound < highBound ? `${lowBound}–${highBound}m` : 'NO OVERLAP';
+    }
+
+    // Per-location items
+    const locationLines = LOCATION_KEYS.map(loc => {
+      const label = LOCATION_LABELS[loc];
+      const items: string[] = [];
+      for (const s of state.slots[loc]) {
+        if (s.weapon) items.push(s.weapon.name);
+      }
+      for (const eq of state.equipment[loc]) {
+        if (eq.item) items.push(eq.item.data.name);
+      }
+      return `${label}: ${items.length > 0 ? items.join(', ') : '—'}`;
+    });
+
+    const lines = [
+      `${selectedMech.name} (${selectedMech.variant}) — Custom Loadout`,
+      `Tonnage Used: ${tonnageUsed}t / ${availableTonnage}t`,
+      `Armor: ${armorPoints} / ${selectedMech.maxArmor}`,
+      `Damage Output: ${Math.floor(totalDamage)}`,
+      `Heat / Dissipation: ${adjustedHeat} / ${shareDissipation}`,
+      `Shutdown Risk: ${shutdown}%`,
+      `Jump Jets: ${jumpJetCount} / ${jjMax}`,
+      `Engagement Range: ${engagementStr}`,
+      '',
+      'Loadout:',
+      ...locationLines,
+      '',
+      '[placeholder: App store link coming soon]',
+      '— Shared via BattleTech Field Manual',
+    ];
+    return lines.join('\n');
+  };
+
+  const handleShare = async () => {
+    if (!selectedMech) return;
+    const text = buildShareText();
+    const title = `${selectedMech.name} — Loadout`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text });
+      } catch {}
+    } else {
+      try {
+        await navigator.clipboard.writeText(text);
+        toast("Copied to clipboard — ready for sharing!", {
+          style: { background: "#1a1a1a", color: "#C87941", fontFamily: "monospace", border: "1px solid #2a2a2a" },
+        });
+      } catch {}
+    }
+  };
+
   return (
     <div className="space-y-4">
       {/* Toast notification */}
@@ -332,58 +433,71 @@ const LoadoutBuilderScreen = () => {
         </div>
       )}
 
-      {/* Header with bookmark icon */}
-      <div className="flex items-center justify-between">
-        <h1 className="font-mono uppercase tracking-wider text-primary font-bold" style={{ fontSize: 'var(--fs-heading)' }}>
-          LOADOUT BUILDER
-        </h1>
-        <button
-          onClick={() => guardedNavigate(() => navigate('/saved-loadouts'))}
-          className="text-muted-foreground hover:text-primary transition-colors p-1"
-        >
-          <Bookmark className="w-5 h-5" />
-        </button>
-      </div>
-
-      {/* Mech Selection Panel */}
-      <div className="border border-border rounded-sm p-4 bg-card">
-        <div className="font-mono uppercase tracking-wider text-primary mb-3" style={{ fontSize: 'var(--fs-body)' }}>
-          SELECT MECH
-        </div>
-
-        {!selectedMech ? (
-          <button
-            onClick={() => setMechPickerOpen(true)}
-            className="w-full border border-primary text-primary font-mono uppercase tracking-wider py-3 rounded-sm hover:bg-primary/10 transition-colors"
-            style={{ fontSize: 'var(--fs-body)' }}
-          >
-            [ TAP TO SELECT MECH ]
-          </button>
-        ) : (
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex-1 min-w-0">
-              <div className="font-mono uppercase tracking-wider text-primary font-semibold" style={{ fontSize: 'var(--fs-card-title)' }}>
-                {selectedMech.name}
-              </div>
-              <div className="font-mono text-muted-foreground" style={{ fontSize: 'var(--fs-badge)' }}>
-                {selectedMech.variant}
-              </div>
-              <div className="flex gap-3 mt-2 font-mono text-muted-foreground flex-wrap" style={{ fontSize: 'var(--fs-badge)' }}>
-                <span>{selectedMech.chassisClass}</span>
-                <span className="text-primary">{selectedMech.tonnage - selectedMech.initialTonnage}t free / {selectedMech.tonnage}T</span>
-                <span>{selectedMech.topSpeed} km/h</span>
-                <span>JJ: {selectedMech.jumpJetsMax}</span>
-              </div>
-            </div>
+      {/* Sticky header block */}
+      <div className="sticky top-0 z-40 -mx-4 px-4" style={{ background: '#0D0D0D', borderBottom: '1px solid #2a2a2a' }}>
+        {/* ROW 1 — Title bar */}
+        <div className="flex items-center justify-between h-11 min-h-[44px]">
+          <span className="text-sm font-mono uppercase tracking-widest text-primary font-bold">
+            LOADOUT BUILDER
+          </span>
+          <div className="flex items-center gap-1">
             <button
-              onClick={() => guardedNavigate(() => setMechPickerOpen(true))}
-              className="font-mono uppercase tracking-wider text-muted-foreground border border-border rounded-sm px-2 py-1 hover:text-foreground transition-colors shrink-0"
-              style={{ fontSize: 'var(--fs-badge)' }}
+              onClick={() => guardedNavigate(() => navigate('/saved-loadouts'))}
+              className="text-muted-foreground hover:text-primary transition-colors p-1"
             >
-              CHANGE
+              <Bookmark className="w-5 h-5" />
+            </button>
+            <button
+              onClick={handleShare}
+              disabled={!selectedMech}
+              className="p-1 active:scale-[0.97] disabled:opacity-40"
+              aria-label="Share"
+            >
+              <Share2 className="h-5 w-5" style={{ color: '#8A8A8A' }} />
             </button>
           </div>
-        )}
+        </div>
+
+        {/* ROW 2 — Mech selector card */}
+        <div className="border border-border rounded-sm p-4 bg-card mb-0">
+          <div className="font-mono uppercase tracking-wider text-primary mb-3" style={{ fontSize: 'var(--fs-body)' }}>
+            SELECT MECH
+          </div>
+
+          {!selectedMech ? (
+            <button
+              onClick={() => setMechPickerOpen(true)}
+              className="w-full border border-primary text-primary font-mono uppercase tracking-wider py-3 rounded-sm hover:bg-primary/10 transition-colors"
+              style={{ fontSize: 'var(--fs-body)' }}
+            >
+              [ TAP TO SELECT MECH ]
+            </button>
+          ) : (
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex-1 min-w-0">
+                <div className="font-mono uppercase tracking-wider text-primary font-semibold" style={{ fontSize: 'var(--fs-card-title)' }}>
+                  {selectedMech.name}
+                </div>
+                <div className="font-mono text-muted-foreground" style={{ fontSize: 'var(--fs-badge)' }}>
+                  {selectedMech.variant}
+                </div>
+                <div className="flex gap-3 mt-2 font-mono text-muted-foreground flex-wrap" style={{ fontSize: 'var(--fs-badge)' }}>
+                  <span>{selectedMech.chassisClass}</span>
+                  <span className="text-primary">{selectedMech.tonnage - selectedMech.initialTonnage}t free / {selectedMech.tonnage}T</span>
+                  <span>{selectedMech.topSpeed} km/h</span>
+                  <span>JJ: {selectedMech.jumpJetsMax}</span>
+                </div>
+              </div>
+              <button
+                onClick={() => guardedNavigate(() => setMechPickerOpen(true))}
+                className="font-mono uppercase tracking-wider text-muted-foreground border border-border rounded-sm px-2 py-1 hover:text-foreground transition-colors shrink-0"
+                style={{ fontSize: 'var(--fs-badge)' }}
+              >
+                CHANGE
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Armor Row */}
