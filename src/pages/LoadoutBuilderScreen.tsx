@@ -1,7 +1,9 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useLoadoutDirty } from '@/contexts/LoadoutDirtyContext';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Bookmark } from 'lucide-react';
+import { Bookmark, Share2 } from 'lucide-react';
+import { toast } from 'sonner';
+import type { HeatSink } from '@/data/loadoutEquipment';
 import type { Mech } from '@/data/mechs';
 import { MECHS } from '@/data/mechs';
 import type { Weapon } from '@/data/weapons';
