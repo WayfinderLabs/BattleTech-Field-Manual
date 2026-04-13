@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Share2 } from "lucide-react";
 import { WEAPONS } from "@/data/weapons";
 import { useScrollContainer } from "@/contexts/ScrollContext";
+import { toast } from "sonner";
 
 const WeaponDetailScreen = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,6 +28,50 @@ const WeaponDetailScreen = () => {
     );
   }
 
+  const buildShareText = () => {
+    const lines: string[] = [
+      weapon.name,
+      `Category: ${weapon.category}`,
+      `Damage: ${weapon.damage}`,
+      `Stability Dmg: ${weapon.stabilityDamage}`,
+      `Heat: ${weapon.heat}`,
+      `Tonnage: ${weapon.tonnage}t`,
+      `Critical Slots: ${weapon.criticalSlots}`,
+    ];
+    if (weapon.ammoPerTon !== null) {
+      lines.push(`Ammo/Ton: ${weapon.ammoPerTon}`);
+    }
+    const formatR = (v: number) => (v === 0 ? "0m" : `${v}m`);
+    lines.push(`Range — Min: ${formatR(weapon.minRange)} / Optimal: ${formatR(weapon.shortRange)} / Max: ${formatR(weapon.longRange)}`);
+    lines.push(`Indirect Fire: ${weapon.indirectFire ? "Yes" : "No"}`);
+    lines.push(`Clan: ${weapon.isClan ? "Yes" : "No"}`);
+    lines.push(`DLC: ${weapon.dlcSource}`);
+    if (weapon.notes) {
+      lines.push(`Bonus: ${weapon.notes}`);
+    }
+    lines.push("");
+    lines.push("[placeholder: App store link coming soon]");
+    lines.push("");
+    lines.push("— Shared via BattleTech Field Manual");
+    return lines.join("\n");
+  };
+
+  const handleShare = async () => {
+    const text = buildShareText();
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: weapon.name, text });
+      } catch {}
+    } else {
+      try {
+        await navigator.clipboard.writeText(text);
+        toast("Copied to clipboard — ready for sharing!", {
+          style: { background: "#1a1a1a", color: "#C87941", fontFamily: "monospace", border: "1px solid #2a2a2a" },
+        });
+      } catch {}
+    }
+  };
+
   const stats = [
     { label: "CATEGORY", value: weapon.category },
     { label: "DAMAGE", value: weapon.damage },
@@ -49,12 +94,21 @@ const WeaponDetailScreen = () => {
   ];
 
   return (
-    <div className="py-4 space-y-5">
-      <button onClick={() => navigate("/")} className="flex items-center gap-1 text-primary text-body font-mono active:scale-[0.97]">
-        <ChevronLeft className="h-4 w-4" /> BACK
-      </button>
-
-      <h1 className="text-primary font-mono text-heading uppercase tracking-widest leading-tight">{weapon.name}</h1>
+    <div className="space-y-5">
+      {/* Sticky header */}
+      <div className="sticky top-0 z-40 -mx-4 px-4" style={{ background: "#0D0D0D", borderBottom: "1px solid #2a2a2a" }}>
+        <div className="flex items-center justify-between h-11 min-h-[44px]">
+          <button onClick={() => navigate("/")} className="flex items-center gap-1 text-primary text-sm font-mono active:scale-[0.97] shrink-0">
+            <ChevronLeft className="h-4 w-4" /> BACK
+          </button>
+          <span className="text-sm font-mono uppercase tracking-widest text-foreground truncate mx-3">
+            {weapon.name}
+          </span>
+          <button onClick={handleShare} className="shrink-0 p-1 active:scale-[0.97]" aria-label="Share">
+            <Share2 className="h-5 w-5" style={{ color: "#8A8A8A" }} />
+          </button>
+        </div>
+      </div>
 
       {/* Stat rows */}
       <div className="border border-border rounded-sm bg-card divide-y divide-border">
