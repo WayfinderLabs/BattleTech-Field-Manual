@@ -53,7 +53,7 @@ const EquipmentScreen = () => {
             <div className="sticky top-0 z-10 bg-background py-2">
               <div className="border-l-2 border-primary pl-3">
                 <span className="text-label font-mono text-muted-foreground uppercase tracking-wider">
-                  {SECTION_LABELS[cat]}
+                  // {SECTION_LABELS[cat]}
                 </span>
               </div>
             </div>
@@ -78,7 +78,7 @@ const EquipmentScreen = () => {
                       )}
                     </div>
                   </div>
-                  <p className="text-muted-foreground text-body font-sans leading-relaxed mb-2">
+                  <p className="text-muted-foreground text-sm font-mono leading-relaxed mb-2">
                     {eq.effectDescription}
                   </p>
                   <div className="flex gap-3">
