@@ -237,6 +237,8 @@ const LoadoutBuilderScreen = () => {
       if (typeof draft.armorPoints === 'number') {
         setArmorPoints(draft.armorPoints);
       }
+      if (draft.loadedName) setLoadedName(draft.loadedName);
+      if (draft.loadedNotes) setLoadedNotes(draft.loadedNotes);
     } catch {}
   }, []);
 
