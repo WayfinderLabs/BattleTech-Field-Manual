@@ -79,7 +79,8 @@ const SaveLoadoutSheet = ({ open, onClose, onSave, onOverwrite, getDuplicateId }
         <SheetContent
           side="bottom"
           className="border-t border-border rounded-t-sm p-0 flex flex-col"
-          style={{ backgroundColor: '#161616', maxHeight: '85dvh' }}
+          style={{ backgroundColor: '#161616', maxHeight: '85vh' }}
+          ref={(el) => { if (el) el.style.setProperty('max-height', '85dvh'); }}
         >
           <SheetHeader className="px-4 pt-4 pb-2 shrink-0">
             <SheetTitle className="font-mono uppercase tracking-wider text-primary" style={{ fontSize: 'var(--fs-body)' }}>
