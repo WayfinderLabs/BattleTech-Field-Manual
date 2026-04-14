@@ -199,6 +199,8 @@ const LoadoutBuilderScreen = () => {
         // Restore armor: use saved value if present, otherwise default to mech maxArmor
         const restoredArmor = typeof saved.armorPoints === 'number' ? saved.armorPoints : mech.maxArmor;
         setArmorPoints(restoredArmor);
+        setLoadedName(saved.name || '');
+        setLoadedNotes(saved.notes || '');
       }
     navigate('/loadout', { replace: true, state: {} });
     }
@@ -362,6 +364,8 @@ const LoadoutBuilderScreen = () => {
     if (!state.selectedMech) return 'saved';
     const result = saveLoadout(name, notes, state.selectedMech.id.toString(), state.slots, state.equipment, armorPoints);
     if (result === 'saved') {
+      setLoadedName(name);
+      setLoadedNotes(notes?.trim() || '');
       setToastMessage('LOADOUT SAVED');
     }
     return result;
