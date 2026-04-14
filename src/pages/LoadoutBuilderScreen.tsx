@@ -121,19 +121,41 @@ const LoadoutBuilderScreen = () => {
     reason: 'OVERWEIGHT' | 'CRIT_OVERFLOW';
   } | null>(null);
   const [unsavedGuardAction, setUnsavedGuardAction] = useState<(() => void) | null>(null);
+  const [loadedName, setLoadedName] = useState('');
+  const [loadedNotes, setLoadedNotes] = useState('');
 
   const isDirty = useMemo(() => {
-    if (armorPoints > 0) return true;
-    for (const loc of LOCATION_KEYS) {
-      for (const s of state.slots[loc]) {
-        if (s.weapon) return true;
-      }
-      for (const eq of state.equipment[loc]) {
-        if (eq.item) return true;
+    // Check if loadout has any content at all
+    let hasContent = armorPoints > 0;
+    if (!hasContent) {
+      for (const loc of LOCATION_KEYS) {
+        for (const s of state.slots[loc]) {
+          if (s.weapon) { hasContent = true; break; }
+        }
+        if (hasContent) break;
+        for (const eq of state.equipment[loc]) {
+          if (eq.item) { hasContent = true; break; }
+        }
+        if (hasContent) break;
       }
     }
-    return false;
-  }, [state, armorPoints]);
+    if (!hasContent) return false;
+
+    // Check if current state exactly matches a saved entry
+    if (state.selectedMech && matchesSavedLoadout(
+      state.selectedMech.id.toString(),
+      state.slots,
+      state.equipment,
+      armorPoints,
+      loadedName,
+      loadedNotes,
+      savedLoadouts,
+    )) {
+      return false;
+    }
+
+    return true;
+  }, [state, armorPoints, loadedName, loadedNotes, savedLoadouts]);
 
   const guardedNavigate = useCallback((action: () => void) => {
     if (isDirty) {
