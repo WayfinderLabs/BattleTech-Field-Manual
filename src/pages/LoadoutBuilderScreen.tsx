@@ -7,12 +7,13 @@ import type { HeatSink } from '@/data/loadoutEquipment';
 import type { Mech } from '@/data/mechs';
 import { MECHS } from '@/data/mechs';
 import type { Weapon } from '@/data/weapons';
-import type { LoadoutState, LocationKey, HardpointType, SlotItem } from '@/types/loadout';
+import type { LoadoutState, LocationKey, HardpointType, SlotItem, SlotAssignment, EquipmentSlot } from '@/types/loadout';
 import { LOCATION_LABELS, EMPTY_SLOTS, EMPTY_EQUIPMENT } from '@/types/loadout';
 import { parseHardpoints } from '@/utils/parseHardpoints';
 import { validateLoadout, wouldCreateNewError } from '@/utils/validateLoadout';
 import type { ValidationResult } from '@/utils/validateLoadout';
 import { useSavedLoadouts } from '@/hooks/useSavedLoadouts';
+import type { SavedLoadout } from '@/types/savedLoadout';
 import MechPickerSheet from '@/components/loadout/MechPickerSheet';
 import UnifiedWeaponPicker from '@/components/loadout/UnifiedWeaponPicker';
 import LocationCard from '@/components/loadout/LocationCard';
@@ -24,10 +25,80 @@ import SaveLoadoutSheet from '@/components/loadout/SaveLoadoutSheet';
 const LOCATION_KEYS: LocationKey[] = ['hd', 'ct', 'lt', 'rt', 'la', 'ra', 'll', 'rl'];
 const DISPLAY_ORDER: LocationKey[] = ['hd', 'ct', 'rt', 'lt', 'ra', 'la', 'rl', 'll'];
 
+/** Deep-compare slot assignments (weapon content only) */
+function slotsMatch(
+  current: Record<string, SlotAssignment[]>,
+  saved: Record<string, SlotAssignment[]>,
+): boolean {
+  for (const loc of LOCATION_KEYS) {
+    const cur = current[loc] ?? [];
+    const sav = saved[loc] ?? [];
+    if (cur.length !== sav.length) return false;
+    for (let i = 0; i < cur.length; i++) {
+      const cw = cur[i]?.weapon;
+      const sw = sav[i]?.weapon;
+      if (cw === null && sw === null) continue;
+      if (cw === null || sw === null) return false;
+      // Compare all weapon properties
+      if (cw.id !== sw.id) return false;
+      if (cw.name !== sw.name) return false;
+      if (cw.tonnage !== sw.tonnage) return false;
+      if (cw.damage !== sw.damage) return false;
+      if (cw.heat !== sw.heat) return false;
+      if (cw.criticalSlots !== sw.criticalSlots) return false;
+    }
+  }
+  return true;
+}
+
+/** Deep-compare equipment slots */
+function equipmentMatch(
+  current: Record<string, EquipmentSlot[]>,
+  saved: Record<string, EquipmentSlot[]>,
+): boolean {
+  for (const loc of LOCATION_KEYS) {
+    const cur = current[loc] ?? [];
+    const sav = saved[loc] ?? [];
+    if (cur.length !== sav.length) return false;
+    for (let i = 0; i < cur.length; i++) {
+      const ci = cur[i]?.item;
+      const si = sav[i]?.item;
+      if (ci === null && si === null) continue;
+      if (ci === null || si === null) return false;
+      if (ci.kind !== si.kind) return false;
+      if (ci.data.id !== si.data.id) return false;
+      if (cur[i].slotsUsed !== sav[i].slotsUsed) return false;
+    }
+  }
+  return true;
+}
+
+/** Check if current loadout exactly matches any saved entry */
+function matchesSavedLoadout(
+  mechId: string,
+  slots: Record<string, SlotAssignment[]>,
+  equipment: Record<string, EquipmentSlot[]>,
+  armor: number,
+  loadoutName: string,
+  loadoutNotes: string,
+  savedLoadouts: SavedLoadout[],
+): boolean {
+  return savedLoadouts.some(saved => {
+    if (saved.mechId !== mechId) return false;
+    if ((saved.armorPoints ?? 0) !== armor) return false;
+    if (saved.name.trim().toLowerCase() !== loadoutName.trim().toLowerCase()) return false;
+    const savedNotes = saved.notes?.trim() || '';
+    if (savedNotes !== loadoutNotes.trim()) return false;
+    if (!slotsMatch(slots, saved.slots)) return false;
+    if (!equipmentMatch(equipment, saved.equipment)) return false;
+    return true;
+  });
+}
+
 const LoadoutBuilderScreen = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { saveLoadout, overwriteLoadout, getDuplicateByName } = useSavedLoadouts();
+  const { savedLoadouts, saveLoadout, overwriteLoadout, getDuplicateByName } = useSavedLoadouts();
 
   const [state, setState] = useState<LoadoutState>({
     selectedMech: null,
@@ -50,19 +121,41 @@ const LoadoutBuilderScreen = () => {
     reason: 'OVERWEIGHT' | 'CRIT_OVERFLOW';
   } | null>(null);
   const [unsavedGuardAction, setUnsavedGuardAction] = useState<(() => void) | null>(null);
+  const [loadedName, setLoadedName] = useState('');
+  const [loadedNotes, setLoadedNotes] = useState('');
 
   const isDirty = useMemo(() => {
-    if (armorPoints > 0) return true;
-    for (const loc of LOCATION_KEYS) {
-      for (const s of state.slots[loc]) {
-        if (s.weapon) return true;
-      }
-      for (const eq of state.equipment[loc]) {
-        if (eq.item) return true;
+    // Check if loadout has any content at all
+    let hasContent = armorPoints > 0;
+    if (!hasContent) {
+      for (const loc of LOCATION_KEYS) {
+        for (const s of state.slots[loc]) {
+          if (s.weapon) { hasContent = true; break; }
+        }
+        if (hasContent) break;
+        for (const eq of state.equipment[loc]) {
+          if (eq.item) { hasContent = true; break; }
+        }
+        if (hasContent) break;
       }
     }
-    return false;
-  }, [state, armorPoints]);
+    if (!hasContent) return false;
+
+    // Check if current state exactly matches a saved entry
+    if (state.selectedMech && matchesSavedLoadout(
+      state.selectedMech.id.toString(),
+      state.slots,
+      state.equipment,
+      armorPoints,
+      loadedName,
+      loadedNotes,
+      savedLoadouts,
+    )) {
+      return false;
+    }
+
+    return true;
+  }, [state, armorPoints, loadedName, loadedNotes, savedLoadouts]);
 
   const guardedNavigate = useCallback((action: () => void) => {
     if (isDirty) {
@@ -106,6 +199,8 @@ const LoadoutBuilderScreen = () => {
         // Restore armor: use saved value if present, otherwise default to mech maxArmor
         const restoredArmor = typeof saved.armorPoints === 'number' ? saved.armorPoints : mech.maxArmor;
         setArmorPoints(restoredArmor);
+        setLoadedName(saved.name || '');
+        setLoadedNotes(saved.notes || '');
       }
     navigate('/loadout', { replace: true, state: {} });
     }
@@ -142,6 +237,8 @@ const LoadoutBuilderScreen = () => {
       if (typeof draft.armorPoints === 'number') {
         setArmorPoints(draft.armorPoints);
       }
+      if (draft.loadedName) setLoadedName(draft.loadedName);
+      if (draft.loadedNotes) setLoadedNotes(draft.loadedNotes);
     } catch {}
   }, []);
 
@@ -157,10 +254,12 @@ const LoadoutBuilderScreen = () => {
         slots: state.slots,
         equipment: state.equipment,
         armorPoints,
+        loadedName,
+        loadedNotes,
       };
       localStorage.setItem('btfm_draft_loadout', JSON.stringify(draft));
     } catch {}
-  }, [state, armorPoints]);
+  }, [state, armorPoints, loadedName, loadedNotes]);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -190,6 +289,8 @@ const LoadoutBuilderScreen = () => {
     }
     setState({ selectedMech: mech, slots: newSlots, equipment: { ...EMPTY_EQUIPMENT } });
     setArmorPoints(0);
+    setLoadedName('');
+    setLoadedNotes('');
   }, []);
 
   const handleWeaponAdd = useCallback((weapon: Weapon, slotIndex: number) => {
@@ -269,6 +370,8 @@ const LoadoutBuilderScreen = () => {
     if (!state.selectedMech) return 'saved';
     const result = saveLoadout(name, notes, state.selectedMech.id.toString(), state.slots, state.equipment, armorPoints);
     if (result === 'saved') {
+      setLoadedName(name);
+      setLoadedNotes(notes?.trim() || '');
       setToastMessage('LOADOUT SAVED');
     }
     return result;
@@ -277,6 +380,8 @@ const LoadoutBuilderScreen = () => {
   const handleOverwrite = (existingId: string, name: string, notes: string | undefined) => {
     if (!state.selectedMech) return;
     overwriteLoadout(existingId, name, notes, state.selectedMech.id.toString(), state.slots, state.equipment, armorPoints);
+    setLoadedName(name);
+    setLoadedNotes(notes?.trim() || '');
     setToastMessage('LOADOUT SAVED');
   };
 

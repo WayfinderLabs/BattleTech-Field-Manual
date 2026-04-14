@@ -78,16 +78,16 @@ const SaveLoadoutSheet = ({ open, onClose, onSave, onOverwrite, getDuplicateId }
       <Sheet open={open} onOpenChange={(o) => { if (!o) onClose(); }}>
         <SheetContent
           side="bottom"
-          className="border-t border-border rounded-t-sm p-0"
-          style={{ backgroundColor: '#161616' }}
+          className="border-t border-border rounded-t-sm p-0 flex flex-col"
+          style={{ backgroundColor: '#161616', maxHeight: '85dvh' }}
         >
-          <SheetHeader className="px-4 pt-4 pb-2">
+          <SheetHeader className="px-4 pt-4 pb-2 shrink-0">
             <SheetTitle className="font-mono uppercase tracking-wider text-primary" style={{ fontSize: 'var(--fs-body)' }}>
               SAVE LOADOUT
             </SheetTitle>
           </SheetHeader>
 
-          <div className="px-4 pb-4 space-y-3">
+          <div className="px-4 pb-4 space-y-3 overflow-y-auto flex-1 min-h-0">
             <div>
               <input
                 ref={nameRef}
@@ -116,8 +116,10 @@ const SaveLoadoutSheet = ({ open, onClose, onSave, onOverwrite, getDuplicateId }
               className="w-full font-mono tracking-wider text-foreground placeholder:text-muted-foreground px-3 py-2.5 rounded-sm border border-border focus:outline-none focus:ring-1 focus:ring-ring"
               style={{ backgroundColor: '#0D0D0D', fontSize: 'var(--fs-body)' }}
             />
+          </div>
 
-            <div className="flex gap-2 pt-1">
+          <div className="px-4 pb-4 pt-1 shrink-0">
+            <div className="flex gap-2">
               <button
                 onClick={onClose}
                 className="flex-1 font-mono uppercase tracking-wider text-muted-foreground border border-border rounded-sm py-2.5 hover:text-foreground transition-colors"
