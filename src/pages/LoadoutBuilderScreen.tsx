@@ -374,6 +374,8 @@ const LoadoutBuilderScreen = () => {
   const handleOverwrite = (existingId: string, name: string, notes: string | undefined) => {
     if (!state.selectedMech) return;
     overwriteLoadout(existingId, name, notes, state.selectedMech.id.toString(), state.slots, state.equipment, armorPoints);
+    setLoadedName(name);
+    setLoadedNotes(notes?.trim() || '');
     setToastMessage('LOADOUT SAVED');
   };
 
