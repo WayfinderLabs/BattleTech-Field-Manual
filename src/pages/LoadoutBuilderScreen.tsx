@@ -252,10 +252,12 @@ const LoadoutBuilderScreen = () => {
         slots: state.slots,
         equipment: state.equipment,
         armorPoints,
+        loadedName,
+        loadedNotes,
       };
       localStorage.setItem('btfm_draft_loadout', JSON.stringify(draft));
     } catch {}
-  }, [state, armorPoints]);
+  }, [state, armorPoints, loadedName, loadedNotes]);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -285,6 +287,8 @@ const LoadoutBuilderScreen = () => {
     }
     setState({ selectedMech: mech, slots: newSlots, equipment: { ...EMPTY_EQUIPMENT } });
     setArmorPoints(0);
+    setLoadedName('');
+    setLoadedNotes('');
   }, []);
 
   const handleWeaponAdd = useCallback((weapon: Weapon, slotIndex: number) => {
