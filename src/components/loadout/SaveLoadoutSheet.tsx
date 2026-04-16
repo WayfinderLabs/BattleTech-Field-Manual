@@ -78,9 +78,8 @@ const SaveLoadoutSheet = ({ open, onClose, onSave, onOverwrite, getDuplicateId }
       <Sheet open={open} onOpenChange={(o) => { if (!o) onClose(); }}>
         <SheetContent
           side="bottom"
-          className="border-t border-border rounded-t-sm p-0 flex flex-col"
-          style={{ backgroundColor: '#161616', maxHeight: '85vh' }}
-          ref={(el) => { if (el) el.style.setProperty('max-height', '85dvh'); }}
+          className="border-t border-border rounded-t-sm p-0 flex flex-col overflow-hidden"
+          style={{ backgroundColor: '#161616', maxHeight: '80vh' }}
         >
           <SheetHeader className="px-4 pt-4 pb-2 shrink-0">
             <SheetTitle className="font-mono uppercase tracking-wider text-primary" style={{ fontSize: 'var(--fs-body)' }}>
