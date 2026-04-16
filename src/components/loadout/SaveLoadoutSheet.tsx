@@ -1,11 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
-import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogHeader,
@@ -73,52 +67,91 @@ const SaveLoadoutSheet = ({ open, onClose, onSave, onOverwrite, getDuplicateId }
     setTimeout(() => nameRef.current?.focus(), 100);
   };
 
+  if (!open) return null;
+
   return (
     <>
-      <Sheet open={open} onOpenChange={(o) => { if (!o) onClose(); }}>
-        <SheetContent
-          side="bottom"
-          className="border-t border-border rounded-t-sm p-0 flex flex-col overflow-hidden"
-          style={{ backgroundColor: '#161616', maxHeight: '80vh' }}
+      {/* Fixed centered modal overlay */}
+      <div
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 50,
+          backgroundColor: 'rgba(0,0,0,0.75)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 16,
+        }}
+        onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      >
+        <div
+          style={{
+            backgroundColor: '#161616',
+            border: '1px solid #2A2A2A',
+            width: '100%',
+            maxWidth: 400,
+            maxHeight: '80vh',
+            display: 'flex',
+            flexDirection: 'column',
+            borderRadius: 0,
+            overflow: 'hidden',
+          }}
         >
-          <SheetHeader className="px-4 pt-4 pb-2 shrink-0">
-            <SheetTitle className="font-mono uppercase tracking-wider text-primary" style={{ fontSize: 'var(--fs-body)' }}>
+          {/* Header */}
+          <div
+            className="shrink-0"
+            style={{ padding: '16px 16px 8px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+          >
+            <span className="font-mono uppercase tracking-wider" style={{ color: '#C87941', fontSize: 'var(--fs-body)' }}>
               SAVE LOADOUT
-            </SheetTitle>
-          </SheetHeader>
-
-          <div className="px-4 pb-4 space-y-3 overflow-y-auto flex-1 min-h-0">
-            <div>
-              <input
-                ref={nameRef}
-                type="text"
-                inputMode="text"
-                value={name}
-                onChange={(e) => { setName(e.target.value.slice(0, 40)); setError(''); }}
-                placeholder="LOADOUT NAME"
-                maxLength={40}
-                className="w-full font-mono uppercase tracking-wider text-foreground placeholder:text-muted-foreground px-3 py-2.5 rounded-sm border border-border focus:outline-none focus:ring-1 focus:ring-ring"
-                style={{ backgroundColor: '#0D0D0D', fontSize: 'var(--fs-body)' }}
-              />
-              {error && (
-                <div className="font-mono text-destructive mt-1" style={{ fontSize: 'var(--fs-badge)' }}>
-                  {error}
-                </div>
-              )}
-            </div>
-
-            <input
-              type="text"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value.slice(0, 120))}
-              placeholder="NOTES (OPTIONAL)"
-              maxLength={120}
-              className="w-full font-mono tracking-wider text-foreground placeholder:text-muted-foreground px-3 py-2.5 rounded-sm border border-border focus:outline-none focus:ring-1 focus:ring-ring"
-              style={{ backgroundColor: '#0D0D0D', fontSize: 'var(--fs-body)' }}
-            />
+            </span>
+            <button
+              onClick={onClose}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              style={{ minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              aria-label="Close"
+            >
+              ✕
+            </button>
           </div>
 
-          <div className="px-4 pb-4 pt-1 shrink-0">
+          {/* Scrollable content */}
+          <div className="flex-1 min-h-0 overflow-y-auto" style={{ padding: '0 16px 8px 16px' }}>
+            <div className="space-y-3">
+              <div>
+                <input
+                  ref={nameRef}
+                  type="text"
+                  inputMode="text"
+                  value={name}
+                  onChange={(e) => { setName(e.target.value.slice(0, 40)); setError(''); }}
+                  placeholder="LOADOUT NAME"
+                  maxLength={40}
+                  className="w-full font-mono uppercase tracking-wider text-foreground placeholder:text-muted-foreground px-3 py-2.5 rounded-sm border border-border focus:outline-none focus:ring-1 focus:ring-ring"
+                  style={{ backgroundColor: '#0D0D0D', fontSize: 'var(--fs-body)' }}
+                />
+                {error && (
+                  <div className="font-mono text-destructive mt-1" style={{ fontSize: 'var(--fs-badge)' }}>
+                    {error}
+                  </div>
+                )}
+              </div>
+
+              <input
+                type="text"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value.slice(0, 120))}
+                placeholder="NOTES (OPTIONAL)"
+                maxLength={120}
+                className="w-full font-mono tracking-wider text-foreground placeholder:text-muted-foreground px-3 py-2.5 rounded-sm border border-border focus:outline-none focus:ring-1 focus:ring-ring"
+                style={{ backgroundColor: '#0D0D0D', fontSize: 'var(--fs-body)' }}
+              />
+            </div>
+          </div>
+
+          {/* Buttons */}
+          <div className="shrink-0" style={{ padding: '8px 16px 16px 16px' }}>
             <div className="flex gap-2">
               <button
                 onClick={onClose}
@@ -136,8 +169,8 @@ const SaveLoadoutSheet = ({ open, onClose, onSave, onOverwrite, getDuplicateId }
               </button>
             </div>
           </div>
-        </SheetContent>
-      </Sheet>
+        </div>
+      </div>
 
       {/* Duplicate Name Dialog */}
       <AlertDialog open={!!duplicateDialog} onOpenChange={(o) => { if (!o) setDuplicateDialog(null); }}>
