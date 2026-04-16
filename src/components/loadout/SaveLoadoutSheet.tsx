@@ -71,104 +71,93 @@ const SaveLoadoutSheet = ({ open, onClose, onSave, onOverwrite, getDuplicateId }
 
   return (
     <>
-      {/* Fixed centered modal overlay */}
+      {/* Fixed overlay background */}
       <div
         style={{
           position: 'fixed',
           inset: 0,
           zIndex: 50,
           backgroundColor: 'rgba(0,0,0,0.75)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+        }}
+        onClick={onClose}
+      />
+      {/* Top-anchored dialog panel */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 51,
+          backgroundColor: '#161616',
+          borderBottom: '1px solid #2A2A2A',
           padding: 16,
         }}
-        onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       >
-        <div
-          style={{
-            backgroundColor: '#161616',
-            border: '1px solid #2A2A2A',
-            width: '100%',
-            maxWidth: 400,
-            maxHeight: '80vh',
-            display: 'flex',
-            flexDirection: 'column',
-            borderRadius: 0,
-            overflow: 'hidden',
-          }}
-        >
-          {/* Header */}
-          <div
-            className="shrink-0"
-            style={{ padding: '16px 16px 8px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+        {/* Title row */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+          <span className="font-mono uppercase tracking-wider" style={{ color: '#C87941', fontSize: 'var(--fs-body)' }}>
+            SAVE LOADOUT
+          </span>
+          <button
+            onClick={onClose}
+            className="text-muted-foreground hover:text-foreground transition-colors"
+            style={{ minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            aria-label="Close"
           >
-            <span className="font-mono uppercase tracking-wider" style={{ color: '#C87941', fontSize: 'var(--fs-body)' }}>
-              SAVE LOADOUT
-            </span>
-            <button
-              onClick={onClose}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              style={{ minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              aria-label="Close"
-            >
-              ✕
-            </button>
-          </div>
+            ✕
+          </button>
+        </div>
 
-          {/* Scrollable content */}
-          <div className="flex-1 min-h-0 overflow-y-auto" style={{ padding: '0 16px 8px 16px' }}>
-            <div className="space-y-3">
-              <div>
-                <input
-                  ref={nameRef}
-                  type="text"
-                  inputMode="text"
-                  value={name}
-                  onChange={(e) => { setName(e.target.value.slice(0, 40)); setError(''); }}
-                  placeholder="LOADOUT NAME"
-                  maxLength={40}
-                  className="w-full font-mono uppercase tracking-wider text-foreground placeholder:text-muted-foreground px-3 py-2.5 rounded-sm border border-border focus:outline-none focus:ring-1 focus:ring-ring"
-                  style={{ backgroundColor: '#0D0D0D', fontSize: 'var(--fs-body)' }}
-                />
-                {error && (
-                  <div className="font-mono text-destructive mt-1" style={{ fontSize: 'var(--fs-badge)' }}>
-                    {error}
-                  </div>
-                )}
-              </div>
-
-              <input
-                type="text"
-                value={notes}
-                onChange={(e) => setNotes(e.target.value.slice(0, 120))}
-                placeholder="NOTES (OPTIONAL)"
-                maxLength={120}
-                className="w-full font-mono tracking-wider text-foreground placeholder:text-muted-foreground px-3 py-2.5 rounded-sm border border-border focus:outline-none focus:ring-1 focus:ring-ring"
-                style={{ backgroundColor: '#0D0D0D', fontSize: 'var(--fs-body)' }}
-              />
+        {/* Name input */}
+        <div>
+          <input
+            ref={nameRef}
+            type="text"
+            inputMode="text"
+            value={name}
+            onChange={(e) => { setName(e.target.value.slice(0, 40)); setError(''); }}
+            placeholder="LOADOUT NAME"
+            maxLength={40}
+            className="w-full font-mono uppercase tracking-wider text-foreground placeholder:text-muted-foreground px-3 py-2.5 rounded-sm border border-border focus:outline-none focus:ring-1 focus:ring-ring"
+            style={{ backgroundColor: '#0D0D0D', fontSize: 'var(--fs-body)' }}
+          />
+          {error && (
+            <div className="font-mono text-destructive mt-1" style={{ fontSize: 'var(--fs-badge)' }}>
+              {error}
             </div>
-          </div>
+          )}
+        </div>
 
-          {/* Buttons */}
-          <div className="shrink-0" style={{ padding: '8px 16px 16px 16px' }}>
-            <div className="flex gap-2">
-              <button
-                onClick={onClose}
-                className="flex-1 font-mono uppercase tracking-wider text-muted-foreground border border-border rounded-sm py-2.5 hover:text-foreground transition-colors"
-                style={{ fontSize: 'var(--fs-body)' }}
-              >
-                CANCEL
-              </button>
-              <button
-                onClick={handleSave}
-                className="flex-1 font-mono uppercase tracking-wider text-primary-foreground bg-primary rounded-sm py-2.5 hover:opacity-90 transition-opacity min-h-[44px]"
-                style={{ fontSize: 'var(--fs-body)' }}
-              >
-                SAVE
-              </button>
-            </div>
-          </div>
+        {/* Notes input */}
+        <div style={{ marginTop: 12 }}>
+          <input
+            type="text"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value.slice(0, 120))}
+            placeholder="NOTES (OPTIONAL)"
+            maxLength={120}
+            className="w-full font-mono tracking-wider text-foreground placeholder:text-muted-foreground px-3 py-2.5 rounded-sm border border-border focus:outline-none focus:ring-1 focus:ring-ring"
+            style={{ backgroundColor: '#0D0D0D', fontSize: 'var(--fs-body)' }}
+          />
+        </div>
+
+        {/* Buttons */}
+        <div className="flex gap-2" style={{ marginTop: 12 }}>
+          <button
+            onClick={onClose}
+            className="flex-1 font-mono uppercase tracking-wider text-muted-foreground border border-border rounded-sm py-2.5 hover:text-foreground transition-colors"
+            style={{ fontSize: 'var(--fs-body)' }}
+          >
+            CANCEL
+          </button>
+          <button
+            onClick={handleSave}
+            className="flex-1 font-mono uppercase tracking-wider text-primary-foreground bg-primary rounded-sm py-2.5 hover:opacity-90 transition-opacity min-h-[44px]"
+            style={{ fontSize: 'var(--fs-body)' }}
+          >
+            SAVE
+          </button>
         </div>
       </div>
 
