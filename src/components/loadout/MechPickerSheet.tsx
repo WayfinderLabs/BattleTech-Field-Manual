@@ -4,6 +4,13 @@ import {
   Drawer, DrawerContent, DrawerHeader, DrawerTitle,
 } from '@/components/ui/drawer';
 
+const CLASS_COLORS: Record<string, string> = {
+  Light: "bg-[hsl(142,71%,45%)] text-black",
+  Medium: "bg-[hsl(217,91%,60%)] text-white",
+  Heavy: "bg-[hsl(24,94%,53%)] text-white",
+  Assault: "bg-[hsl(0,84%,60%)] text-white",
+};
+
 interface MechPickerSheetProps {
   open: boolean;
   onClose: () => void;
@@ -74,7 +81,7 @@ const MechPickerSheet = ({ open, onClose, onSelect }: MechPickerSheetProps) => {
                 </div>
               </div>
               <div className="flex items-center gap-2 shrink-0">
-                <span className="font-mono text-muted-foreground px-1.5 py-0.5 border border-border rounded-sm" style={{ fontSize: 'var(--fs-badge)' }}>
+                <span className={`font-mono px-1.5 py-0.5 rounded-sm ${CLASS_COLORS[mech.chassisClass] ?? 'bg-muted text-muted-foreground'}`} style={{ fontSize: 'var(--fs-badge)' }}>
                   {mech.chassisClass}
                 </span>
                 <span className="font-mono text-primary" style={{ fontSize: 'var(--fs-badge)' }}>
