@@ -1,5 +1,6 @@
 import type { LoadoutState, LocationKey } from '@/types/loadout';
 import type { HeatSink } from '@/data/loadoutEquipment';
+import type { Weapon } from '@/data/weapons';
 
 interface StatsBarProps {
   state: LoadoutState;
@@ -51,17 +52,54 @@ const StatsBar = ({ state, armorPoints = 0 }: StatsBarProps) => {
     }
   }
 
-  const equippedWeapons = allLocations
-    .flatMap(loc => slots[loc])
-    .map(slot => slot.weapon)
-    .filter((w): w is NonNullable<typeof w> => w !== null && w !== undefined);
+  // Collect all equipped weapons
+  const equippedWeapons: Weapon[] = [];
+  for (const loc of allLocations) {
+    for (const slot of slots[loc]) {
+      if (slot.weapon) equippedWeapons.push(slot.weapon);
+    }
+  }
 
-  const engagementRange = (() => {
-    if (equippedWeapons.length === 0) return null;
-    const lowBound = Math.max(...equippedWeapons.map(w => w.shortRange));
-    const highBound = Math.min(...equippedWeapons.map(w => w.longRange));
-    return { lowBound, highBound, overlap: lowBound < highBound };
-  })();
+  // Build candidate range checkpoints from all unique shortRange and longRange values
+  const checkpoints = Array.from(
+    new Set(equippedWeapons.flatMap(w => [w.shortRange, w.longRange]))
+  ).sort((a, b) => a - b);
+
+  // For each checkpoint, count weapons that can fire (minRange ≤ point ≤ longRange)
+  const counts = checkpoints.map(point => ({
+    range: point,
+    count: equippedWeapons.filter(w => w.minRange <= point && point <= w.longRange).length,
+  }));
+
+  // Find peak count
+  const peakCount = counts.reduce((max, c) => Math.max(max, c.count), 0);
+
+  // Collect all checkpoints within 1 weapon of peak
+  const peakPoints = counts.filter(c => c.count >= peakCount - 1 && c.count > 0).map(c => c.range);
+
+  // Merge into contiguous bands
+  const bands: { min: number; max: number }[] = [];
+  if (peakPoints.length > 0) {
+    let bandStart = peakPoints[0];
+    let prev = peakPoints[0];
+    for (let i = 1; i < peakPoints.length; i++) {
+      const curr = peakPoints[i];
+      const prevIdx = checkpoints.indexOf(prev);
+      const currIdx = checkpoints.indexOf(curr);
+      if (currIdx === prevIdx + 1) {
+        prev = curr;
+      } else {
+        bands.push({ min: bandStart, max: prev });
+        bandStart = curr;
+        prev = curr;
+      }
+    }
+    bands.push({ min: bandStart, max: prev });
+  }
+
+  const optimumRangeStr = equippedWeapons.length === 0
+    ? '—'
+    : bands.map(b => b.min === b.max ? `${b.min}m` : `${b.min} – ${b.max}m`).join(' / ');
 
   const adjustedHeat = Math.floor(rawHeat * reductionMultiplier);
   const shutdown = BASE_MAX_HEAT + totalMaxHeatBonus;
@@ -128,19 +166,13 @@ const StatsBar = ({ state, armorPoints = 0 }: StatsBarProps) => {
             </div>
           </div>
         </div>
-        {/* Row 3 — Engagement range */}
+        {/* Row 3 — Optimum range */}
         <div className="text-center py-2 px-3 border-t border-border">
           <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
-            ENGAGEMENT RANGE
+            OPTIMUM RANGE ({peakCount} WEAPONS)
           </div>
-          <div className="font-mono font-semibold text-sm">
-            {!engagementRange ? (
-              <span>—</span>
-            ) : engagementRange.overlap ? (
-              <span>{engagementRange.lowBound}–{engagementRange.highBound}m</span>
-            ) : (
-              <span style={{ color: '#C87941' }}>NO OVERLAP</span>
-            )}
+          <div className="font-mono font-semibold text-sm" style={{ color: peakCount > 0 ? '#C87941' : '#8A8A8A' }}>
+            {optimumRangeStr}
           </div>
         </div>
       </div>
