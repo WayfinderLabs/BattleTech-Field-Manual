@@ -166,19 +166,13 @@ const StatsBar = ({ state, armorPoints = 0 }: StatsBarProps) => {
             </div>
           </div>
         </div>
-        {/* Row 3 — Engagement range */}
+        {/* Row 3 — Optimum range */}
         <div className="text-center py-2 px-3 border-t border-border">
           <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
-            ENGAGEMENT RANGE
+            OPTIMUM RANGE ({peakCount} WEAPONS)
           </div>
-          <div className="font-mono font-semibold text-sm">
-            {!engagementRange ? (
-              <span>—</span>
-            ) : engagementRange.overlap ? (
-              <span>{engagementRange.lowBound}–{engagementRange.highBound}m</span>
-            ) : (
-              <span style={{ color: '#C87941' }}>NO OVERLAP</span>
-            )}
+          <div className="font-mono font-semibold text-sm" style={{ color: peakCount > 0 ? '#C87941' : '#8A8A8A' }}>
+            {optimumRangeStr}
           </div>
         </div>
       </div>
