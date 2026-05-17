@@ -8,7 +8,6 @@ import InstallPrompt from "./InstallPrompt";
 import { ScrollProvider, useScrollContainer } from "@/contexts/ScrollContext";
 
 const AppShellInner = () => {
-  useAdMob();
   const scrollContainerRef = useScrollContainer();
 
   useEffect(() => {
