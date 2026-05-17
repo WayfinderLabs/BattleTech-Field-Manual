@@ -1,11 +1,9 @@
-import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { Capacitor } from "@capacitor/core";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import TopBar from "./TopBar";
 import BottomNav from "./BottomNav";
 import InstallPrompt from "./InstallPrompt";
-import { useAdMob } from "@/hooks/useAdMob";
 import { ScrollProvider, useScrollContainer } from "@/contexts/ScrollContext";
 
 const AppShellInner = () => {
