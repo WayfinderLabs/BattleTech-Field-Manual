@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
-import { AdMob, AdLoadInfo } from '@capacitor-community/admob';
+import { AdMob } from '@capacitor-community/admob';
 
 const INTERSTITIAL_AD_UNIT_ID = 'ca-app-pub-6695196307784459/3558537445';
 const NAV_FLOOR = 8;
