@@ -6,9 +6,11 @@ import TopBar from "./TopBar";
 import BottomNav from "./BottomNav";
 import InstallPrompt from "./InstallPrompt";
 import { ScrollProvider, useScrollContainer } from "@/contexts/ScrollContext";
+import { useConsentFlow } from "@/hooks/useConsentFlow";
 
 const AppShellInner = () => {
   const scrollContainerRef = useScrollContainer();
+  useConsentFlow();
 
   useEffect(() => {
     if (Capacitor.getPlatform() === "android") {
