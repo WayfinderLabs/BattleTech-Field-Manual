@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-const BANNER_AD_UNIT_ID = 'ca-app-pub-6177451660679409/7116883398';
+const BANNER_AD_UNIT_ID = import.meta.env.VITE_ADMOB_APP_ID || '';
 
 export function useAdMob() {
   useEffect(() => {
