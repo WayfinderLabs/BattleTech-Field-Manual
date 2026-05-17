@@ -5,11 +5,9 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import TopBar from "./TopBar";
 import BottomNav from "./BottomNav";
 import InstallPrompt from "./InstallPrompt";
-import { useAdMob } from "@/hooks/useAdMob";
 import { ScrollProvider, useScrollContainer } from "@/contexts/ScrollContext";
 
 const AppShellInner = () => {
-  useAdMob();
   const scrollContainerRef = useScrollContainer();
 
   useEffect(() => {
