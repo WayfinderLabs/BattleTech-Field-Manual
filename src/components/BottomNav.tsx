@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Crosshair, Bot, Wrench, Layers } from "lucide-react";
 import { useLoadoutDirty } from "@/contexts/LoadoutDirtyContext";
+import { useInterstitial } from "@/hooks/useInterstitial";
 
 const tabs = [
   { path: "/", label: "WEAPONS", icon: Crosshair },
@@ -13,6 +14,7 @@ const BottomNav = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { requestNavigate } = useLoadoutDirty();
+  const { recordNavigation } = useInterstitial();
 
   const isActive = (path: string) => {
     if (path === "/") return location.pathname === "/" || location.pathname.startsWith("/weapons");
@@ -33,7 +35,10 @@ const BottomNav = () => {
                 if (isLoadoutTab || alreadyOnTab) {
                   navigate(path);
                 } else {
-                  requestNavigate(() => navigate(path));
+                  requestNavigate(() => {
+                    navigate(path);
+                    recordNavigation();
+                  });
                 }
               }}
               className={`flex-1 flex flex-col items-center gap-1 py-2.5 transition-colors duration-150 active:scale-[0.97] ${
