@@ -4,6 +4,8 @@ import { Search } from "lucide-react";
 import { MECHS, type Mech } from "@/data/mechs";
 import { useFilters } from "@/contexts/FilterContext";
 import { useScrollContainer } from "@/contexts/ScrollContext";
+import { NativeAdCard } from "@/components/NativeAdCard";
+import { useNativeAd } from "@/hooks/useNativeAd";
 
 const CLASS_COLORS: Record<Mech["chassisClass"], string> = {
   Light: "bg-[hsl(142,71%,45%)] text-black",
@@ -22,6 +24,7 @@ const MechsScreen = () => {
   const navigate = useNavigate();
   const filters = useFilters();
   const scrollContainer = useScrollContainer();
+  const { adAssets } = useNativeAd();
   const { search, setSearch, classFilter, setClassFilter, metaFilters, toggleMeta } = filters.mechs;
   const scrollKey = "mechs";
 
@@ -103,51 +106,55 @@ const MechsScreen = () => {
         </div>
       ) : (
         <div className="space-y-2">
-          {filtered.map((m) => (
-            <button
-              key={m.id}
-              onClick={() => navigateToDetail(m.id)}
-              className="w-full text-left bg-card border border-border rounded-sm p-3 hover:border-primary/60 transition-colors active:scale-[0.98] group"
-            >
-              <div className="flex items-start justify-between gap-2 mb-2">
-                <div>
-                  <span className="text-primary font-mono text-card-title uppercase tracking-wider leading-tight">
-                    {m.name}
-                  </span>
-                  <span className="text-muted-foreground font-mono text-badge tracking-wider ml-2">{m.variant}</span>
-                </div>
-                <div className="flex gap-1.5 shrink-0 flex-wrap justify-end">
-                  <span className={`px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm ${CLASS_COLORS[m.chassisClass]}`}>
-                    {m.chassisClass}
-                  </span>
-                  {m.isClan && (
-                    <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-primary text-primary">
-                      CLAN
+          {filtered.map((m, index) => (
+            <div key={m.id}>
+              <button
+                onClick={() => navigateToDetail(m.id)}
+                className="w-full text-left bg-card border border-border rounded-sm p-3 hover:border-primary/60 transition-colors active:scale-[0.98] group"
+              >
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <div>
+                    <span className="text-primary font-mono text-card-title uppercase tracking-wider leading-tight">
+                      {m.name}
                     </span>
-                  )}
-                  {m.isLosTech && (
-                    <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm bg-primary text-primary-foreground">
-                      LOSTECH
+                    <span className="text-muted-foreground font-mono text-badge tracking-wider ml-2">{m.variant}</span>
+                  </div>
+                  <div className="flex gap-1.5 shrink-0 flex-wrap justify-end">
+                    <span className={`px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm ${CLASS_COLORS[m.chassisClass]}`}>
+                      {m.chassisClass}
                     </span>
-                  )}
-                  {m.dlcSource !== "Base" && (
-                    <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-border text-muted-foreground">
-                      DLC
-                    </span>
-                  )}
+                    {m.isClan && (
+                      <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-primary text-primary">
+                        CLAN
+                      </span>
+                    )}
+                    {m.isLosTech && (
+                      <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm bg-primary text-primary-foreground">
+                        LOSTECH
+                      </span>
+                    )}
+                    {m.dlcSource !== "Base" && (
+                      <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-border text-muted-foreground">
+                        DLC
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="flex gap-3">
-                <div className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
-                  <div className="text-label font-mono text-muted-foreground tracking-wider">TONS</div>
-                  <div className="text-detail-value font-mono text-foreground">{m.tonnage}T</div>
+                <div className="flex gap-3">
+                  <div className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
+                    <div className="text-label font-mono text-muted-foreground tracking-wider">TONS</div>
+                    <div className="text-detail-value font-mono text-foreground">{m.tonnage}T</div>
+                  </div>
+                  <div className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
+                    <div className="text-label font-mono text-muted-foreground tracking-wider">SPD</div>
+                    <div className="text-detail-value font-mono text-foreground">{m.topSpeed} km/h</div>
+                  </div>
                 </div>
-                <div className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
-                  <div className="text-label font-mono text-muted-foreground tracking-wider">SPD</div>
-                  <div className="text-detail-value font-mono text-foreground">{m.topSpeed} km/h</div>
-                </div>
-              </div>
-            </button>
+              </button>
+              {(index + 1) % 15 === 0 && adAssets && (
+                <NativeAdCard assets={adAssets} key={`native-ad-mechs-${index}`} />
+              )}
+            </div>
           ))}
         </div>
       )}
