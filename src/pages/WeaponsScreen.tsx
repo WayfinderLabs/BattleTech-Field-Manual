@@ -4,6 +4,8 @@ import { Search } from "lucide-react";
 import { WEAPONS, type Weapon } from "@/data/weapons";
 import { useFilters } from "@/contexts/FilterContext";
 import { useScrollContainer } from "@/contexts/ScrollContext";
+import { NativeAdCard } from "@/components/NativeAdCard";
+import { useNativeAd } from "@/hooks/useNativeAd";
 
 const CATEGORY_COLORS: Record<Weapon["category"], string> = {
   Ballistic: "bg-[hsl(220,9%,46%)] text-white",
@@ -25,6 +27,7 @@ const WeaponsScreen = () => {
   const navigate = useNavigate();
   const filters = useFilters();
   const scrollContainer = useScrollContainer();
+  const { adAssets } = useNativeAd();
   const { search, setSearch, categoryFilter, setCategoryFilter, metaFilters, toggleMeta } = filters.weapons;
   const [tierFilter, setTierFilter] = useState(false);
   const scrollKey = "weapons";
@@ -172,48 +175,52 @@ const WeaponsScreen = () => {
         </div>
       ) : (
         <div className="space-y-2">
-          {filtered.map((w) => (
-            <button
-              key={w.id}
-              onClick={() => navigateToDetail(w.id)}
-              className="w-full text-left bg-card border border-border rounded-sm p-3 hover:border-primary/60 transition-colors active:scale-[0.98] group"
-            >
-              <div className="flex items-start justify-between gap-2 mb-2">
-                <span className="text-primary font-mono text-card-title uppercase tracking-wider leading-tight">
-                  {w.name}
-                </span>
-                <div className="flex gap-1.5 shrink-0 flex-wrap justify-end">
-                  <span className={`px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm ${CATEGORY_COLORS[w.category]}`}>
-                    {w.category}
+          {filtered.map((w, index) => (
+            <div key={w.id}>
+              <button
+                onClick={() => navigateToDetail(w.id)}
+                className="w-full text-left bg-card border border-border rounded-sm p-3 hover:border-primary/60 transition-colors active:scale-[0.98] group"
+              >
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <span className="text-primary font-mono text-card-title uppercase tracking-wider leading-tight">
+                    {w.name}
                   </span>
-                  {w.isClan && (
-                    <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-primary text-primary">
-                      CLAN
+                  <div className="flex gap-1.5 shrink-0 flex-wrap justify-end">
+                    <span className={`px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm ${CATEGORY_COLORS[w.category]}`}>
+                      {w.category}
                     </span>
-                  )}
-                  {w.dlcSource !== "Base" && (
-                    <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-border text-muted-foreground">
-                      DLC
-                    </span>
-                  )}
-                </div>
-              </div>
-              {w.notes && (
-                <p className="font-mono text-xs mb-2" style={{ color: '#8A8A8A' }}>{w.notes}</p>
-              )}
-              <div className="flex gap-3">
-                {[
-                  { label: "DMG", value: w.damage },
-                  { label: "HEAT", value: w.heat },
-                  { label: "TONS", value: w.tonnage },
-                ].map((stat) => (
-                  <div key={stat.label} className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
-                    <div className="text-label font-mono text-muted-foreground tracking-wider">{stat.label}</div>
-                    <div className="text-detail-value font-mono text-foreground">{stat.value}</div>
+                    {w.isClan && (
+                      <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-primary text-primary">
+                        CLAN
+                      </span>
+                    )}
+                    {w.dlcSource !== "Base" && (
+                      <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-border text-muted-foreground">
+                        DLC
+                      </span>
+                    )}
                   </div>
-                ))}
-              </div>
-            </button>
+                </div>
+                {w.notes && (
+                  <p className="font-mono text-xs mb-2" style={{ color: '#8A8A8A' }}>{w.notes}</p>
+                )}
+                <div className="flex gap-3">
+                  {[
+                    { label: "DMG", value: w.damage },
+                    { label: "HEAT", value: w.heat },
+                    { label: "TONS", value: w.tonnage },
+                  ].map((stat) => (
+                    <div key={stat.label} className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
+                      <div className="text-label font-mono text-muted-foreground tracking-wider">{stat.label}</div>
+                      <div className="text-detail-value font-mono text-foreground">{stat.value}</div>
+                    </div>
+                  ))}
+                </div>
+              </button>
+              {(index + 1) % 10 === 0 && adAssets && (
+                <NativeAdCard assets={adAssets} key={`native-ad-weapons-${index}`} />
+              )}
+            </div>
           ))}
         </div>
       )}

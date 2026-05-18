@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import { EQUIPMENT, type Equipment } from "@/data/equipment";
+import { NativeAdCard } from "@/components/NativeAdCard";
+import { useNativeAd } from "@/hooks/useNativeAd";
 
 const CATEGORY_COLORS: Record<Equipment["category"], string> = {
   "Heat Sink": "bg-[hsl(0,84%,60%)] text-white",
@@ -32,6 +34,7 @@ const SECTION_LABELS: Record<Equipment["category"], string> = {
 };
 
 const EquipmentScreen = () => {
+  const { adAssets } = useNativeAd();
   const grouped = useMemo(() => {
     const map = new Map<Equipment["category"], Equipment[]>();
     for (const cat of SECTION_ORDER) {
@@ -94,6 +97,9 @@ const EquipmentScreen = () => {
                 </div>
               ))}
             </div>
+            {cat === "Heat Sink" && adAssets && (
+              <NativeAdCard assets={adAssets} key="native-ad-equipment-heatsink" />
+            )}
           </div>
         );
       })}
