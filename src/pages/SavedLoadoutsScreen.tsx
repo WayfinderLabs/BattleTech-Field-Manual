@@ -11,12 +11,14 @@ import {
   AlertDialogFooter,
 } from '@/components/ui/alert-dialog';
 import { useSavedLoadouts } from '@/hooks/useSavedLoadouts';
+import { useInterstitial } from '@/hooks/useInterstitial';
 import { MECHS } from '@/data/mechs';
 import type { SavedLoadout } from '@/types/savedLoadout';
 
 const SavedLoadoutsScreen = () => {
   const navigate = useNavigate();
   const { savedLoadouts, deleteLoadout } = useSavedLoadouts();
+  const { recordNavigation } = useInterstitial();
   const [deleteTarget, setDeleteTarget] = useState<SavedLoadout | null>(null);
   const [loadTarget, setLoadTarget] = useState<SavedLoadout | null>(null);
 
@@ -30,6 +32,7 @@ const SavedLoadoutsScreen = () => {
 
   const handleLoad = () => {
     if (!loadTarget) return;
+    recordNavigation();
     navigate('/loadout', { state: { restoreLoadout: loadTarget } });
     setLoadTarget(null);
   };
