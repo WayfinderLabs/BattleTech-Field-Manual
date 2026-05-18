@@ -2,6 +2,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Crosshair, Bot, Wrench, Layers } from "lucide-react";
 import { useLoadoutDirty } from "@/contexts/LoadoutDirtyContext";
 import { useInterstitial } from "@/hooks/useInterstitial";
+import { useRewardedAd } from "@/hooks/useRewardedAd";
+
 
 const tabs = [
   { path: "/", label: "WEAPONS", icon: Crosshair },
@@ -15,6 +17,7 @@ const BottomNav = () => {
   const navigate = useNavigate();
   const { requestNavigate } = useLoadoutDirty();
   const { recordNavigation } = useInterstitial();
+  const { rewardActive } = useRewardedAd();
 
   const isActive = (path: string) => {
     if (path === "/") return location.pathname === "/" || location.pathname.startsWith("/weapons");
