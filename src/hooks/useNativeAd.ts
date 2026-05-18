@@ -22,7 +22,9 @@ export const useNativeAd = () => {
     const loadAd = async () => {
       setIsLoading(true);
       try {
-        const result = await AdMob.requestNativeAd({ adId: NATIVE_AD_UNIT_ID });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const admob = AdMob as any;
+        const result = await admob.requestNativeAd({ adId: NATIVE_AD_UNIT_ID });
         if (result) {
           setAdAssets({
             headline: result.headline ?? 'Sponsored',
