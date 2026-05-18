@@ -6,6 +6,7 @@ import TopBar from "./TopBar";
 import BottomNav from "./BottomNav";
 import InstallPrompt from "./InstallPrompt";
 import { ScrollProvider, useScrollContainer } from "@/contexts/ScrollContext";
+import { RewardedAdProvider } from "@/contexts/RewardedAdContext";
 import { useConsentFlow } from "@/hooks/useConsentFlow";
 
 const AppShellInner = () => {
