@@ -42,9 +42,11 @@ const AppShellInner = () => {
 };
 
 const AppShell = () => (
-  <ScrollProvider>
-    <AppShellInner />
-  </ScrollProvider>
+  <RewardedAdProvider>
+    <ScrollProvider>
+      <AppShellInner />
+    </ScrollProvider>
+  </RewardedAdProvider>
 );
 
 export default AppShell;
