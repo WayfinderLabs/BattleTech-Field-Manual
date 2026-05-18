@@ -2,6 +2,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Crosshair, Bot, Wrench, Layers } from "lucide-react";
 import { useLoadoutDirty } from "@/contexts/LoadoutDirtyContext";
 import { useInterstitial } from "@/hooks/useInterstitial";
+import { useRewardedAd } from "@/hooks/useRewardedAd";
+
 
 const tabs = [
   { path: "/", label: "WEAPONS", icon: Crosshair },
@@ -15,6 +17,7 @@ const BottomNav = () => {
   const navigate = useNavigate();
   const { requestNavigate } = useLoadoutDirty();
   const { recordNavigation } = useInterstitial();
+  const { rewardActive } = useRewardedAd();
 
   const isActive = (path: string) => {
     if (path === "/") return location.pathname === "/" || location.pathname.startsWith("/weapons");
@@ -42,7 +45,7 @@ const BottomNav = () => {
                 }
               }}
               className={`flex-1 flex flex-col items-center gap-1 py-2.5 transition-colors duration-150 active:scale-[0.97] ${
-                active ? "text-primary" : "text-muted-foreground"
+                active ? "text-primary" : (path === '/loadout' && rewardActive) ? "text-primary" : "text-muted-foreground"
               }`}
             >
               <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 1.5} />
