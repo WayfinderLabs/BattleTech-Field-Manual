@@ -11,6 +11,7 @@ import {
   AlertDialogFooter,
 } from '@/components/ui/alert-dialog';
 import { useSavedLoadouts } from '@/hooks/useSavedLoadouts';
+import { useInterstitial } from '@/hooks/useInterstitial';
 import { MECHS } from '@/data/mechs';
 import type { SavedLoadout } from '@/types/savedLoadout';
 
