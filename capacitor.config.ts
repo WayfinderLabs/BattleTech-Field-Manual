@@ -6,11 +6,12 @@ const config: CapacitorConfig = {
   appName: 'BT Field Manual',
   webDir: 'dist',
   android: {
-    buildOptions: {
-      minSdkVersion: 24,
-      targetSdkVersion: 35,
-    }
-  },
+  adjustMarginsForEdgeToEdge: 'auto',
+  buildOptions: {
+    minSdkVersion: 24,
+    targetSdkVersion: 35,
+  }
+},
   plugins: {
     AdMob: {
       appId: process.env.ADMOB_APP_ID,
