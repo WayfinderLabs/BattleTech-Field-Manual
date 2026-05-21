@@ -24,3 +24,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+btfm-app-release-signed.aab 
+wayfinderlabs-keystore.jks 
