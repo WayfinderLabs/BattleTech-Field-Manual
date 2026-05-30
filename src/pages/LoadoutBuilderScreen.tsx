@@ -174,6 +174,7 @@ const LoadoutBuilderScreen = () => {
 
   // Restore from saved loadout navigation
   useEffect(() => {
+    localStorage.removeItem('btfm_draft_loadout');
     const navState = location.state as { restoreLoadout?: any } | null;
     if (navState?.restoreLoadout) {
       const saved = navState.restoreLoadout;
