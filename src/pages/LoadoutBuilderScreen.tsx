@@ -859,6 +859,13 @@ const LoadoutBuilderScreen = () => {
                 onClick={() => {
                   const action = unsavedGuardAction;
                   setUnsavedGuardAction(null);
+                  setState({
+                    selectedMech: null,
+                    slots: { ...EMPTY_SLOTS },
+                    equipment: { ...EMPTY_EQUIPMENT },
+                  });
+                  setArmorPoints(0);
+                  setMechPickerOpen(false);
                   action();
                 }}
                 className="font-mono uppercase tracking-wider"
