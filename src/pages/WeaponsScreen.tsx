@@ -202,7 +202,7 @@ const WeaponsScreen = () => {
                   </div>
                 </div>
                 {w.notes && (
-                  <p className="text-muted-foreground text-badge font-mono leading-relaxed mb-2">
+                  <p className="text-muted-foreground text-sm font-mono leading-relaxed mb-2">
                     {w.notes}
                   </p>
                 )}
