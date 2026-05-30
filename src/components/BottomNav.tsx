@@ -51,7 +51,12 @@ const BottomNav = () => {
                 active ? "text-primary" : "text-muted-foreground"
               }`}
             >
-              <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 1.5} />
+              <div className="relative">
+                <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 1.5} />
+                {path === '/loadout' && rewardActive && (
+                  <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-primary" />
+                )}
+              </div>
               <span className="font-mono tracking-wider" style={{ fontSize: 'var(--fs-nav)' }}>{label}</span>
             </button>
           );
