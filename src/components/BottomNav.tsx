@@ -48,7 +48,7 @@ const BottomNav = () => {
                 }
               }}
               className={`flex-1 flex flex-col items-center gap-1 py-2.5 transition-colors duration-150 active:scale-[0.97] ${
-                active ? "text-primary" : (path === '/loadout' && rewardActive) ? "text-primary" : "text-muted-foreground"
+                active ? "text-primary" : "text-muted-foreground"
               }`}
             >
               <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 1.5} />
