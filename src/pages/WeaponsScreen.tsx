@@ -202,7 +202,9 @@ const WeaponsScreen = () => {
                   </div>
                 </div>
                 {w.notes && (
-                  <p className="font-mono text-xs mb-2" style={{ color: '#8A8A8A' }}>{w.notes}</p>
+                  <p className="text-muted-foreground text-badge font-mono leading-relaxed mb-2">
+                    {w.notes}
+                  </p>
                 )}
                 <div className="flex gap-3">
                   {[
