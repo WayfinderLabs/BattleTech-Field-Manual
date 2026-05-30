@@ -21,6 +21,7 @@ const BottomNav = () => {
 
   const isActive = (path: string) => {
     if (path === "/") return location.pathname === "/" || location.pathname.startsWith("/weapons");
+    if (path === "/loadout") return location.pathname === "/loadout";
     return location.pathname.startsWith(path);
   };
 
