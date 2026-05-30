@@ -81,7 +81,7 @@ const EquipmentScreen = () => {
                       )}
                     </div>
                   </div>
-                  <p className="text-muted-foreground text-sm font-mono leading-relaxed mb-2">
+                  <p className="text-muted-foreground text-badge font-mono leading-relaxed mb-2">
                     {eq.effectDescription}
                   </p>
                   <div className="flex gap-3">
