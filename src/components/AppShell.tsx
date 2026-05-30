@@ -24,7 +24,7 @@ const AppShellInner = () => {
     }
   }, []);
   return (
-    <div className="flex flex-col h-dvh overflow-hidden bg-background">
+    <div className="flex flex-col h-dvh overflow-hidden bg-background" style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}>
       <InstallPrompt />
       <div className="flex-shrink-0">
         <TopBar />
