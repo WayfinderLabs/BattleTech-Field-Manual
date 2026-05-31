@@ -47,6 +47,10 @@ const BackButtonHandler = () => {
         navigate('/mechs');
         return;
       }
+      if (isEquipmentDetail(path)) {
+        navigate('/equipment');
+        return;
+      }
 
       if (path === '/loadout') {
         requestNavigate(() => navigate(lastTabRef.current || '/'));
