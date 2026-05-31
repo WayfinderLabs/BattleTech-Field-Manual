@@ -10,4 +10,13 @@ public class MainActivity extends BridgeActivity {
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
     }
+
+    @Override
+    public void onBackPressed() {
+        if (this.bridge != null) {
+            this.bridge.triggerJSEvent("backButton", "window", "{canGoBack: false}");
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
