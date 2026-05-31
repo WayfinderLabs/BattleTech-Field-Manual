@@ -12,20 +12,6 @@ export const useInterstitial = () => {
   const lastShown = useRef(0);
   const { rewardActive } = useRewardedAd();
 
-  useEffect(() => {
-    if (Capacitor.getPlatform() !== 'android') return;
-
-    const listener = AdMob.addListener(InterstitialAdPluginEvents.Dismissed, () => {
-      if (!rewardActive) {
-        showRewardedAd();
-      }
-    });
-
-    return () => {
-      listener.then(l => l.remove());
-    };
-  }, [rewardActive]);
-
   const recordNavigation = async () => {
     if (Capacitor.getPlatform() !== 'android') return;
     if (rewardActive) return;
