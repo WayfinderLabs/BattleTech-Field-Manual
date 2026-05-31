@@ -10,7 +10,7 @@ const COOLDOWN_MS = 180000;
 export const useInterstitial = () => {
   const navCount = useRef(0);
   const lastShown = useRef(0);
-  const { rewardActive, showRewardedAd } = useRewardedAd();
+  const { rewardActive } = useRewardedAd();
 
   useEffect(() => {
     if (Capacitor.getPlatform() !== 'android') return;
