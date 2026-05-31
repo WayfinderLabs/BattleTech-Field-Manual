@@ -1,6 +1,6 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
-import { AdMob, InterstitialAdPluginEvents } from '@capacitor-community/admob';
+import { AdMob } from '@capacitor-community/admob';
 import { useRewardedAd } from '@/hooks/useRewardedAd';
 
 const INTERSTITIAL_AD_UNIT_ID = 'ca-app-pub-6695196307784459/3558537445';
@@ -10,21 +10,7 @@ const COOLDOWN_MS = 180000;
 export const useInterstitial = () => {
   const navCount = useRef(0);
   const lastShown = useRef(0);
-  const { rewardActive, showRewardedAd } = useRewardedAd();
-
-  useEffect(() => {
-    if (Capacitor.getPlatform() !== 'android') return;
-
-    const listener = AdMob.addListener(InterstitialAdPluginEvents.Dismissed, () => {
-      if (!rewardActive) {
-        showRewardedAd();
-      }
-    });
-
-    return () => {
-      listener.then(l => l.remove());
-    };
-  }, [rewardActive]);
+  const { rewardActive } = useRewardedAd();
 
   const recordNavigation = async () => {
     if (Capacitor.getPlatform() !== 'android') return;
