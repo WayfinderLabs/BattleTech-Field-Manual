@@ -22,6 +22,10 @@ const BackButtonHandler = () => {
   const exitPromptRef = useRef<number | null>(null);
 
   useEffect(() => {
+    window.history.replaceState(null, '', window.location.pathname);
+  }, []);
+
+  useEffect(() => {
     pathRef.current = location.pathname;
     if (isListRoute(location.pathname)) {
       lastTabRef.current = location.pathname;
