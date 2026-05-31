@@ -1,6 +1,6 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
-import { AdMob, InterstitialAdPluginEvents } from '@capacitor-community/admob';
+import { AdMob } from '@capacitor-community/admob';
 import { useRewardedAd } from '@/hooks/useRewardedAd';
 
 const INTERSTITIAL_AD_UNIT_ID = 'ca-app-pub-6695196307784459/3558537445';
