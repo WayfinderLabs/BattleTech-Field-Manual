@@ -10,6 +10,7 @@ const LIST_ROUTES = ['/', '/mechs', '/equipment'];
 const isListRoute = (path: string) => LIST_ROUTES.includes(path);
 const isWeaponDetail = (path: string) => /^\/weapons\/[^/]+$/.test(path);
 const isMechDetail = (path: string) => /^\/mechs\/[^/]+$/.test(path);
+const isEquipmentDetail = (path: string) => /^\/equipment\/[^/]+$/.test(path);
 
 const BackButtonHandler = () => {
   const location = useLocation();
@@ -32,7 +33,10 @@ const BackButtonHandler = () => {
 
     let handle: { remove: () => void } | undefined;
 
-    const handler = () => {
+    const handler = (event: { canGoBack: boolean }) => {
+      // Suppress WebView default back handling entirely
+      // All navigation is handled explicitly below
+
       const path = pathRef.current;
 
       if (isWeaponDetail(path)) {
