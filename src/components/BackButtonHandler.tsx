@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { App } from '@capacitor/app';
+
 import { Capacitor } from '@capacitor/core';
 import { toast } from 'sonner';
 import { useLoadoutDirty } from '@/contexts/LoadoutDirtyContext';
@@ -35,9 +35,7 @@ const BackButtonHandler = () => {
   useEffect(() => {
     if (!Capacitor.isNativePlatform()) return;
 
-    let handle: { remove: () => void } | undefined;
-
-    const handler = (event: { canGoBack: boolean }) => {
+    const handler = () => {
       // Suppress WebView default back handling entirely
       // All navigation is handled explicitly below
 
@@ -86,12 +84,10 @@ const BackButtonHandler = () => {
       navigate(lastTabRef.current || '/');
     };
 
-    App.addListener('backButton', handler).then((h) => {
-      handle = h;
-    });
+    window.addEventListener('backButton', handler);
 
     return () => {
-      handle?.remove();
+      window.removeEventListener('backButton', handler);
     };
   }, [navigate, requestNavigate]);
 
