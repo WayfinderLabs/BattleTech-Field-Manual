@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import { FilterProvider } from "./contexts/FilterContext";
 import { LoadoutDirtyProvider } from "./contexts/LoadoutDirtyContext";
 import BackButtonHandler from "./components/BackButtonHandler";
+import { Toaster } from 'sonner';
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
         <LoadoutDirtyProvider>
           <BrowserRouter>
             <BackButtonHandler />
+            <Toaster />
             <Routes>
               <Route element={<AppShell />}>
                 <Route path="/" element={<WeaponsScreen />} />
