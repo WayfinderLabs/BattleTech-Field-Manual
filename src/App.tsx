@@ -24,6 +24,7 @@ const App = () => (
         <LoadoutDirtyProvider>
           <BrowserRouter>
             <BackButtonHandler />
+            <Toaster />
             <Routes>
               <Route element={<AppShell />}>
                 <Route path="/" element={<WeaponsScreen />} />
