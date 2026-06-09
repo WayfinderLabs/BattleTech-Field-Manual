@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { App } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { toast } from 'sonner';
 import { useLoadoutDirty } from '@/contexts/LoadoutDirtyContext';
