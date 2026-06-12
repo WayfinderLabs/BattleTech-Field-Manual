@@ -29,6 +29,7 @@ const BottomNav = () => {
 
   return (
     <nav className="shrink-0 bg-background border-t border-border z-50">
+      {rewardActive && <div className="h-0.5 bg-primary" />}
       <div className="max-w-[480px] mx-auto flex">
         {tabs.map(({ path, label, icon: Icon }) => {
           const active = isActive(path);
@@ -53,9 +54,6 @@ const BottomNav = () => {
             >
               <div className="relative">
                 <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 1.5} />
-                {path === '/loadout' && rewardActive && (
-                  <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-primary" />
-                )}
               </div>
               <span className="font-mono tracking-wider" style={{ fontSize: 'var(--fs-nav)' }}>{label}</span>
             </button>
