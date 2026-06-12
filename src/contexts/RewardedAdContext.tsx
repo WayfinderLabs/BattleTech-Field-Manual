@@ -9,11 +9,17 @@ const STORAGE_KEY = 'rewardedAdLastClaimed';
 interface RewardedAdContextValue {
   rewardActive: boolean;
   showRewardedAd: () => Promise<void>;
+  offerVisible: boolean;
+  openOffer: () => void;
+  closeOffer: () => void;
 }
 
 const RewardedAdContext = createContext<RewardedAdContextValue>({
   rewardActive: false,
   showRewardedAd: async () => {},
+  offerVisible: false,
+  openOffer: () => {},
+  closeOffer: () => {},
 });
 
 export const RewardedAdProvider = ({ children }: { children: ReactNode }) => {
