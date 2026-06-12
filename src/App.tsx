@@ -24,7 +24,7 @@ const App = () => (
         <LoadoutDirtyProvider>
           <BrowserRouter>
             <BackButtonHandler />
-            <Toaster position="top-center" />
+            <Toaster position="top-center" offset="calc(env(safe-area-inset-top, 0px) + 12px)" />
             <Routes>
               <Route element={<AppShell />}>
                 <Route path="/" element={<WeaponsScreen />} />
