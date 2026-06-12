@@ -75,3 +75,8 @@
     @apply font-mono uppercase tracking-widest;
   }
 }
+
+/* Sonner toast: clear the Android status bar. Sonner ignores its offset prop on mobile widths, so override directly. */
+[data-sonner-toaster][data-y-position='top'] {
+  top: calc(max(env(safe-area-inset-top, 0px), 28px) + 12px) !important;
+}
