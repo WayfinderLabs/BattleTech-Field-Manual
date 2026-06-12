@@ -35,6 +35,8 @@ export const useInterstitial = () => {
 
     if (navCount.current < NAV_FLOOR) return;
     if (Date.now() - lastShown.current < COOLDOWN_MS) return;
+    if (adInFlight.current) return;
+    adInFlight.current = true;
 
     try {
       await AdMob.prepareInterstitial({ adId: INTERSTITIAL_AD_UNIT_ID });
@@ -43,6 +45,8 @@ export const useInterstitial = () => {
       navCount.current = 0;
     } catch {
       // silent — ad failures must never affect navigation
+    } finally {
+      adInFlight.current = false;
     }
   };
 
