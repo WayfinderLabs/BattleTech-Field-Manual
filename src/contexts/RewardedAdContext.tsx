@@ -9,11 +9,17 @@ const STORAGE_KEY = 'rewardedAdLastClaimed';
 interface RewardedAdContextValue {
   rewardActive: boolean;
   showRewardedAd: () => Promise<void>;
+  offerVisible: boolean;
+  openOffer: () => void;
+  closeOffer: () => void;
 }
 
 const RewardedAdContext = createContext<RewardedAdContextValue>({
   rewardActive: false,
   showRewardedAd: async () => {},
+  offerVisible: false,
+  openOffer: () => {},
+  closeOffer: () => {},
 });
 
 export const RewardedAdProvider = ({ children }: { children: ReactNode }) => {
@@ -32,7 +38,14 @@ export const RewardedAdProvider = ({ children }: { children: ReactNode }) => {
     return () => clearTimeout(timer);
   }, [rewardActive]);
 
+  const [offerVisible, setOfferVisible] = useState(false);
+  const openOffer = () => {
+    if (!rewardActive) setOfferVisible(true);
+  };
+  const closeOffer = () => setOfferVisible(false);
+
   const showRewardedAd = async () => {
+    setOfferVisible(false);
     if (Capacitor.getPlatform() !== 'android') return;
     try {
       await AdMob.prepareRewardVideoAd({ adId: REWARDED_AD_UNIT_ID });
@@ -45,7 +58,7 @@ export const RewardedAdProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <RewardedAdContext.Provider value={{ rewardActive, showRewardedAd }}>
+    <RewardedAdContext.Provider value={{ rewardActive, showRewardedAd, offerVisible, openOffer, closeOffer }}>
       {children}
     </RewardedAdContext.Provider>
   );
