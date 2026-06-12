@@ -10,6 +10,7 @@ const COOLDOWN_MS = 180000;
 export const useInterstitial = () => {
   const navCount = useRef(0);
   const lastShown = useRef(0);
+  const adInFlight = useRef(false);
   const { rewardActive, openOffer } = useRewardedAd();
 
   useEffect(() => {
