@@ -5,6 +5,7 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import TopBar from "./TopBar";
 import BottomNav from "./BottomNav";
 import InstallPrompt from "./InstallPrompt";
+import RewardedOfferDialog from "./RewardedOfferDialog";
 import { ScrollProvider, useScrollContainer } from "@/contexts/ScrollContext";
 import { RewardedAdProvider } from "@/contexts/RewardedAdContext";
 import { useConsentFlow } from "@/hooks/useConsentFlow";
@@ -37,6 +38,7 @@ const AppShellInner = () => {
       <div className="flex-shrink-0">
         <BottomNav />
       </div>
+      <RewardedOfferDialog />
     </div>
   );
 };
