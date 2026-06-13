@@ -113,7 +113,7 @@ const LoadoutBuilderScreen = () => {
   const [mechPickerOpen, setMechPickerOpen] = useState(false);
   const [pickerLocation, setPickerLocation] = useState<LocationKey | null>(null);
   const [saveSheetOpen, setSaveSheetOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  
   const [blockingDialog, setBlockingDialog] = useState<{
     isOpen: boolean;
     itemName: string;
@@ -264,12 +264,6 @@ const LoadoutBuilderScreen = () => {
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  // Toast auto-dismiss
-  useEffect(() => {
-    if (!toastMessage) return;
-    const t = setTimeout(() => setToastMessage(null), 2500);
-    return () => clearTimeout(t);
-  }, [toastMessage]);
 
   // Focus armor input when editing
   useEffect(() => {
@@ -373,7 +367,9 @@ const LoadoutBuilderScreen = () => {
     if (result === 'saved') {
       setLoadedName(name);
       setLoadedNotes(notes?.trim() || '');
-      setToastMessage('LOADOUT SAVED');
+      toast('LOADOUT SAVED', {
+        style: { background: '#C87941', color: '#0D0D0D', fontFamily: 'monospace', letterSpacing: '0.05em', border: 'none', borderRadius: '2px' },
+      });
     }
     return result;
   };
@@ -383,7 +379,9 @@ const LoadoutBuilderScreen = () => {
     overwriteLoadout(existingId, name, notes, state.selectedMech.id.toString(), state.slots, state.equipment, armorPoints);
     setLoadedName(name);
     setLoadedNotes(notes?.trim() || '');
-    setToastMessage('LOADOUT SAVED');
+    toast('LOADOUT SAVED', {
+      style: { background: '#C87941', color: '#0D0D0D', fontFamily: 'monospace', letterSpacing: '0.05em', border: 'none', borderRadius: '2px' },
+    });
   };
 
   const handleGetDuplicate = (name: string) => {
@@ -529,15 +527,6 @@ const LoadoutBuilderScreen = () => {
 
   return (
     <div className="space-y-4">
-      {/* Toast notification */}
-      {toastMessage && (
-        <div
-          className="fixed top-2 left-1/2 -translate-x-1/2 z-[100] px-4 py-2 rounded-sm font-mono uppercase tracking-wider text-primary-foreground"
-          style={{ backgroundColor: '#C87941', fontSize: 'var(--fs-body)' }}
-        >
-          {toastMessage}
-        </div>
-      )}
 
       {/* Sticky header block */}
       <div className="sticky top-0 z-40 -mx-4 px-4" style={{ background: '#0D0D0D', borderBottom: '1px solid #2a2a2a' }}>
