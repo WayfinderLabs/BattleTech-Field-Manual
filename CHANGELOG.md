@@ -1,3 +1,6 @@
+## versionCode 32 — 13-Jun-2026
+- Fix: Android long-press text selection toolbar suppressed on Save Loadout inputs
+
 ## versionCode 30 — 12-Jun-2026
 - Fix: toast positioning — consolidated custom LOADOUT SAVED toast into sonner, upgraded sonner to v2, mobileOffset clears status bar on all devices
 - Changed: removed hand-rolled toast system from LoadoutBuilderScreen
