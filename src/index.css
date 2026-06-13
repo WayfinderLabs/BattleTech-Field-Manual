@@ -76,3 +76,9 @@
   }
 }
 
+
+/* Suppress Android WebView text selection handles on inputs */
+input, textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}

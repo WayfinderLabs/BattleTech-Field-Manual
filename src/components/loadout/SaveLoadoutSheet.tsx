@@ -117,6 +117,7 @@ const SaveLoadoutSheet = ({ open, onClose, onSave, onOverwrite, getDuplicateId }
             inputMode="text"
             value={name}
             onChange={(e) => { setName(e.target.value.slice(0, 40)); setError(''); }}
+            onContextMenu={(e) => e.preventDefault()}
             placeholder="LOADOUT NAME"
             maxLength={40}
             className="w-full font-mono uppercase tracking-wider text-foreground placeholder:text-muted-foreground px-3 py-2.5 rounded-sm border border-border focus:outline-none focus:ring-1 focus:ring-ring"
@@ -135,6 +136,7 @@ const SaveLoadoutSheet = ({ open, onClose, onSave, onOverwrite, getDuplicateId }
             type="text"
             value={notes}
             onChange={(e) => setNotes(e.target.value.slice(0, 120))}
+            onContextMenu={(e) => e.preventDefault()}
             placeholder="NOTES (OPTIONAL)"
             maxLength={120}
             className="w-full font-mono tracking-wider text-foreground placeholder:text-muted-foreground px-3 py-2.5 rounded-sm border border-border focus:outline-none focus:ring-1 focus:ring-ring"
