@@ -76,7 +76,11 @@
   }
 }
 
-/* Sonner toast: clear the Android status bar. Sonner ignores its offset prop on mobile widths, so override directly. */
-[data-sonner-toaster][data-y-position='top'] {
+/* Sonner toast: clear the Android status bar.
+   Sonner's own mobile media query uses !important, so we must win on
+   specificity (html prefix) and also set its mobile offset variables. */
+html [data-sonner-toaster][data-y-position='top'] {
+  --mobile-offset-top: calc(max(env(safe-area-inset-top, 0px), 28px) + 12px);
+  --offset-top: calc(max(env(safe-area-inset-top, 0px), 28px) + 12px);
   top: calc(max(env(safe-area-inset-top, 0px), 28px) + 12px) !important;
 }
