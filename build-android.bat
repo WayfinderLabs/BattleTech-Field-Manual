@@ -8,7 +8,7 @@ echo.
 
 :: [1] Set Java home
 :: Verify this path matches Android Studio > Settings > Build Tools > Gradle > Gradle JDK
-set JAVA_HOME=C:\Program Files\Android\Android Studio\jbr
+set JAVA_HOME=C:\Android\Android Studio\jbr
 echo [1/9] JAVA_HOME set to %JAVA_HOME%
 echo.
 
