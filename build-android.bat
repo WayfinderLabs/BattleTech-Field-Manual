@@ -6,6 +6,10 @@ echo  BTFM Android Build Script
 echo ========================================
 echo.
 
+:: ── LOG: Build session start ──────────────────────────────────────────────────
+set "LOGFILE=build-log.txt"
+echo [%date% %time%] BUILD STARTED >> %LOGFILE%
+
 :: [1] Set Java home
 :: Verify this path matches Android Studio > Settings > Build Tools > Gradle > Gradle JDK
 set JAVA_HOME=C:\Android\Android Studio\jbr
@@ -17,6 +21,7 @@ echo [2/9] Pulling latest from GitHub...
 git pull origin main
 if %ERRORLEVEL% NEQ 0 (
     echo ERROR: git pull failed. Resolve conflicts before building.
+    echo [%date% %time%] BUILD FAILED - git pull >> %LOGFILE%
     pause
     exit /b 1
 )
@@ -27,6 +32,7 @@ echo [3/9] Installing npm dependencies...
 call npm install
 if %ERRORLEVEL% NEQ 0 (
     echo ERROR: npm install failed. Aborting.
+    echo [%date% %time%] BUILD FAILED - npm install >> %LOGFILE%
     pause
     exit /b 1
 )
@@ -37,6 +43,7 @@ echo [4/9] Running npm build...
 call npm run build
 if %ERRORLEVEL% NEQ 0 (
     echo ERROR: npm build failed. Aborting.
+    echo [%date% %time%] BUILD FAILED - npm build >> %LOGFILE%
     pause
     exit /b 1
 )
@@ -47,6 +54,7 @@ echo [5/9] Running cap sync...
 call npx cap sync android
 if %ERRORLEVEL% NEQ 0 (
     echo ERROR: cap sync failed. Aborting.
+    echo [%date% %time%] BUILD FAILED - cap sync >> %LOGFILE%
     pause
     exit /b 1
 )
@@ -117,16 +125,61 @@ copy /Y "android-patches\AndroidManifest.xml"  "android\app\src\main\AndroidMani
 echo Critical files restored.
 echo.
 
+:: ── VERSION CODE: Read current, confirm increment ─────────────────────────────
+echo ========================================
+echo  VERSION CODE MANAGEMENT
+echo ========================================
+
+for /f "delims=" %%i in ('powershell -NoProfile -Command "(Get-Content 'android\app\build.gradle' | Select-String 'versionCode\s+\d+').Matches[0].Value -replace 'versionCode\s+','' "') do set "CURRENT_VC=%%i"
+
+echo  Current versionCode in build.gradle: %CURRENT_VC%
+set /a NEXT_VC=%CURRENT_VC%+1
+echo  Suggested next versionCode:          %NEXT_VC%
+echo.
+set /p CONFIRM_VC="  Enter new versionCode (press Enter to use %NEXT_VC%, or type a different number): "
+
+if "%CONFIRM_VC%"=="" set "CONFIRM_VC=%NEXT_VC%"
+
+echo.
+echo  Writing versionCode %CONFIRM_VC% to build.gradle...
+powershell -NoProfile -Command "(Get-Content 'android\app\build.gradle') -replace 'versionCode\s+%CURRENT_VC%', 'versionCode %CONFIRM_VC%' | Set-Content 'android\app\build.gradle'"
+echo  Done.
+echo.
+
+echo  Creating CHANGELOG.md entry for versionCode %CONFIRM_VC%...
+
+set "CLFILE=CHANGELOG.md"
+set "CLTMP=changelog_tmp.md"
+
+(
+    echo ## versionCode %CONFIRM_VC% - %date%
+    echo - [ ] describe change 1
+    echo - [ ] describe change 2
+    echo.
+) > %CLTMP%
+
+if exist %CLFILE% (
+    type %CLFILE% >> %CLTMP%
+)
+move /Y %CLTMP% %CLFILE% >nul
+echo  CHANGELOG.md updated. Fill in the entries before your next git push.
+echo.
+
+echo [%date% %time%] versionCode %CONFIRM_VC% written to build.gradle >> %LOGFILE%
+
 echo ========================================
 echo  Build complete. Next steps:
 echo.
-echo  1. Check android\variables.gradle
+echo  1. Verify android\variables.gradle:
 echo     compileSdkVersion=35, targetSdkVersion=35
-echo  2. Increment versionCode in android\app\build.gradle
-echo  3. Android Studio: Build ^> Generate Signed Bundle
+echo  2. Android Studio: Build ^> Generate Signed Bundle
+echo  3. Upload AAB to Play Console internal track
+echo  4. After successful device test - come back and
+echo     run TAG-AND-PUSH.bat to tag this version in Git
 echo.
 echo  NEVER run Clean Project.
 echo  NEVER run cap sync after this script.
 echo ========================================
 echo.
+echo [%date% %time%] Build script completed for versionCode %CONFIRM_VC% >> %LOGFILE%
 pause
