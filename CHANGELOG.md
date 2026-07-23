@@ -1,3 +1,7 @@
+## versionCode 33 - 23-Jul-26
+- [ ] describe change 1
+- [ ] describe change 2
+
 ## versionCode 32 — 13-Jun-2026
 - Fix: Android long-press text selection toolbar suppressed on Save Loadout inputs
 
