@@ -1,6 +1,7 @@
 package com.wayfinderlabs.btfm;
 
 import android.os.Bundle;
+import androidx.activity.OnBackPressedCallback;
 import androidx.core.view.WindowCompat;
 import com.getcapacitor.BridgeActivity;
 
@@ -9,14 +10,17 @@ public class MainActivity extends BridgeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-    }
 
-    @Override
-    public void onBackPressed() {
-        if (this.bridge != null) {
-            this.bridge.triggerJSEvent("backButton", "window", "{canGoBack: false}");
-        } else {
-            super.onBackPressed();
-        }
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (bridge != null) {
+                    bridge.triggerJSEvent("backButton", "window", "{canGoBack: false}");
+                } else {
+                    setEnabled(false);
+                    getOnBackPressedDispatcher().onBackPressed();
+                }
+            }
+        });
     }
 }
