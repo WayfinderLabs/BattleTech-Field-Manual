@@ -122,6 +122,55 @@ if not exist "android-patches\AndroidManifest.xml" (
     exit /b 1
 )
 copy /Y "android-patches\AndroidManifest.xml"  "android\app\src\main\AndroidManifest.xml"
+
+if not exist "android-patches\variables.gradle" (
+
+    echo ERROR: android-patches\variables.gradle is missing. Aborting.
+
+    pause
+
+    exit /b 1
+
+)
+
+copy /Y "android-patches\variables.gradle"    "android\variables.gradle"
+
+if not exist "android-patches\build.gradle" (
+
+    echo ERROR: android-patches\build.gradle is missing. Aborting.
+
+    pause
+
+    exit /b 1
+
+)
+
+copy /Y "android-patches\build.gradle"         "android\build.gradle"
+
+if not exist "android-patches\gradle.properties" (
+
+    echo ERROR: android-patches\gradle.properties is missing. Aborting.
+
+    pause
+
+    exit /b 1
+
+)
+
+copy /Y "android-patches\gradle.properties"    "android\gradle.properties"
+
+if not exist "android-patches\gradle-wrapper.properties" (
+
+    echo ERROR: android-patches\gradle-wrapper.properties is missing. Aborting.
+
+    pause
+
+    exit /b 1
+
+)
+
+copy /Y "android-patches\gradle-wrapper.properties"  "android\gradle\wrapper\gradle-wrapper.properties"
+
 echo Critical files restored.
 echo.
 
