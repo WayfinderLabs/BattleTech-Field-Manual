@@ -220,7 +220,7 @@ echo ========================================
 echo  Build complete. Next steps:
 echo.
 echo  1. Verify android\variables.gradle:
-echo     compileSdkVersion=35, targetSdkVersion=35
+echo     compileSdkVersion=36, targetSdkVersion=36
 echo  2. Android Studio: Build ^> Generate Signed Bundle
 echo  3. Upload AAB to Play Console internal track
 echo  4. After successful device test - come back and
