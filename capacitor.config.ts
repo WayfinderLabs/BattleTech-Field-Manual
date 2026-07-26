@@ -5,13 +5,7 @@ const config: CapacitorConfig = {
   appId: 'com.wayfinderlabs.btfm',
   appName: 'BT Field Manual',
   webDir: 'dist',
-  android: {
-  adjustMarginsForEdgeToEdge: 'auto',
-  buildOptions: {
-    minSdkVersion: 24,
-    targetSdkVersion: 35,
-  }
-},
+  android: {},
   plugins: {
     AdMob: {
       appId: process.env.ADMOB_APP_ID,
