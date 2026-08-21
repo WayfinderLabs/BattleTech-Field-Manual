@@ -6,6 +6,7 @@ import { useFilters } from "@/contexts/FilterContext";
 import { useScrollContainer } from "@/contexts/ScrollContext";
 import { NativeAdCard } from "@/components/NativeAdCard";
 import { useNativeAd } from "@/hooks/useNativeAd";
+import { WEAPON_ORDER, stripTier, getTier, isTierVariant } from "@/lib/weaponOrder";
 
 const CATEGORY_COLORS: Record<Weapon["category"], string> = {
   Ballistic: "bg-[hsl(220,9%,46%)] text-white",
@@ -17,7 +18,6 @@ const CATEGORY_COLORS: Record<Weapon["category"], string> = {
 type CategoryFilter = Weapon["category"] | "ALL";
 type MetaFilter = "CLAN" | "DLC";
 
-const isTierVariant = (name: string) => name.includes('+');
 
 const CATEGORY_CHIPS: CategoryFilter[] = ["ALL", "Ballistic", "Energy", "Missile", "Support"];
 const META_CHIPS: MetaFilter[] = ["CLAN", "DLC"];
@@ -45,51 +45,6 @@ const WeaponsScreen = () => {
   };
 
   const filtered = useMemo(() => {
-    const WEAPON_ORDER: Record<string, number> = {
-      // ── BALLISTIC ──────────────────────────────────────
-      'Ballistic:AC/2':          100,
-      'Ballistic:AC/5':          110,
-      'Ballistic:AC/10':         120,
-      'Ballistic:AC/20':         130,
-      'Ballistic:Gauss Rifle':   140,
-      // ── ENERGY ─────────────────────────────────────────
-      'Energy:Small Laser':         200,
-      'Energy:Medium Laser':        210,
-      'Energy:Large Laser':         220,
-      'Energy:ER Small Laser':      230,
-      'Energy:ER Medium Laser':     240,
-      'Energy:ER Large Laser':      250,
-      'Energy:Small Pulse Laser':   260,
-      'Energy:Medium Pulse Laser':  270,
-      'Energy:Large Pulse Laser':   280,
-      'Energy:PPC':                 290,
-      'Energy:ER PPC':              300,
-      'Energy:Flamer':              310,
-      // ── MISSILE ────────────────────────────────────────
-      'Missile:SRM 2':    400,
-      'Missile:SRM 4':    410,
-      'Missile:SRM 6':    420,
-      'Missile:LRM 5':    430,
-      'Missile:LRM 10':   440,
-      'Missile:LRM 15':   450,
-      'Missile:LRM 20':   460,
-      // ── SUPPORT ────────────────────────────────────────
-      'Support:Small Laser':       500,
-      'Support:ER Small Laser':    510,
-      'Support:Small Pulse Laser': 520,
-      'Support:Machine Gun':       530,
-      'Support:Flamer':            540,
-    };
-
-    const stripTier = (name: string) =>
-      name.replace(/\s*(\+\s*)+$/, '').trim();
-
-    const getTier = (name: string) => {
-      const match = name.match(/(\+[\s+]*)+$/);
-      if (!match) return 0;
-      return (match[0].match(/\+/g) || []).length;
-    };
-
     const getSortKey = (w: Weapon): number => {
       const base = stripTier(w.name);
       return WEAPON_ORDER[`${w.category}:${base}`] ?? 999;
