@@ -5,6 +5,7 @@ import type { Mech } from '@/data/mechs';
 import type { SlotAssignment, HardpointType, LocationKey, SlotItem, EquipmentSlot } from '@/types/loadout';
 import { LOCATION_LABELS } from '@/types/loadout';
 import { HP_PILL_COLORS } from '@/utils/hardpointPills';
+import { WEAPON_ORDER, stripTier, getTier, isTierVariant } from '@/lib/weaponOrder';
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
 } from '@/components/ui/dialog';

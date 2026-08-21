@@ -6,6 +6,7 @@ import { useFilters } from "@/contexts/FilterContext";
 import { useScrollContainer } from "@/contexts/ScrollContext";
 import { NativeAdCard } from "@/components/NativeAdCard";
 import { useNativeAd } from "@/hooks/useNativeAd";
+import { WEAPON_ORDER, stripTier, getTier, isTierVariant } from "@/lib/weaponOrder";
 
 const CATEGORY_COLORS: Record<Weapon["category"], string> = {
   Ballistic: "bg-[hsl(220,9%,46%)] text-white",
