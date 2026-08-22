@@ -10,6 +10,10 @@ export const WEAPON_ORDER: Record<string, number> = {
   'Ballistic:UAC/5':   151,
   'Ballistic:UAC/10':  152,
   'Ballistic:UAC/20':  153,
+  'Ballistic:LB 2-X':   160,
+  'Ballistic:LB 5-X':   161,
+  'Ballistic:LB 10-X':  162,
+  'Ballistic:LB 20-X':  163,
   // ── ENERGY ─────────────────────────────────────────
   'Energy:Small Laser':         200,
   'Energy:Medium Laser':        210,
