@@ -27,6 +27,9 @@ export const WEAPON_ORDER: Record<string, number> = {
   'Energy:PPC':                 290,
   'Energy:ER PPC':              300,
   'Energy:Flamer':              310,
+  // Heavy Metal DLC
+  'Energy:Snub PPC':  320,
+  'Energy:TAG':       321,
   // ── MISSILE ────────────────────────────────────────
   'Missile:SRM 2':    400,
   'Missile:SRM 4':    410,
@@ -35,6 +38,10 @@ export const WEAPON_ORDER: Record<string, number> = {
   'Missile:LRM 10':   440,
   'Missile:LRM 15':   450,
   'Missile:LRM 20':   460,
+  // Heavy Metal DLC
+  'Missile:Narc Beacon': 470,
+  'Missile:Infernos':    471,
+
   // ── SUPPORT ────────────────────────────────────────
   'Support:Small Laser':       500,
   'Support:ER Small Laser':    510,
