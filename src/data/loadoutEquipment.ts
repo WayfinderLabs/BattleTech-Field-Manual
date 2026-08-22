@@ -164,7 +164,28 @@ export const AMMO_BINS: AmmoBin[] = [
     canExplode: true,
     isLosTech: true,
   },
+  {
+    id: 'Ammo_AmmunitionBox_Generic_Narc',
+    name: 'Narc Ammo',
+    ammoId: 'Narc',
+    capacity: 6,
+    tonnage: 1,
+    slots: 1,
+    canExplode: true,
+    isLosTech: true,
+  },
+  {
+    id: 'Ammo_AmmunitionBox_Generic_Inferno',
+    name: 'Inferno Ammo',
+    ammoId: 'Inferno',
+    capacity: 16,
+    tonnage: 1,
+    slots: 1,
+    canExplode: true,
+    isLosTech: true,
+  },
 ];
+
 
 export const HEAT_SINKS: HeatSink[] = [
   {
