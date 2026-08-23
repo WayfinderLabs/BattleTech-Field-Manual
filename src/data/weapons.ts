@@ -13,6 +13,7 @@ export interface Weapon {
   criticalSlots: number;    // InventorySize from game JSON
   ammoPerTon: number | null;
   ammoType?: string;
+  heatDamage?: number;   // heat applied to the TARGET per activation
   shotsWhenFired: number;   // Rounds consumed from ammo bin per activation
   indirectFire: boolean;
   dlcSource: 'Base' | 'Flashpoint' | 'Urban Warfare' | 'Heavy Metal';
@@ -391,6 +392,7 @@ export const WEAPONS: Weapon[] = [
     tonnage: 1,
     criticalSlots: 1,
     ammoPerTon: null,
+    heatDamage: 10,
     shotsWhenFired: 1,
     indirectFire: false,
     dlcSource: 'Base',
@@ -1415,6 +1417,7 @@ export const WEAPONS: Weapon[] = [
     tonnage: 1,
     criticalSlots: 1,
     ammoPerTon: null,
+    heatDamage: 10,
     shotsWhenFired: 1,
     indirectFire: false,
     dlcSource: 'Base',
@@ -1435,11 +1438,33 @@ export const WEAPONS: Weapon[] = [
     tonnage: 1,
     criticalSlots: 1,
     ammoPerTon: null,
+    heatDamage: 15,
     shotsWhenFired: 1,
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
     notes: 'Manufacturer: Olympus. * 4 Ammo + 5 Dmg. (H)',
+  },
+  {
+    id: 208,
+    name: 'Flamer + + +',
+    category: 'Support',
+    damage: 5,
+    stabilityDamage: 0,
+    heat: 0,
+    minRange: 0,
+    shortRange: 90,
+    medRange: 90,
+    longRange: 90,
+    tonnage: 1,
+    criticalSlots: 1,
+    ammoPerTon: null,
+    shotsWhenFired: 1,
+    indirectFire: false,
+    dlcSource: 'Base',
+    isClan: false,
+    heatDamage: 15,
+    notes: 'Manufacturer: Skylight. * 40 Ammo',
   },
 
   // ── GAUSS RIFLE TIER VARIANTS ──────────────────────────────────────────────
@@ -4355,6 +4380,7 @@ export const WEAPONS: Weapon[] = [
     criticalSlots: 2,
     ammoPerTon: 8,
     ammoType: 'Inferno',
+    heatDamage: 10,
     shotsWhenFired: 2,
     indirectFire: false,
     dlcSource: 'Heavy Metal',
@@ -4376,6 +4402,7 @@ export const WEAPONS: Weapon[] = [
     criticalSlots: 2,
     ammoPerTon: 8,
     ammoType: 'Inferno',
+    heatDamage: 20,
     shotsWhenFired: 2,
     indirectFire: false,
     dlcSource: 'Heavy Metal',
@@ -4397,6 +4424,7 @@ export const WEAPONS: Weapon[] = [
     criticalSlots: 2,
     ammoPerTon: 8,
     ammoType: 'Inferno',
+    heatDamage: 30,
     shotsWhenFired: 2,
     indirectFire: false,
     dlcSource: 'Heavy Metal',

@@ -35,6 +35,7 @@ const WeaponDetailScreen = () => {
       `Damage: ${weapon.damage}`,
       `Stability Dmg: ${weapon.stabilityDamage}`,
       `Heat: ${weapon.heat}`,
+      ...(weapon.heatDamage !== undefined ? [`Heat Damage: ${weapon.heatDamage}`] : []),
       `Tonnage: ${weapon.tonnage}t`,
       `Critical Slots: ${weapon.criticalSlots}`,
     ];
@@ -77,6 +78,7 @@ const WeaponDetailScreen = () => {
     { label: "DAMAGE", value: weapon.damage },
     { label: "STABILITY DMG", value: weapon.stabilityDamage },
     { label: "HEAT", value: weapon.heat },
+    ...(weapon.heatDamage !== undefined ? [{ label: "HEAT DMG", value: weapon.heatDamage }] : []),
     { label: "TONNAGE", value: weapon.tonnage },
     { label: "CRITICAL SLOTS", value: weapon.criticalSlots },
     ...(weapon.ammoPerTon !== null ? [{ label: "AMMO / TON", value: weapon.ammoPerTon }] : []),
