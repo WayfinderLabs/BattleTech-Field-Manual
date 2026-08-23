@@ -3578,7 +3578,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Heavy Metal',
     isClan: false,
-    notes: 'Manufacturer: Imperator. Fires 2 rounds per activation, consuming 2 ammo. Recoil penalty to subsequent shots.',
+    notes: 'Fires 2 rounds per activation, consuming 2 ammo. Recoil penalty to subsequent shots.',
   },
   {
     id: 169,
@@ -3641,7 +3641,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Heavy Metal',
     isClan: false,
-    notes: 'Manufacturer: Mydron. Fires 2 rounds per activation, consuming 2 ammo. Recoil penalty to subsequent shots.',
+    notes: 'Fires 2 rounds per activation, consuming 2 ammo. Recoil penalty to subsequent shots.',
   },
   {
     id: 172,
@@ -3704,7 +3704,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Heavy Metal',
     isClan: false,
-    notes: 'Manufacturer: Federated. Fires 2 rounds per activation, consuming 2 ammo. Heavy recoil penalty.',
+    notes: 'Fires 2 rounds per activation, consuming 2 ammo. Heavy recoil penalty.',
   },
   {
     id: 175,
@@ -3767,7 +3767,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Heavy Metal',
     isClan: false,
-    notes: 'Manufacturer: Kali Yama. Fires 2 rounds per activation, consuming 2 ammo. Severe recoil penalty.',
+    notes: 'Fires 2 rounds per activation, consuming 2 ammo. Severe recoil penalty.',
   },
   {
     id: 178,
@@ -3831,7 +3831,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Heavy Metal',
     isClan: false,
-    notes: 'Manufacturer: Defiance. Cluster autocannon - damage spreads across locations. + 25% Crit.',
+    notes: 'Cluster autocannon - damage spreads across locations. + 25% Crit.',
   },
   {
     id: 181,
@@ -3894,7 +3894,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Heavy Metal',
     isClan: false,
-    notes: 'Manufacturer: GM. Cluster autocannon - damage spreads across locations.',
+    notes: 'Cluster autocannon - damage spreads across locations.',
   },
   {
     id: 184,
@@ -3957,7 +3957,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Heavy Metal',
     isClan: false,
-    notes: 'Manufacturer: Western. Cluster autocannon - damage spreads across locations.',
+    notes: 'Cluster autocannon - damage spreads across locations.',
   },
   {
     id: 187,
@@ -4020,7 +4020,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Heavy Metal',
     isClan: false,
-    notes: 'Manufacturer: Shengli Arms. Cluster autocannon - damage spreads across locations.',
+    notes: 'Cluster autocannon - damage spreads across locations.',
   },
   {
     id: 190,
@@ -4086,7 +4086,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Heavy Metal',
     isClan: false,
-    notes: 'Manufacturer: Fusigon. Fires 5 projectiles per shot. No minimum range, unlike the standard PPC.',
+    notes: 'Fires 5 projectiles per shot. No minimum range, unlike the standard PPC.',
   },
   {
     id: 193,
@@ -4229,7 +4229,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Heavy Metal',
     isClan: false,
-    notes: 'Manufacturer: Garret. Marks target - allies gain + 10% Dmg. with Energy and Ballistic weapons. Deals almost no damage itself.',
+    notes: 'Marks target - allies gain + 10% Dmg. with Energy and Ballistic weapons. Deals almost no damage itself.',
   },
   {
     id: 200,
@@ -4293,7 +4293,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Heavy Metal',
     isClan: false,
-    notes: 'Manufacturer: Irian. Marks target - allies gain + 25% Dmg. with Missile weapons. Deals almost no damage itself. + 4 Acc.',
+    notes: 'Marks target - allies gain + 25% Dmg. with Missile weapons. Deals almost no damage itself. + 4 Acc.',
   },
   {
     id: 203,
@@ -4359,7 +4359,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Heavy Metal',
     isClan: false,
-    notes: 'Manufacturer: Hovertec. Heat weapon - deals minimal damage but adds major heat to target. * 8 Volleys',
+    notes: 'Heat weapon - deals minimal damage but adds major heat to target. * 8 Volleys',
   },
   {
     id: 206,
