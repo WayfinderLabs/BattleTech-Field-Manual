@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { Search } from "lucide-react";
 import { EQUIPMENT, type Equipment } from "@/data/equipment";
 import { useFilters } from "@/contexts/FilterContext";
 import { NativeAdCard } from "@/components/NativeAdCard";
