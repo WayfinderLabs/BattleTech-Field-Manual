@@ -1,9 +1,11 @@
 import { createContext, useContext, useRef, useState, type ReactNode, type MutableRefObject } from "react";
 import type { Weapon } from "@/data/weapons";
 import type { Mech } from "@/data/mechs";
+import type { Equipment } from "@/data/equipment";
 
 type WeaponCategoryFilter = Weapon["category"] | "ALL";
 type MechClassFilter = Mech["chassisClass"] | "ALL";
+type EquipmentCategoryFilter = Equipment["category"] | "ALL";
 type MetaFilter = "CLAN" | "DLC" | "LOSTECH";
 
 interface WeaponsFilterState {
@@ -24,9 +26,19 @@ interface MechsFilterState {
   toggleMeta: (m: MetaFilter) => void;
 }
 
+interface EquipmentFilterState {
+  search: string;
+  setSearch: (v: string) => void;
+  categoryFilter: EquipmentCategoryFilter;
+  setCategoryFilter: (v: EquipmentCategoryFilter) => void;
+  metaFilters: Set<MetaFilter>;
+  toggleMeta: (m: MetaFilter) => void;
+}
+
 interface FilterContextType {
   weapons: WeaponsFilterState;
   mechs: MechsFilterState;
+  equipment: EquipmentFilterState;
   scrollPositions: MutableRefObject<Record<string, number>>;
 }
 
@@ -66,6 +78,19 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  // Equipment state
+  const [eSearch, setESearch] = useState("");
+  const [eCategory, setECategory] = useState<EquipmentCategoryFilter>("ALL");
+  const [eMeta, setEMeta] = useState<Set<MetaFilter>>(new Set());
+
+  const toggleEMeta = (m: MetaFilter) => {
+    setEMeta((prev) => {
+      const next = new Set(prev);
+      next.has(m) ? next.delete(m) : next.add(m);
+      return next;
+    });
+  };
+
   return (
     <FilterContext.Provider
       value={{
@@ -84,6 +109,14 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
           setClassFilter: setMClass,
           metaFilters: mMeta,
           toggleMeta: toggleMMeta,
+        },
+        equipment: {
+          search: eSearch,
+          setSearch: setESearch,
+          categoryFilter: eCategory,
+          setCategoryFilter: setECategory,
+          metaFilters: eMeta,
+          toggleMeta: toggleEMeta,
         },
         scrollPositions,
       }}
