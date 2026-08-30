@@ -78,6 +78,19 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  // Equipment state
+  const [eSearch, setESearch] = useState("");
+  const [eCategory, setECategory] = useState<EquipmentCategoryFilter>("ALL");
+  const [eMeta, setEMeta] = useState<Set<MetaFilter>>(new Set());
+
+  const toggleEMeta = (m: MetaFilter) => {
+    setEMeta((prev) => {
+      const next = new Set(prev);
+      next.has(m) ? next.delete(m) : next.add(m);
+      return next;
+    });
+  };
+
   return (
     <FilterContext.Provider
       value={{
@@ -96,6 +109,14 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
           setClassFilter: setMClass,
           metaFilters: mMeta,
           toggleMeta: toggleMMeta,
+        },
+        equipment: {
+          search: eSearch,
+          setSearch: setESearch,
+          categoryFilter: eCategory,
+          setCategoryFilter: setECategory,
+          metaFilters: eMeta,
+          toggleMeta: toggleEMeta,
         },
         scrollPositions,
       }}
