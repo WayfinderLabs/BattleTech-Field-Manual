@@ -1,9 +1,11 @@
 import { createContext, useContext, useRef, useState, type ReactNode, type MutableRefObject } from "react";
 import type { Weapon } from "@/data/weapons";
 import type { Mech } from "@/data/mechs";
+import type { Equipment } from "@/data/equipment";
 
 type WeaponCategoryFilter = Weapon["category"] | "ALL";
 type MechClassFilter = Mech["chassisClass"] | "ALL";
+type EquipmentCategoryFilter = Equipment["category"] | "ALL";
 type MetaFilter = "CLAN" | "DLC" | "LOSTECH";
 
 interface WeaponsFilterState {
