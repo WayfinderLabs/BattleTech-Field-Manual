@@ -26,9 +26,19 @@ interface MechsFilterState {
   toggleMeta: (m: MetaFilter) => void;
 }
 
+interface EquipmentFilterState {
+  search: string;
+  setSearch: (v: string) => void;
+  categoryFilter: EquipmentCategoryFilter;
+  setCategoryFilter: (v: EquipmentCategoryFilter) => void;
+  metaFilters: Set<MetaFilter>;
+  toggleMeta: (m: MetaFilter) => void;
+}
+
 interface FilterContextType {
   weapons: WeaponsFilterState;
   mechs: MechsFilterState;
+  equipment: EquipmentFilterState;
   scrollPositions: MutableRefObject<Record<string, number>>;
 }
 
