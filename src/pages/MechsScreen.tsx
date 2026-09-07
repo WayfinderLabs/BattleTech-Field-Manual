@@ -147,7 +147,7 @@ const MechsScreen = () => {
                   </div>
                   <div className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
                     <div className="text-label font-mono text-muted-foreground tracking-wider">SPD</div>
-                    <div className="text-detail-value font-mono text-foreground">{m.topSpeed} km/h</div>
+                    <div className="text-detail-value font-mono text-foreground">{m.topSpeed !== undefined ? `${m.topSpeed} km/h` : '-'}</div>
                   </div>
                 </div>
               </button>

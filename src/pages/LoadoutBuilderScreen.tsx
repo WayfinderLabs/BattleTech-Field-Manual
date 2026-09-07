@@ -579,7 +579,7 @@ const LoadoutBuilderScreen = () => {
                 <div className="flex gap-3 mt-2 font-mono text-muted-foreground flex-wrap" style={{ fontSize: 'var(--fs-badge)' }}>
                   <span>{selectedMech.chassisClass}</span>
                   <span className="text-primary">{selectedMech.tonnage - selectedMech.initialTonnage}t free / {selectedMech.tonnage}T</span>
-                  <span>{selectedMech.topSpeed} km/h</span>
+                  {selectedMech.topSpeed !== undefined && <span>{selectedMech.topSpeed} km/h</span>}
                   <span>JJ: {selectedMech.jumpJetsMax}</span>
                 </div>
               </div>
