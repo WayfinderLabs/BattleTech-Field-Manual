@@ -17,7 +17,7 @@ export interface Mech {
   tonnage: number;
   initialTonnage: number;  // fixed chassis weight (engine + structure + gyro) — not available for loadout
   maxArmor: number;
-  topSpeed: number;       // km/h as stored in game
+  topSpeed?: number;       // km/h as stored in game
   jumpJetsMax: number;
   hardpoints: MechHardpoints;
   isClan: boolean;

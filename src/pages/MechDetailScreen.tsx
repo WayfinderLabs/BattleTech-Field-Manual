@@ -63,14 +63,18 @@ const MechDetailScreen = () => {
       `Class: ${mech.chassisClass}`,
       `Tonnage: ${mech.tonnage}T`,
       `Max Armor: ${mech.maxArmor}`,
-      `Top Speed: ${mech.topSpeed} km/h`,
+    ];
+    if (mech.topSpeed !== undefined) {
+      lines.push(`Top Speed: ${mech.topSpeed} km/h`);
+    }
+    lines.push(
       `Max Jump Jets: ${mech.jumpJetsMax}`,
       `Clan: ${mech.isClan ? "Yes" : "No"}`,
       `LosTech: ${mech.isLosTech ? "Yes" : "No"}`,
       `DLC: ${mech.dlcSource}`,
       "",
       "Hardpoints:",
-    ];
+    );
     for (const loc of HARDPOINT_LABELS) {
       lines.push(`${HARDPOINT_DISPLAY[loc]}: ${formatHardpointLine(mech.hardpoints[loc])}`);
     }
@@ -102,7 +106,7 @@ const MechDetailScreen = () => {
   const stats = [
     { label: "TONNAGE", value: `${mech.tonnage}T` },
     { label: "MAX ARMOR", value: mech.maxArmor },
-    { label: "TOP SPEED", value: `${mech.topSpeed} km/h` },
+    ...(mech.topSpeed !== undefined ? [{ label: "TOP SPEED", value: `${mech.topSpeed} km/h` }] : []),
     { label: "MAX JUMP JETS", value: mech.jumpJetsMax },
     { label: "CLAN", value: mech.isClan ? "YES" : "NO" },
     { label: "LOSTECH", value: mech.isLosTech ? "YES" : "NO" },
