@@ -501,7 +501,9 @@ const LoadoutBuilderScreen = () => {
       'Loadout:',
       ...locationLines,
       '',
-      '[placeholder: App store link coming soon]',
+      'Get the app:',
+      'https://play.google.com/store/apps/details?id=com.wayfinderlabs.btfm',
+      '',
       '— Shared via BattleTech Field Manual',
     ];
     return lines.join('\n');
