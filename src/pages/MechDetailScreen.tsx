@@ -79,7 +79,8 @@ const MechDetailScreen = () => {
       lines.push(`${HARDPOINT_DISPLAY[loc]}: ${formatHardpointLine(mech.hardpoints[loc])}`);
     }
     lines.push("");
-    lines.push("[placeholder: App store link coming soon]");
+    lines.push("Get the app:");
+    lines.push("https://play.google.com/store/apps/details?id=com.wayfinderlabs.btfm");
     lines.push("");
     lines.push("— Shared via BattleTech Field Manual");
     return lines.join("\n");
