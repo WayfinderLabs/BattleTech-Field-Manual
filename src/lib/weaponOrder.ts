@@ -30,6 +30,8 @@ export const WEAPON_ORDER: Record<string, number> = {
   // Heavy Metal DLC
   'Energy:Snub PPC':  320,
   'Energy:TAG':       321,
+  'Energy:COIL-M':    322,
+  'Energy:COIL-L':    323,
   // ── MISSILE ────────────────────────────────────────
   'Missile:SRM 2':    400,
   'Missile:SRM 4':    410,
@@ -48,6 +50,8 @@ export const WEAPON_ORDER: Record<string, number> = {
   'Support:Small Pulse Laser': 520,
   'Support:Machine Gun':       530,
   'Support:Flamer':            540,
+  // Heavy Metal DLC
+  'Support:COIL-S':            550,
 };
 
 export const isTierVariant = (name: string) => name.includes('+');

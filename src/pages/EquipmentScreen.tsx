@@ -12,6 +12,7 @@ const CATEGORY_COLORS: Record<Equipment["category"], string> = {
   Gyro: "bg-[hsl(280,60%,50%)] text-white",
   Cockpit: "bg-[hsl(340,65%,50%)] text-white",
   Actuator: "bg-[hsl(24,94%,53%)] text-white",
+  Upgrade: "bg-[hsl(45,80%,40%)] text-white",
   Other: "bg-[hsl(220,9%,46%)] text-white",
 };
 
@@ -22,6 +23,7 @@ const SECTION_ORDER: Equipment["category"][] = [
   "Gyro",
   "Cockpit",
   "Actuator",
+  "Upgrade",
   "Other",
 ];
 
@@ -32,12 +34,13 @@ const SECTION_LABELS: Record<Equipment["category"], string> = {
   Gyro: "GYROS",
   Cockpit: "COCKPITS",
   Actuator: "ACTUATORS",
+  Upgrade: "UPGRADES",
   Other: "OTHER",
 };
 
 const CATEGORY_CHIPS: (Equipment["category"] | "ALL")[] = [
   "ALL", "Heat Sink", "Jump Jet", "Sensor", "Gyro", "Cockpit",
-  "Actuator", "Other",
+  "Actuator", "Upgrade", "Other",
 ];
 const META_CHIPS = ["DLC"] as const;
 
@@ -59,6 +62,11 @@ const EquipmentCard = ({ eq }: { eq: Equipment }) => (
             CLAN
           </span>
         )}
+        {eq.builtInOn && !eq.installable && (
+          <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-border text-muted-foreground">
+            BUILT-IN
+          </span>
+        )}
         {eq.dlcSource !== "Base" && (
           <span className="px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm border border-border text-muted-foreground">
             DLC
@@ -69,6 +77,11 @@ const EquipmentCard = ({ eq }: { eq: Equipment }) => (
     <p className="text-muted-foreground text-sm font-mono leading-relaxed mb-2">
       {eq.effectDescription}
     </p>
+    {eq.builtInOn && (
+      <p className="text-muted-foreground text-xs font-mono uppercase tracking-wider mb-2">
+        FIXED ON: {eq.builtInOn.join(", ")}
+      </p>
+    )}
     <div className="flex gap-3">
       <div className="bg-background border border-border rounded-sm px-2 py-1 text-center min-w-[52px]">
         <div className="text-label font-mono text-muted-foreground tracking-wider">TONS</div>
