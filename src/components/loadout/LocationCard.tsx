@@ -41,6 +41,7 @@ const EQUIP_COLORS: Record<string, { first: string; cont: string }> = {
   heatSink: { first: '#3A7A8A', cont: '#2A5A6A' },
   jumpJet: { first: '#7A5A8A', cont: '#5A3A6A' },
   fixed: { first: '#8A8A8A', cont: '#4A4A4A' },
+  upgrade: { first: '#B8A040', cont: '#7A6A2A' },
 };
 
 const LocationCard = ({

@@ -8,7 +8,7 @@ import type { Mech } from '@/data/mechs';
 import { MECHS } from '@/data/mechs';
 import type { Weapon } from '@/data/weapons';
 import type { LoadoutState, LocationKey, HardpointType, SlotItem, SlotAssignment, EquipmentSlot } from '@/types/loadout';
-import { LOCATION_LABELS, EMPTY_SLOTS, EMPTY_EQUIPMENT } from '@/types/loadout';
+import { LOCATION_LABELS, EMPTY_SLOTS, EMPTY_EQUIPMENT, slotItemSlots } from '@/types/loadout';
 import { parseHardpoints } from '@/utils/parseHardpoints';
 import { validateLoadout, wouldCreateNewError } from '@/utils/validateLoadout';
 import { availableTonnage as mechAvailableTonnage, availableJumpJets, availableSlots, fixedItemsAt } from '@/utils/mechCapacity';
@@ -338,7 +338,7 @@ const LoadoutBuilderScreen = () => {
       return;
     }
 
-    const slotsUsed = item.kind === 'weapon' ? item.data.criticalSlots : item.data.slots;
+    const slotsUsed = slotItemSlots(item);
     setState((prev) => {
       const locEquip = [...prev.equipment[loc], { item, slotsUsed }];
       const newState = { ...prev, equipment: { ...prev.equipment, [loc]: locEquip } };

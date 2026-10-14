@@ -1,5 +1,9 @@
 import { useState, useRef, useCallback } from 'react';
 import { MECHS, type Mech } from '@/data/mechs';
+import { useFilters } from '@/contexts/FilterContext';
+import { matchesDlcMode } from '@/lib/dlcFilter';
+import DlcModeChip from '@/components/DlcModeChip';
+import DlcBadge from '@/components/DlcBadge';
 import {
   Drawer, DrawerContent, DrawerHeader, DrawerTitle,
 } from '@/components/ui/drawer';
@@ -21,8 +25,10 @@ const MechPickerSheet = ({ open, onClose, onSelect }: MechPickerSheetProps) => {
   const [search, setSearch] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
   const savedScrollTop = useRef(0);
+  const { dlcMode, setDlcMode } = useFilters().builder;
 
   const filtered = MECHS.filter((m) => {
+    if (!matchesDlcMode(m.dlcSource, dlcMode)) return false;
     const q = search.toLowerCase();
     return m.name.toLowerCase().includes(q) || m.variant.toLowerCase().includes(q);
   }).sort((a, b) => {
@@ -59,6 +65,12 @@ const MechPickerSheet = ({ open, onClose, onSelect }: MechPickerSheetProps) => {
             className="w-full bg-secondary border border-border rounded-sm px-3 py-2 font-mono text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
             style={{ fontSize: 'var(--fs-body)' }}
           />
+          <div className="flex items-center gap-2 mt-2">
+            <DlcModeChip mode={dlcMode} onChange={setDlcMode} />
+            <span className="font-mono text-muted-foreground" style={{ fontSize: 'var(--fs-badge)' }}>
+              {filtered.length} MECHS
+            </span>
+          </div>
         </div>
         <div
           ref={scrollRef}
@@ -76,8 +88,12 @@ const MechPickerSheet = ({ open, onClose, onSelect }: MechPickerSheetProps) => {
                 <div className="font-mono uppercase tracking-wider text-foreground truncate" style={{ fontSize: 'var(--fs-body)' }}>
                   {mech.name}
                 </div>
-                <div className="font-mono text-muted-foreground" style={{ fontSize: 'var(--fs-badge)' }}>
+                <div className="font-mono text-muted-foreground flex items-center gap-1.5" style={{ fontSize: 'var(--fs-badge)' }}>
                   {mech.variant}
+                  <DlcBadge source={mech.dlcSource} />
+                  {mech.fixedEquipment && mech.fixedEquipment.length > 0 && (
+                    <span style={{ color: '#8A8A8A' }}>· FIXED GEAR</span>
+                  )}
                 </div>
               </div>
               <div className="flex items-center gap-2 shrink-0">

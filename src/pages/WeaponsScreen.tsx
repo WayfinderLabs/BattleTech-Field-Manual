@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { WEAPONS, type Weapon } from "@/data/weapons";
 import { useFilters } from "@/contexts/FilterContext";
+import { matchesDlcMode } from "@/lib/dlcFilter";
+import DlcModeChip from "@/components/DlcModeChip";
 import { useScrollContainer } from "@/contexts/ScrollContext";
 import { NativeAdCard } from "@/components/NativeAdCard";
 import { useNativeAd } from "@/hooks/useNativeAd";
@@ -20,7 +22,7 @@ type MetaFilter = "CLAN" | "DLC";
 
 
 const CATEGORY_CHIPS: CategoryFilter[] = ["ALL", "Ballistic", "Energy", "Missile", "Support"];
-const META_CHIPS: MetaFilter[] = ["CLAN", "DLC"];
+const META_CHIPS: MetaFilter[] = ["CLAN"];
 
 
 const WeaponsScreen = () => {
@@ -28,7 +30,7 @@ const WeaponsScreen = () => {
   const filters = useFilters();
   const scrollContainer = useScrollContainer();
   const { adAssets } = useNativeAd();
-  const { search, setSearch, categoryFilter, setCategoryFilter, metaFilters, toggleMeta } = filters.weapons;
+  const { search, setSearch, categoryFilter, setCategoryFilter, metaFilters, toggleMeta, dlcMode, setDlcMode } = filters.weapons;
   const [tierFilter, setTierFilter] = useState(false);
   const scrollKey = "weapons";
 
@@ -55,7 +57,7 @@ const WeaponsScreen = () => {
       if (categoryFilter !== "ALL" && w.category !== categoryFilter) return false;
       if (tierFilter ? !isTierVariant(w.name) : isTierVariant(w.name)) return false;
       if (metaFilters.has("CLAN") && !w.isClan) return false;
-      if (metaFilters.has("DLC") && w.dlcSource === "Base") return false;
+      if (!matchesDlcMode(w.dlcSource, dlcMode)) return false;
       return true;
     }).sort((a, b) => {
       const keyA = getSortKey(a);
@@ -66,7 +68,7 @@ const WeaponsScreen = () => {
       if (tierA !== tierB) return tierA - tierB;
       return a.name.localeCompare(b.name);
     });
-  }, [search, categoryFilter, tierFilter, metaFilters]);
+  }, [search, categoryFilter, tierFilter, metaFilters, dlcMode]);
 
   return (
     <div className="py-4 space-y-4">
@@ -120,6 +122,7 @@ const WeaponsScreen = () => {
             {chip}
           </button>
         ))}
+        <DlcModeChip mode={dlcMode} onChange={setDlcMode} />
       </div>
 
       {filtered.length === 0 ? (

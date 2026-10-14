@@ -2,6 +2,7 @@ import { createContext, useContext, useRef, useState, type ReactNode, type Mutab
 import type { Weapon } from "@/data/weapons";
 import type { Mech } from "@/data/mechs";
 import type { Equipment } from "@/data/equipment";
+import type { DlcMode } from "@/lib/dlcFilter";
 
 type WeaponCategoryFilter = Weapon["category"] | "ALL";
 type MechClassFilter = Mech["chassisClass"] | "ALL";
@@ -15,6 +16,8 @@ interface WeaponsFilterState {
   setCategoryFilter: (v: WeaponCategoryFilter) => void;
   metaFilters: Set<MetaFilter>;
   toggleMeta: (m: MetaFilter) => void;
+  dlcMode: DlcMode;
+  setDlcMode: (m: DlcMode) => void;
 }
 
 interface MechsFilterState {
@@ -24,6 +27,8 @@ interface MechsFilterState {
   setClassFilter: (v: MechClassFilter) => void;
   metaFilters: Set<MetaFilter>;
   toggleMeta: (m: MetaFilter) => void;
+  dlcMode: DlcMode;
+  setDlcMode: (m: DlcMode) => void;
 }
 
 interface EquipmentFilterState {
@@ -33,12 +38,16 @@ interface EquipmentFilterState {
   setCategoryFilter: (v: EquipmentCategoryFilter) => void;
   metaFilters: Set<MetaFilter>;
   toggleMeta: (m: MetaFilter) => void;
+  dlcMode: DlcMode;
+  setDlcMode: (m: DlcMode) => void;
 }
 
 interface FilterContextType {
   weapons: WeaponsFilterState;
   mechs: MechsFilterState;
   equipment: EquipmentFilterState;
+  /** Shared by the loadout builder mech and item pickers */
+  builder: { dlcMode: DlcMode; setDlcMode: (m: DlcMode) => void };
   scrollPositions: MutableRefObject<Record<string, number>>;
 }
 
@@ -56,6 +65,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   const [wSearch, setWSearch] = useState("");
   const [wCategory, setWCategory] = useState<WeaponCategoryFilter>("ALL");
   const [wMeta, setWMeta] = useState<Set<MetaFilter>>(new Set());
+  const [wDlc, setWDlc] = useState<DlcMode>("ALL");
 
   const toggleWMeta = (m: MetaFilter) => {
     setWMeta((prev) => {
@@ -69,6 +79,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   const [mSearch, setMSearch] = useState("");
   const [mClass, setMClass] = useState<MechClassFilter>("ALL");
   const [mMeta, setMMeta] = useState<Set<MetaFilter>>(new Set());
+  const [mDlc, setMDlc] = useState<DlcMode>("ALL");
 
   const toggleMMeta = (m: MetaFilter) => {
     setMMeta((prev) => {
@@ -82,6 +93,8 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   const [eSearch, setESearch] = useState("");
   const [eCategory, setECategory] = useState<EquipmentCategoryFilter>("ALL");
   const [eMeta, setEMeta] = useState<Set<MetaFilter>>(new Set());
+  const [eDlc, setEDlc] = useState<DlcMode>("ALL");
+  const [bDlc, setBDlc] = useState<DlcMode>("ALL");
 
   const toggleEMeta = (m: MetaFilter) => {
     setEMeta((prev) => {
@@ -101,6 +114,8 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
           setCategoryFilter: setWCategory,
           metaFilters: wMeta,
           toggleMeta: toggleWMeta,
+          dlcMode: wDlc,
+          setDlcMode: setWDlc,
         },
         mechs: {
           search: mSearch,
@@ -109,6 +124,8 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
           setClassFilter: setMClass,
           metaFilters: mMeta,
           toggleMeta: toggleMMeta,
+          dlcMode: mDlc,
+          setDlcMode: setMDlc,
         },
         equipment: {
           search: eSearch,
@@ -117,7 +134,10 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
           setCategoryFilter: setECategory,
           metaFilters: eMeta,
           toggleMeta: toggleEMeta,
+          dlcMode: eDlc,
+          setDlcMode: setEDlc,
         },
+        builder: { dlcMode: bDlc, setDlcMode: setBDlc },
         scrollPositions,
       }}
     >

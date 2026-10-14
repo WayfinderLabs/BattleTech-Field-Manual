@@ -104,7 +104,7 @@ export const EQUIPMENT: Equipment[] = [
     dlcSource: 'Urban Warfare',
     gameId: 'Gear_Sensor_Prototype_ECM',
     installable: true,
-    exclusiveWith: [8],
+    exclusiveWith: [8, 18],
     maxPerMech: 1,
   },
   {
@@ -118,7 +118,7 @@ export const EQUIPMENT: Equipment[] = [
     dlcSource: 'Urban Warfare',
     gameId: 'Gear_Sensor_Prototype_ActiveProbe',
     installable: true,
-    exclusiveWith: [7],
+    exclusiveWith: [7, 18],
     maxPerMech: 1,
   },
 
@@ -215,6 +215,7 @@ export const EQUIPMENT: Equipment[] = [
     gameId: 'Gear_Mortar_MechMortar',
     installable: true,
     allowedLocations: ['lt', 'rt'],
+    exclusiveWith: [25],
     maxPerMech: 1,
   },
 

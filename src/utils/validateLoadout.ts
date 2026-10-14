@@ -1,6 +1,7 @@
 import type { Mech } from '@/data/mechs';
 import type { Weapon } from '@/data/weapons';
 import type { LoadoutState, LocationKey, SlotItem, EquipmentSlot } from '@/types/loadout';
+import { slotItemSlots } from '@/types/loadout';
 import { availableTonnage as mechAvailableTonnage, availableSlots, availableJumpJets } from '@/utils/mechCapacity';
 
 export type ValidationSeverity = 'ERROR' | 'WARNING';
@@ -19,8 +20,7 @@ function itemTonnage(item: SlotItem): number {
 
 /** Get critical slots of any slot item */
 function itemSlots(item: SlotItem): number {
-  if (item.kind === 'weapon') return item.data.criticalSlots;
-  return item.data.slots;
+  return slotItemSlots(item);
 }
 
 /** Collect all weapons from loadout state */

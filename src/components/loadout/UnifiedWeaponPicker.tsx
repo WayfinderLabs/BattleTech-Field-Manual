@@ -3,7 +3,12 @@ import { WEAPONS, type Weapon } from '@/data/weapons';
 import { AMMO_BINS, HEAT_SINKS, JUMP_JETS, type AmmoBin, type HeatSink, type JumpJet } from '@/data/loadoutEquipment';
 import type { Mech } from '@/data/mechs';
 import type { SlotAssignment, HardpointType, LocationKey, SlotItem, EquipmentSlot } from '@/types/loadout';
-import { LOCATION_LABELS } from '@/types/loadout';
+import { LOCATION_LABELS, slotItemSlots } from '@/types/loadout';
+import { INSTALLABLE_UPGRADES, upgradeBlockReason } from '@/utils/upgradeRules';
+import DlcBadge from '@/components/DlcBadge';
+import DlcModeChip from '@/components/DlcModeChip';
+import { matchesDlcMode } from '@/lib/dlcFilter';
+import { useFilters } from '@/contexts/FilterContext';
 import { HP_PILL_COLORS } from '@/utils/hardpointPills';
 import { WEAPON_ORDER, stripTier, getTier, isTierVariant } from '@/lib/weaponOrder';
 import { availableJumpJets } from '@/utils/mechCapacity';
@@ -12,7 +17,7 @@ import {
 } from '@/components/ui/dialog';
 
 type CategoryFilter = Weapon['category'] | 'ALL';
-type PickerTab = 'WEAPONS' | 'AMMO' | 'HEAT SINKS' | 'JUMP JETS';
+type PickerTab = 'WEAPONS' | 'AMMO' | 'HEAT SINKS' | 'JUMP JETS' | 'UPGRADES';
 
 const CATEGORY_COLORS: Record<Weapon['category'], string> = {
   Ballistic: 'bg-[hsl(220,9%,46%)] text-white',
@@ -29,7 +34,7 @@ const CATEGORY_TO_HP: Record<Weapon['category'], HardpointType> = {
   Ballistic: 'B', Energy: 'E', Missile: 'M', Support: 'S',
 };
 
-const TABS: PickerTab[] = ['WEAPONS', 'AMMO', 'HEAT SINKS', 'JUMP JETS'];
+const TABS: PickerTab[] = ['WEAPONS', 'AMMO', 'HEAT SINKS', 'JUMP JETS', 'UPGRADES'];
 
 const JJ_ALLOWED_LOCATIONS: LocationKey[] = ['ct', 'lt', 'rt', 'll', 'rl'];
 
@@ -55,6 +60,7 @@ const UnifiedWeaponPicker = ({
   const [search, setSearch] = useState('');
   const [tierFilter, setTierFilter] = useState(false);
   const [flashId, setFlashId] = useState<string | number | null>(null);
+  const { dlcMode, setDlcMode } = useFilters().builder;
 
   // Compute used inventory slots
   const usedInventorySlots = useMemo(() => {
@@ -110,6 +116,7 @@ const UnifiedWeaponPicker = ({
     };
     return WEAPONS.filter((w) => {
       if (!availableCategories.has(w.category)) return false;
+      if (!matchesDlcMode(w.dlcSource, dlcMode)) return false;
       if (filter !== 'ALL' && w.category !== filter) return false;
       if (tierFilter ? !isTierVariant(w.name) : isTierVariant(w.name)) return false;
       if (search && !w.name.toLowerCase().includes(search.toLowerCase())) return false;
@@ -123,7 +130,7 @@ const UnifiedWeaponPicker = ({
       if (tierA !== tierB) return tierA - tierB;
       return a.name.localeCompare(b.name);
     });
-  }, [filter, search, tierFilter, availableCategories]);
+  }, [filter, search, tierFilter, availableCategories, dlcMode]);
 
   // Jump jet availability
   const jjAllowed = JJ_ALLOWED_LOCATIONS.includes(locationKey);
@@ -163,6 +170,13 @@ const UnifiedWeaponPicker = ({
     return jjs;
   }, [search, jjAllowed, compatibleJJ]);
 
+  // Filtered upgrades, each with the reason it is blocked here (if any)
+  const filteredUpgrades = useMemo(() => {
+    let ups = INSTALLABLE_UPGRADES.filter(u => matchesDlcMode(u.dlcSource, dlcMode));
+    if (search) ups = ups.filter(u => u.name.toLowerCase().includes(search.toLowerCase()));
+    return ups.map(u => ({ u, blocked: upgradeBlockReason(u, mech, locationKey, allEquipment) }));
+  }, [search, mech, locationKey, allEquipment, dlcMode]);
+
   const handleAddWeapon = (weapon: Weapon) => {
     const hpType = CATEGORY_TO_HP[weapon.category];
     const slotIndex = slots.findIndex(s => s.hardpointType === hpType && !s.weapon);
@@ -176,7 +190,7 @@ const UnifiedWeaponPicker = ({
   };
 
   const handleAddEquipment = (item: SlotItem, flashKey: string) => {
-    if (remainingInventory < (item.kind === 'weapon' ? 0 : item.data.slots)) return;
+    if (item.kind !== 'weapon' && remainingInventory < slotItemSlots(item)) return;
     setFlashId(flashKey);
     setTimeout(() => {
       setFlashId(null);
@@ -330,6 +344,13 @@ const UnifiedWeaponPicker = ({
               >
                 TIER
               </button>
+              <DlcModeChip mode={dlcMode} onChange={setDlcMode} />
+            </div>
+          )}
+
+          {tab === 'UPGRADES' && (
+            <div className="flex gap-2">
+              <DlcModeChip mode={dlcMode} onChange={setDlcMode} />
             </div>
           )}
         </div>
@@ -356,6 +377,7 @@ const UnifiedWeaponPicker = ({
                       <div className="flex items-start justify-between gap-2 mb-1">
                         <span className="font-mono uppercase tracking-wider leading-tight" style={{ fontSize: 'var(--fs-card-title)', color: '#C87941' }}>
                           {w.name}
+                          {w.dlcSource !== 'Base' && <DlcBadge source={w.dlcSource} className="ml-2 align-middle" />}
                         </span>
                         <span className={`px-1.5 py-0.5 font-mono uppercase rounded-sm shrink-0 ${CATEGORY_COLORS[w.category]}`} style={{ fontSize: 'var(--fs-badge)' }}>
                           {w.category}
@@ -536,6 +558,54 @@ const UnifiedWeaponPicker = ({
                         <div className="flex gap-3">
                           <StatBox label="TONS" value={jj.tonnage} />
                           <StatBox label="SLOTS" value={jj.slots} />
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </>
+          )}
+
+          {tab === 'UPGRADES' && (
+            <>
+              {filteredUpgrades.length === 0 ? (
+                <EmptyState />
+              ) : (
+                <div className="space-y-2">
+                  {filteredUpgrades.map(({ u, blocked }) => {
+                    const key = `upgrade-${u.id}`;
+                    const noRoom = remainingInventory < u.criticalSlots;
+                    const disabled = !!blocked || noRoom;
+                    return (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => !disabled && handleAddEquipment({ kind: 'upgrade', data: u }, key)}
+                        disabled={disabled}
+                        className="w-full text-left border border-border rounded-sm p-3 cursor-pointer min-h-[44px] disabled:opacity-40 disabled:cursor-not-allowed"
+                        style={{
+                          backgroundColor: flashId === key ? 'rgba(200, 121, 65, 0.18)' : '#161616',
+                          transition: flashId === key ? 'background-color 150ms ease-in' : 'background-color 100ms ease-out',
+                        }}
+                      >
+                        <div className="flex items-start justify-between gap-2 mb-1">
+                          <span className="font-mono uppercase tracking-wider leading-tight" style={{ fontSize: 'var(--fs-card-title)', color: disabled ? '#8A8A8A' : '#C87941' }}>
+                            {u.name}
+                          </span>
+                          {u.dlcSource !== 'Base' && <DlcBadge source={u.dlcSource} />}
+                        </div>
+                        {blocked && (
+                          <div className="font-mono uppercase mb-1" style={{ fontSize: 'var(--fs-badge)', color: '#E05050' }}>
+                            {blocked}
+                          </div>
+                        )}
+                        <div className="font-mono mb-2" style={{ fontSize: 'var(--fs-badge)', color: '#8A8A8A' }}>
+                          {u.effectDescription}
+                        </div>
+                        <div className="flex gap-3">
+                          <StatBox label="TONS" value={u.tonnage} />
+                          <StatBox label="SLOTS" value={u.criticalSlots} />
                         </div>
                       </button>
                     );

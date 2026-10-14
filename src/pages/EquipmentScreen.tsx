@@ -2,6 +2,8 @@ import { useMemo } from "react";
 import { Search } from "lucide-react";
 import { EQUIPMENT, type Equipment } from "@/data/equipment";
 import { useFilters } from "@/contexts/FilterContext";
+import { matchesDlcMode } from "@/lib/dlcFilter";
+import DlcModeChip from "@/components/DlcModeChip";
 import { NativeAdCard } from "@/components/NativeAdCard";
 import { useNativeAd } from "@/hooks/useNativeAd";
 
@@ -42,7 +44,6 @@ const CATEGORY_CHIPS: (Equipment["category"] | "ALL")[] = [
   "ALL", "Heat Sink", "Jump Jet", "Sensor", "Gyro", "Cockpit",
   "Actuator", "Upgrade", "Other",
 ];
-const META_CHIPS = ["DLC"] as const;
 
 const EquipmentCard = ({ eq }: { eq: Equipment }) => (
   <div
@@ -97,16 +98,16 @@ const EquipmentCard = ({ eq }: { eq: Equipment }) => (
 
 const EquipmentScreen = () => {
   const { adAssets } = useNativeAd();
-  const { search, setSearch, categoryFilter, setCategoryFilter, metaFilters, toggleMeta } = useFilters().equipment;
+  const { search, setSearch, categoryFilter, setCategoryFilter, dlcMode, setDlcMode } = useFilters().equipment;
 
   const filtered = useMemo(() => {
     return EQUIPMENT.filter((e) => {
       if (search && !e.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (categoryFilter !== "ALL" && e.category !== categoryFilter) return false;
-      if (metaFilters.has("DLC") && e.dlcSource === "Base") return false;
+      if (!matchesDlcMode(e.dlcSource, dlcMode)) return false;
       return true;
     });
-  }, [search, categoryFilter, metaFilters]);
+  }, [search, categoryFilter, dlcMode]);
 
   const grouped = useMemo(() => {
     const map = new Map<Equipment["category"], Equipment[]>();
@@ -146,19 +147,7 @@ const EquipmentScreen = () => {
             {chip}
           </button>
         ))}
-        {META_CHIPS.map((chip) => (
-          <button
-            key={chip}
-            onClick={() => toggleMeta(chip)}
-            className={`shrink-0 px-3 py-1 text-label font-mono uppercase tracking-wider rounded-sm border transition-colors active:scale-[0.97] ${
-              metaFilters.has(chip)
-                ? "bg-primary text-primary-foreground border-primary"
-                : "bg-card text-muted-foreground border-border hover:border-primary/50"
-            }`}
-          >
-            {chip}
-          </button>
-        ))}
+        <DlcModeChip mode={dlcMode} onChange={setDlcMode} />
       </div>
 
       {filtered.length === 0 ? (

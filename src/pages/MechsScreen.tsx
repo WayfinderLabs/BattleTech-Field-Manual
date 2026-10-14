@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { MECHS, type Mech } from "@/data/mechs";
 import { useFilters } from "@/contexts/FilterContext";
+import { matchesDlcMode } from "@/lib/dlcFilter";
+import DlcModeChip from "@/components/DlcModeChip";
 import { useScrollContainer } from "@/contexts/ScrollContext";
 import { NativeAdCard } from "@/components/NativeAdCard";
 import { useNativeAd } from "@/hooks/useNativeAd";
@@ -18,14 +20,14 @@ type ClassFilter = Mech["chassisClass"] | "ALL";
 type MetaFilter = "CLAN" | "DLC" | "LOSTECH";
 
 const CLASS_CHIPS: ClassFilter[] = ["ALL", "Light", "Medium", "Heavy", "Assault"];
-const META_CHIPS: MetaFilter[] = ["CLAN", "DLC", "LOSTECH"];
+const META_CHIPS: MetaFilter[] = ["CLAN", "LOSTECH"];
 
 const MechsScreen = () => {
   const navigate = useNavigate();
   const filters = useFilters();
   const scrollContainer = useScrollContainer();
   const { adAssets } = useNativeAd();
-  const { search, setSearch, classFilter, setClassFilter, metaFilters, toggleMeta } = filters.mechs;
+  const { search, setSearch, classFilter, setClassFilter, metaFilters, toggleMeta, dlcMode, setDlcMode } = filters.mechs;
   const scrollKey = "mechs";
 
   useEffect(() => {
@@ -45,14 +47,14 @@ const MechsScreen = () => {
       if (search && !m.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (classFilter !== "ALL" && m.chassisClass !== classFilter) return false;
       if (metaFilters.has("CLAN") && !m.isClan) return false;
-      if (metaFilters.has("DLC") && m.dlcSource === "Base") return false;
+      if (!matchesDlcMode(m.dlcSource, dlcMode)) return false;
       if (metaFilters.has("LOSTECH") && !m.isLosTech) return false;
       return true;
     }).sort((a, b) => {
       if (a.tonnage !== b.tonnage) return a.tonnage - b.tonnage;
       return a.name.localeCompare(b.name);
     });
-  }, [search, classFilter, metaFilters]);
+  }, [search, classFilter, metaFilters, dlcMode]);
 
   return (
     <div className="py-4 space-y-4">
@@ -96,6 +98,7 @@ const MechsScreen = () => {
             {chip}
           </button>
         ))}
+        <DlcModeChip mode={dlcMode} onChange={setDlcMode} />
       </div>
 
       {filtered.length === 0 ? (

@@ -1,6 +1,7 @@
 import type { Weapon } from '@/data/weapons';
 import type { Mech } from '@/data/mechs';
 import type { AmmoBin, HeatSink, JumpJet } from '@/data/loadoutEquipment';
+import type { Equipment } from '@/data/equipment';
 
 export type HardpointType = 'B' | 'E' | 'M' | 'S';
 export type LocationKey = 'hd' | 'ct' | 'lt' | 'rt' | 'la' | 'ra' | 'll' | 'rl';
@@ -9,7 +10,15 @@ export type SlotItem =
   | { kind: 'weapon'; data: Weapon }
   | { kind: 'ammo'; data: AmmoBin }
   | { kind: 'heatSink'; data: HeatSink }
-  | { kind: 'jumpJet'; data: JumpJet };
+  | { kind: 'jumpJet'; data: JumpJet }
+  | { kind: 'upgrade'; data: Equipment };
+
+/** Inventory slots an item occupies */
+export function slotItemSlots(item: SlotItem): number {
+  if (item.kind === 'weapon') return item.data.criticalSlots;
+  if (item.kind === 'upgrade') return item.data.criticalSlots;
+  return item.data.slots;
+}
 
 export interface SlotAssignment {
   hardpointType: HardpointType;
