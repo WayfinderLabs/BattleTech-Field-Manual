@@ -160,7 +160,7 @@ const StatsBar = ({ state, armorPoints = 0 }: StatsBarProps) => {
           </div>
           <div className="text-center py-2 px-3">
             <div className="font-mono uppercase tracking-widest" style={{ fontSize: '10px', color: '#8A8A8A' }}>
-              SHUTDOWN
+              MAX HEAT
             </div>
             <div className="font-mono font-semibold text-sm">
               {shutdown}

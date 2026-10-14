@@ -2,7 +2,7 @@ import type { Mech } from '@/data/mechs';
 import type { Weapon } from '@/data/weapons';
 import type { LoadoutState, LocationKey, SlotItem, EquipmentSlot } from '@/types/loadout';
 import { slotItemSlots } from '@/types/loadout';
-import { availableTonnage as mechAvailableTonnage, availableSlots, availableJumpJets } from '@/utils/mechCapacity';
+import { availableTonnage as mechAvailableTonnage, availableSlots, availableJumpJets, ARMOR_TONS_PER_POINT, roundTons } from '@/utils/mechCapacity';
 
 export type ValidationSeverity = 'ERROR' | 'WARNING';
 
@@ -62,7 +62,8 @@ function countJumpJets(state: LoadoutState): number {
 
 export function validateLoadout(
   mech: Mech,
-  state: LoadoutState
+  state: LoadoutState,
+  armorPoints = 0,
 ): ValidationResult[] {
   const results: ValidationResult[] = [];
   const locationKeys = Object.keys(state.slots) as LocationKey[];
@@ -72,7 +73,7 @@ export function validateLoadout(
   // 1. OVERWEIGHT — sum weapons + equipment tonnage vs available tonnage
   const weaponTonnage = allWeapons.reduce((sum, w) => sum + w.tonnage, 0);
   const equipTonnage = allEquipment.reduce((sum, item) => sum + itemTonnage(item), 0);
-  const tonnageUsed = weaponTonnage + equipTonnage;
+  const tonnageUsed = roundTons(weaponTonnage + equipTonnage + armorPoints * ARMOR_TONS_PER_POINT);
   const availableTonnage = mechAvailableTonnage(mech);
   if (tonnageUsed > availableTonnage) {
     results.push({
@@ -121,7 +122,8 @@ export function wouldCreateNewError(
   locationKey: LocationKey,
   mech: Mech,
   state: LoadoutState,
-  currentValidation: ValidationResult[]
+  currentValidation: ValidationResult[],
+  armorPoints = 0,
 ): { blocked: boolean; reason: 'OVERWEIGHT' | 'CRIT_OVERFLOW' | null } {
   const alreadyOverweight = currentValidation.some(v => v.code === 'OVERWEIGHT');
   const alreadyOverflow = currentValidation.some(
@@ -133,7 +135,7 @@ export function wouldCreateNewError(
 
   // Check overweight
   if (!alreadyOverweight) {
-    let currentTonnage = 0;
+    let currentTonnage = armorPoints * ARMOR_TONS_PER_POINT;
     for (const slots of Object.values(state.slots)) {
       for (const s of slots) {
         if (s.weapon) currentTonnage += s.weapon.tonnage;
@@ -145,7 +147,7 @@ export function wouldCreateNewError(
       }
     }
     const availableTonnage = mechAvailableTonnage(mech);
-    if (currentTonnage + addTonnage > availableTonnage) {
+    if (roundTons(currentTonnage + addTonnage) > availableTonnage) {
       return { blocked: true, reason: 'OVERWEIGHT' };
     }
   }

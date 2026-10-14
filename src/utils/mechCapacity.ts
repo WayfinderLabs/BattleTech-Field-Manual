@@ -23,6 +23,12 @@ export function fixedJumpJets(mech: Mech): number {
   return (mech.fixedEquipment ?? []).filter(f => f.isJumpJet).length;
 }
 
+/** Armor weight: 80 points per ton, as the builder already uses. */
+export const ARMOR_TONS_PER_POINT = 0.0125;
+
+/** Round to 1/10000 t so float noise never flips an overweight check. */
+export const roundTons = (t: number) => Math.round(t * 10000) / 10000;
+
 /** Tonnage available for weapons and equipment the player installs. */
 export function availableTonnage(mech: Mech): number {
   return mech.tonnage - mech.initialTonnage - fixedTonnage(mech);

@@ -147,7 +147,7 @@ const EquipmentScreen = () => {
             {chip}
           </button>
         ))}
-        <DlcModeChip mode={dlcMode} onChange={setDlcMode} />
+        <DlcModeChip mode={dlcMode} onChange={setDlcMode} large />
       </div>
 
       {filtered.length === 0 ? (

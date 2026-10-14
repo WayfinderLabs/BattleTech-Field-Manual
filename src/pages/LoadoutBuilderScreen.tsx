@@ -275,8 +275,8 @@ const LoadoutBuilderScreen = () => {
 
   const validation = useMemo<ValidationResult[]>(() => {
     if (!state.selectedMech) return [];
-    return validateLoadout(state.selectedMech, state);
-  }, [state]);
+    return validateLoadout(state.selectedMech, state, armorPoints);
+  }, [state, armorPoints]);
 
   const handleSelectMech = useCallback((mech: Mech) => {
     const newSlots = { ...EMPTY_SLOTS } as Record<LocationKey, ReturnType<typeof parseHardpoints>>;
@@ -297,7 +297,8 @@ const LoadoutBuilderScreen = () => {
       pickerLocation,
       state.selectedMech,
       state,
-      validation
+      validation,
+      armorPoints,
     );
     if (check.blocked && check.reason) {
       setBlockingDialog({
@@ -321,12 +322,12 @@ const LoadoutBuilderScreen = () => {
 
       return newState;
     });
-  }, [pickerLocation, state, validation]);
+  }, [pickerLocation, state, validation, armorPoints]);
 
   const handleEquipmentAdd = useCallback((item: SlotItem, loc: LocationKey) => {
     if (!state.selectedMech) return;
 
-    const check = wouldCreateNewError(item, loc, state.selectedMech, state, validation);
+    const check = wouldCreateNewError(item, loc, state.selectedMech, state, validation, armorPoints);
     if (check.blocked && check.reason) {
       const name = item.data.name;
       setBlockingDialog({
@@ -344,7 +345,7 @@ const LoadoutBuilderScreen = () => {
       const newState = { ...prev, equipment: { ...prev.equipment, [loc]: locEquip } };
       return newState;
     });
-  }, [state, validation]);
+  }, [state, validation, armorPoints]);
 
   const handleRemoveWeapon = useCallback((location: LocationKey, slotIndex: number) => {
     setState((prev) => {

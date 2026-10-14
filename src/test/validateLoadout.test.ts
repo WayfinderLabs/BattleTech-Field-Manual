@@ -56,4 +56,16 @@ describe('fixed equipment capacity', () => {
       expect(validateLoadout(m, state), m.variant).toEqual([]);
     }
   });
+
+  it('counts armor weight toward the tonnage limit', () => {
+    const state = emptyState('GRF-4N');
+    const m = state.selectedMech!;
+    const free = availableTonnage(m);
+    const fullArmorPoints = free / 0.0125;
+    expect(validateLoadout(m, state, fullArmorPoints)).toEqual([]);
+    const ml = WEAPONS.find(w => w.name === 'Medium Laser')!;
+    const block = wouldCreateNewError({ kind: 'weapon', data: ml }, 'ra', m, state, [], fullArmorPoints);
+    expect(block).toEqual({ blocked: true, reason: 'OVERWEIGHT' });
+    expect(validateLoadout(m, state, fullArmorPoints + 80).some(v => v.code === 'OVERWEIGHT')).toBe(true);
+  });
 });
