@@ -78,6 +78,13 @@ const MechDetailScreen = () => {
     for (const loc of HARDPOINT_LABELS) {
       lines.push(`${HARDPOINT_DISPLAY[loc]}: ${formatHardpointLine(mech.hardpoints[loc])}`);
     }
+    if (mech.fixedEquipment && mech.fixedEquipment.length > 0) {
+      lines.push("");
+      lines.push("Fixed Equipment:");
+      for (const f of mech.fixedEquipment) {
+        lines.push(`${HARDPOINT_DISPLAY[f.location]}: ${f.name} (${f.tonnage}T)`);
+      }
+    }
     lines.push("");
     lines.push("Get the app:");
     lines.push("https://play.google.com/store/apps/details?id=com.wayfinderlabs.btfm");
@@ -175,6 +182,26 @@ const MechDetailScreen = () => {
           ))}
         </div>
       </div>
+
+      {mech.fixedEquipment && mech.fixedEquipment.length > 0 && (
+        <div>
+          <h2 className="text-primary text-label font-mono tracking-[0.15em] mb-2">// FIXED EQUIPMENT</h2>
+          <div className="border border-border rounded-sm bg-card divide-y divide-border">
+            {mech.fixedEquipment.map((f, i) => (
+              <div key={`${f.id}-${i}`} className="px-4 py-2.5">
+                <div className="flex justify-between items-baseline gap-3">
+                  <span className="text-detail-value font-mono text-foreground uppercase">{f.name}</span>
+                  <span className="text-label font-mono text-muted-foreground tracking-wider shrink-0">
+                    {HARDPOINT_DISPLAY[f.location]} · {f.tonnage}T · {f.slots} SLOT{f.slots === 1 ? "" : "S"}
+                  </span>
+                </div>
+                <p className="text-muted-foreground text-sm font-sans mt-1">{f.effect}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-muted-foreground text-xs font-mono mt-1.5">BUILT-IN. CANNOT BE REMOVED.</p>
+        </div>
+      )}
 
       {mech.loreDescription && (
         <div>

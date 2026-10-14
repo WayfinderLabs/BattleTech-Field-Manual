@@ -1,5 +1,6 @@
 import type { LoadoutState, LocationKey } from '@/types/loadout';
 import type { HeatSink } from '@/data/loadoutEquipment';
+import { availableTonnage as mechAvailableTonnage, availableJumpJets } from '@/utils/mechCapacity';
 import type { Weapon } from '@/data/weapons';
 
 interface StatsBarProps {
@@ -104,9 +105,9 @@ const StatsBar = ({ state, armorPoints = 0 }: StatsBarProps) => {
   const adjustedHeat = Math.floor(rawHeat * reductionMultiplier);
   const shutdown = BASE_MAX_HEAT + totalMaxHeatBonus;
   const hasExchanger = reductionMultiplier < 1;
-  const jjMax = selectedMech.jumpJetsMax;
+  const jjMax = availableJumpJets(selectedMech);
 
-  const availableTonnage = selectedMech.tonnage - selectedMech.initialTonnage;
+  const availableTonnage = mechAvailableTonnage(selectedMech);
 
   const tonnageColor = tonnageUsed > availableTonnage
     ? '#FF4444'

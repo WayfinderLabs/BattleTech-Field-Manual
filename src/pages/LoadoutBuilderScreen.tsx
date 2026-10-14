@@ -11,6 +11,7 @@ import type { LoadoutState, LocationKey, HardpointType, SlotItem, SlotAssignment
 import { LOCATION_LABELS, EMPTY_SLOTS, EMPTY_EQUIPMENT } from '@/types/loadout';
 import { parseHardpoints } from '@/utils/parseHardpoints';
 import { validateLoadout, wouldCreateNewError } from '@/utils/validateLoadout';
+import { availableTonnage as mechAvailableTonnage, availableJumpJets, availableSlots, fixedItemsAt } from '@/utils/mechCapacity';
 import type { ValidationResult } from '@/utils/validateLoadout';
 import { useSavedLoadouts } from '@/hooks/useSavedLoadouts';
 import type { SavedLoadout } from '@/types/savedLoadout';
@@ -460,8 +461,8 @@ const LoadoutBuilderScreen = () => {
 
     const adjustedHeat = Math.floor(rawHeat * reductionMultiplier);
     const shutdown = BASE_MAX_HEAT + totalMaxHeatBonus;
-    const availableTonnage = selectedMech.tonnage - selectedMech.initialTonnage;
-    const jjMax = selectedMech.jumpJetsMax;
+    const availableTonnage = mechAvailableTonnage(selectedMech);
+    const jjMax = availableJumpJets(selectedMech);
 
     // Engagement range
     const equippedWeapons = LOCATION_KEYS
@@ -478,7 +479,7 @@ const LoadoutBuilderScreen = () => {
     // Per-location items
     const locationLines = LOCATION_KEYS.map(loc => {
       const label = LOCATION_LABELS[loc];
-      const items: string[] = [];
+      const items: string[] = fixedItemsAt(selectedMech, loc).map(f => `${f.name} (fixed)`);
       for (const s of state.slots[loc]) {
         if (s.weapon) items.push(s.weapon.name);
       }
@@ -494,7 +495,7 @@ const LoadoutBuilderScreen = () => {
       `Armor: ${armorPoints} / ${selectedMech.maxArmor}`,
       `Damage Output: ${Math.floor(totalDamage)}`,
       `Heat / Dissipation: ${adjustedHeat} / ${shareDissipation}`,
-      `Shutdown Risk: ${shutdown}%`,
+      `Max Heat: ${shutdown}`,
       `Jump Jets: ${jumpJetCount} / ${jjMax}`,
       `Engagement Range: ${engagementStr}`,
       '',
@@ -580,9 +581,12 @@ const LoadoutBuilderScreen = () => {
                 </div>
                 <div className="flex gap-3 mt-2 font-mono text-muted-foreground flex-wrap" style={{ fontSize: 'var(--fs-badge)' }}>
                   <span>{selectedMech.chassisClass}</span>
-                  <span className="text-primary">{selectedMech.tonnage - selectedMech.initialTonnage}t free / {selectedMech.tonnage}T</span>
+                  <span className="text-primary">{mechAvailableTonnage(selectedMech)}t free / {selectedMech.tonnage}T</span>
                   {selectedMech.topSpeed !== undefined && <span>{selectedMech.topSpeed} km/h</span>}
                   <span>JJ: {selectedMech.jumpJetsMax}</span>
+                  {selectedMech.fixedEquipment && selectedMech.fixedEquipment.length > 0 && (
+                    <span style={{ color: '#8A8A8A' }}>{selectedMech.fixedEquipment.length} FIXED</span>
+                  )}
                 </div>
               </div>
               <button
@@ -609,7 +613,7 @@ const LoadoutBuilderScreen = () => {
             if (eq.item) usedTons += eq.item.data.tonnage;
           }
         }
-        const availableTonnage = selectedMech.tonnage - selectedMech.initialTonnage;
+        const availableTonnage = mechAvailableTonnage(selectedMech);
         const freeTons = availableTonnage - usedTons;
         const handleMaxArmor = () => {
           const maxAffordablePoints = Math.floor(Math.max(0, freeTons) / 0.0125);
@@ -727,6 +731,7 @@ const LoadoutBuilderScreen = () => {
                 slots={state.slots[loc]}
                 equipment={state.equipment[loc]}
                 inventorySlots={selectedMech.inventorySlots[loc]}
+                fixedItems={fixedItemsAt(selectedMech, loc)}
                 onOpenPicker={() => setPickerLocation(loc)}
                 onRemoveWeapon={(slotIndex) => handleRemoveWeapon(loc, slotIndex)}
                 onRemoveEquipment={(equipIndex) => handleRemoveEquipment(loc, equipIndex)}
@@ -763,7 +768,7 @@ const LoadoutBuilderScreen = () => {
           locationKey={pickerLocation}
           slots={state.slots[pickerLocation]}
           equipment={state.equipment[pickerLocation]}
-          inventorySlots={selectedMech.inventorySlots[pickerLocation]}
+          inventorySlots={availableSlots(selectedMech, pickerLocation)}
           mech={selectedMech}
           allEquipment={state.equipment}
           onClose={() => setPickerLocation(null)}

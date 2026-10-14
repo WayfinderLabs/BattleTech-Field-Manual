@@ -6,6 +6,7 @@ import type { SlotAssignment, HardpointType, LocationKey, SlotItem, EquipmentSlo
 import { LOCATION_LABELS } from '@/types/loadout';
 import { HP_PILL_COLORS } from '@/utils/hardpointPills';
 import { WEAPON_ORDER, stripTier, getTier, isTierVariant } from '@/lib/weaponOrder';
+import { availableJumpJets } from '@/utils/mechCapacity';
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
 } from '@/components/ui/dialog';
@@ -135,7 +136,7 @@ const UnifiedWeaponPicker = ({
     }
     return count;
   }, [allEquipment]);
-  const jjMaxReached = totalJJCount >= mech.jumpJetsMax;
+  const jjMaxReached = totalJJCount >= availableJumpJets(mech);
 
   // Compatible jump jets for this mech's tonnage
   const compatibleJJ = useMemo(() => {
@@ -483,7 +484,7 @@ const UnifiedWeaponPicker = ({
                 </div>
               ) : filteredJJ.length === 0 ? (
                 <EmptyState />
-              ) : mech.jumpJetsMax === 0 ? (
+              ) : availableJumpJets(mech) === 0 ? (
                 <div className="space-y-2">
                   {filteredJJ.map((jj) => (
                     <div

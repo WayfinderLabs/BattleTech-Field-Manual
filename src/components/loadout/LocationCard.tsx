@@ -8,6 +8,8 @@ interface LocationCardProps {
   slots: SlotAssignment[];
   equipment: EquipmentSlot[];
   inventorySlots: number;
+  /** Built-in equipment in this location: rendered locked, cannot be removed */
+  fixedItems?: { name: string; slots: number }[];
   onOpenPicker: () => void;
   onRemoveWeapon: (slotIndex: number) => void;
   onRemoveEquipment: (equipIndex: number) => void;
@@ -27,6 +29,7 @@ interface SlotBlock {
   equipIndex?: number;
   isEquipment?: boolean;
   equipKind?: string;
+  isFixed?: boolean;
   /** Reference to weapon for ammo annotation */
   weapon?: Weapon;
 }
@@ -37,18 +40,35 @@ const EQUIP_COLORS: Record<string, { first: string; cont: string }> = {
   ammo: { first: '#5A8A3A', cont: '#3A5A2A' },
   heatSink: { first: '#3A7A8A', cont: '#2A5A6A' },
   jumpJet: { first: '#7A5A8A', cont: '#5A3A6A' },
+  fixed: { first: '#8A8A8A', cont: '#4A4A4A' },
 };
 
 const LocationCard = ({
-  label, hardpointStr, slots, equipment, inventorySlots,
+  label, hardpointStr, slots, equipment, inventorySlots, fixedItems = [],
   onOpenPicker, onRemoveWeapon, onRemoveEquipment, hasCritOverflow, ammoBinCapacity = {}, ammoWeaponCounts = {},
 }: LocationCardProps) => {
-  const isEmpty = slots.length === 0 && equipment.length === 0;
+  const isEmpty = slots.length === 0 && equipment.length === 0 && fixedItems.length === 0;
   const hasHardpoints = slots.length > 0;
 
   // Build flat slot block array
   const blocks: SlotBlock[] = [];
   let blockIndex = 0;
+
+  // Fixed (built-in) blocks first
+  for (const f of fixedItems) {
+    for (let c = 0; c < f.slots; c++) {
+      if (blockIndex < inventorySlots) {
+        blocks.push({
+          type: c === 0 ? 'first' : 'continuation',
+          itemName: f.name,
+          isEquipment: true,
+          equipKind: 'fixed',
+          isFixed: true,
+        });
+        blockIndex++;
+      }
+    }
+  }
 
   // Weapon blocks
   for (let i = 0; i < slots.length; i++) {
@@ -96,7 +116,8 @@ const LocationCard = ({
   const allWeaponsFull = slots.length > 0 && slots.every(s => !!s.weapon);
   // Check if any inventory space remains
   const usedSlots = slots.reduce((sum, s) => sum + (s.weapon ? s.weapon.criticalSlots : 0), 0)
-    + equipment.reduce((sum, eq) => sum + eq.slotsUsed, 0);
+    + equipment.reduce((sum, eq) => sum + eq.slotsUsed, 0)
+    + fixedItems.reduce((sum, f) => sum + f.slots, 0);
   const hasInventorySpace = usedSlots < inventorySlots;
   const showAddButton = hasHardpoints || hasInventorySpace;
 
@@ -194,6 +215,14 @@ const LocationCard = ({
                       </span>
                     );
                   })()}
+                  {block.isFixed ? (
+                    <span
+                      className="shrink-0 font-mono uppercase"
+                      style={{ fontSize: 9, letterSpacing: '0.05em', color: '#0D0D0D' }}
+                    >
+                      FIXED
+                    </span>
+                  ) : (
                   <button
                     onClick={() => {
                       if (block.isEquipment && block.equipIndex !== undefined) {
@@ -207,6 +236,7 @@ const LocationCard = ({
                   >
                     ✕
                   </button>
+                  )}
                 </div>
               );
             }

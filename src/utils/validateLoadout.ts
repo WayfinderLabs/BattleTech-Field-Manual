@@ -1,6 +1,7 @@
 import type { Mech } from '@/data/mechs';
 import type { Weapon } from '@/data/weapons';
 import type { LoadoutState, LocationKey, SlotItem, EquipmentSlot } from '@/types/loadout';
+import { availableTonnage as mechAvailableTonnage, availableSlots, availableJumpJets } from '@/utils/mechCapacity';
 
 export type ValidationSeverity = 'ERROR' | 'WARNING';
 
@@ -72,7 +73,7 @@ export function validateLoadout(
   const weaponTonnage = allWeapons.reduce((sum, w) => sum + w.tonnage, 0);
   const equipTonnage = allEquipment.reduce((sum, item) => sum + itemTonnage(item), 0);
   const tonnageUsed = weaponTonnage + equipTonnage;
-  const availableTonnage = mech.tonnage - mech.initialTonnage;
+  const availableTonnage = mechAvailableTonnage(mech);
   if (tonnageUsed > availableTonnage) {
     results.push({
       severity: 'ERROR',
@@ -89,7 +90,7 @@ export function validateLoadout(
     const equipSlots = state.equipment[key]
       .reduce((sum, eq) => sum + eq.slotsUsed, 0);
     const slotsUsed = weaponSlots + equipSlots;
-    const slotsAvailable = mech.inventorySlots[key];
+    const slotsAvailable = availableSlots(mech, key);
     if (slotsUsed > slotsAvailable) {
       results.push({
         severity: 'ERROR',
@@ -102,11 +103,12 @@ export function validateLoadout(
 
   // 3. JUMP JET CAP EXCEEDED
   const jjCount = countJumpJets(state);
-  if (jjCount > mech.jumpJetsMax) {
+  const jjCap = availableJumpJets(mech);
+  if (jjCount > jjCap) {
     results.push({
       severity: 'WARNING',
       code: 'JUMP_JET_EXCEEDED',
-      message: `Jump jet limit exceeded — ${jjCount} installed, max ${mech.jumpJetsMax}`,
+      message: `Jump jet limit exceeded — ${jjCount} installed, max ${jjCap}`,
     });
   }
 
@@ -142,7 +144,7 @@ export function wouldCreateNewError(
         if (eq.item) currentTonnage += itemTonnage(eq.item);
       }
     }
-    const availableTonnage = mech.tonnage - mech.initialTonnage;
+    const availableTonnage = mechAvailableTonnage(mech);
     if (currentTonnage + addTonnage > availableTonnage) {
       return { blocked: true, reason: 'OVERWEIGHT' };
     }
@@ -156,7 +158,7 @@ export function wouldCreateNewError(
     const equipSlots = state.equipment[locationKey]
       .reduce((sum, eq) => sum + eq.slotsUsed, 0);
     const currentSlots = weaponSlots + equipSlots;
-    if (currentSlots + addSlots > mech.inventorySlots[locationKey]) {
+    if (currentSlots + addSlots > availableSlots(mech, locationKey)) {
       return { blocked: true, reason: 'CRIT_OVERFLOW' };
     }
   }
