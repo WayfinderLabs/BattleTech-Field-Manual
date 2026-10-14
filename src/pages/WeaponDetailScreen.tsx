@@ -4,6 +4,7 @@ import { ChevronLeft, Share2 } from "lucide-react";
 import { WEAPONS } from "@/data/weapons";
 import { useScrollContainer } from "@/contexts/ScrollContext";
 import { toast } from "sonner";
+import { weaponDisplayName } from '@/lib/weaponDisplayName';
 
 const WeaponDetailScreen = () => {
   const { id } = useParams<{ id: string }>();
@@ -30,7 +31,7 @@ const WeaponDetailScreen = () => {
 
   const buildShareText = () => {
     const lines: string[] = [
-      weapon.name,
+      weaponDisplayName(weapon),
       `Category: ${weapon.category}`,
       `Damage: ${weapon.damage}`,
       `Stability Dmg: ${weapon.stabilityDamage}`,
@@ -62,7 +63,7 @@ const WeaponDetailScreen = () => {
     const text = buildShareText();
     if (navigator.share) {
       try {
-        await navigator.share({ title: weapon.name, text });
+        await navigator.share({ title: weaponDisplayName(weapon), text });
       } catch {}
     } else {
       try {
@@ -105,7 +106,7 @@ const WeaponDetailScreen = () => {
             <ChevronLeft className="h-4 w-4" /> BACK
           </button>
           <span className="text-sm font-mono uppercase tracking-widest text-foreground truncate mx-3">
-            {weapon.name}
+            {weaponDisplayName(weapon)}
           </span>
           <button onClick={handleShare} className="shrink-0 p-1 active:scale-[0.97]" aria-label="Share">
             <Share2 className="h-5 w-5" style={{ color: "#8A8A8A" }} />

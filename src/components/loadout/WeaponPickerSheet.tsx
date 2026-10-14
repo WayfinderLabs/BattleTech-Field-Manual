@@ -5,6 +5,7 @@ import { HARDPOINT_TO_CATEGORY, HARDPOINT_TYPE_LABELS } from '@/types/loadout';
 import {
   Drawer, DrawerContent, DrawerHeader, DrawerTitle,
 } from '@/components/ui/drawer';
+import { weaponDisplayName } from '@/lib/weaponDisplayName';
 
 interface WeaponPickerSheetProps {
   open: boolean;
@@ -71,7 +72,7 @@ const WeaponPickerSheet = ({ open, hardpointType, onClose, onSelect }: WeaponPic
             >
               <div className="flex-1 min-w-0">
                 <div className="font-mono uppercase tracking-wider text-foreground truncate" style={{ fontSize: 'var(--fs-body)' }}>
-                  {weapon.name}
+                  {weaponDisplayName(weapon)}
                 </div>
               </div>
               <div className="flex items-center gap-3 shrink-0 font-mono" style={{ fontSize: 'var(--fs-badge)' }}>

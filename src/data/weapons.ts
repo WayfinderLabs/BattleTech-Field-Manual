@@ -397,7 +397,7 @@ export const WEAPONS: Weapon[] = [
     indirectFire: false,
     dlcSource: 'Base',
     isClan: false,
-    notes: 'Support hardpoint. Adds significant heat to target. Very short range. Effective in hot biomes.',
+    notes: 'Support hardpoint. Very short range. Effective in hot biomes.',
   },
 
   // ── MISSILE ────────────────────────────────────────────────────────────────

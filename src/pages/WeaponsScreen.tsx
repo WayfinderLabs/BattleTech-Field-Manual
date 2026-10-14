@@ -9,6 +9,7 @@ import { useScrollContainer } from "@/contexts/ScrollContext";
 import { NativeAdCard } from "@/components/NativeAdCard";
 import { useNativeAd } from "@/hooks/useNativeAd";
 import { WEAPON_ORDER, stripTier, getTier, isTierVariant } from "@/lib/weaponOrder";
+import { weaponDisplayName } from '@/lib/weaponDisplayName';
 
 const CATEGORY_COLORS: Record<Weapon["category"], string> = {
   Ballistic: "bg-[hsl(220,9%,46%)] text-white",
@@ -141,7 +142,7 @@ const WeaponsScreen = () => {
               >
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <span className="text-primary font-mono text-card-title uppercase tracking-wider leading-tight">
-                    {w.name}
+                    {weaponDisplayName(w)}
                   </span>
                   <div className="flex gap-1.5 shrink-0 flex-wrap justify-end">
                     <span className={`px-1.5 py-0.5 text-badge font-mono uppercase rounded-sm ${CATEGORY_COLORS[w.category]}`}>

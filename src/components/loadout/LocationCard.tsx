@@ -1,6 +1,7 @@
 import type { SlotAssignment, HardpointType, EquipmentSlot } from '@/types/loadout';
 import type { Weapon } from '@/data/weapons';
 import { HP_PILL_COLORS, parseHardpointTokens } from '@/utils/hardpointPills';
+import { weaponDisplayName } from '@/lib/weaponDisplayName';
 
 interface LocationCardProps {
   label: string;
@@ -79,7 +80,7 @@ const LocationCard = ({
         if (blockIndex < inventorySlots) {
           blocks.push({
             type: c === 0 ? 'first' : 'continuation',
-            itemName: slot.weapon.name,
+            itemName: weaponDisplayName(slot.weapon),
             weaponSlotIndex: i,
             weapon: c === 0 ? slot.weapon : undefined,
           });

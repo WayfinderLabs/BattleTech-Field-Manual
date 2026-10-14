@@ -22,6 +22,7 @@ import StatsBar from '@/components/loadout/StatsBar';
 import ValidationPanel from '@/components/loadout/ValidationPanel';
 import BlockingDialog from '@/components/loadout/BlockingDialog';
 import SaveLoadoutSheet from '@/components/loadout/SaveLoadoutSheet';
+import { weaponDisplayName } from '@/lib/weaponDisplayName';
 
 const LOCATION_KEYS: LocationKey[] = ['hd', 'ct', 'lt', 'rt', 'la', 'ra', 'll', 'rl'];
 const DISPLAY_ORDER: LocationKey[] = ['hd', 'ct', 'rt', 'lt', 'ra', 'la', 'rl', 'll'];
@@ -303,7 +304,7 @@ const LoadoutBuilderScreen = () => {
     if (check.blocked && check.reason) {
       setBlockingDialog({
         isOpen: true,
-        itemName: weapon.name,
+        itemName: weaponDisplayName(weapon),
         locationKey: pickerLocation,
         reason: check.reason,
       });
@@ -482,7 +483,7 @@ const LoadoutBuilderScreen = () => {
       const label = LOCATION_LABELS[loc];
       const items: string[] = fixedItemsAt(selectedMech, loc).map(f => `${f.name} (fixed)`);
       for (const s of state.slots[loc]) {
-        if (s.weapon) items.push(s.weapon.name);
+        if (s.weapon) items.push(weaponDisplayName(s.weapon));
       }
       for (const eq of state.equipment[loc]) {
         if (eq.item) items.push(eq.item.data.name);

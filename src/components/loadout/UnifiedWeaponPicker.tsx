@@ -15,6 +15,7 @@ import { availableJumpJets } from '@/utils/mechCapacity';
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
 } from '@/components/ui/dialog';
+import { weaponDisplayName } from '@/lib/weaponDisplayName';
 
 type CategoryFilter = Weapon['category'] | 'ALL';
 type PickerTab = 'WEAPONS' | 'AMMO' | 'HEAT SINKS' | 'JUMP JETS' | 'UPGRADES';
@@ -376,7 +377,7 @@ const UnifiedWeaponPicker = ({
                     >
                       <div className="flex items-start justify-between gap-2 mb-1">
                         <span className="font-mono uppercase tracking-wider leading-tight" style={{ fontSize: 'var(--fs-card-title)', color: '#C87941' }}>
-                          {w.name}
+                          {weaponDisplayName(w)}
                           {w.dlcSource !== 'Base' && <DlcBadge source={w.dlcSource} className="ml-2 align-middle" />}
                         </span>
                         <span className={`px-1.5 py-0.5 font-mono uppercase rounded-sm shrink-0 ${CATEGORY_COLORS[w.category]}`} style={{ fontSize: 'var(--fs-badge)' }}>

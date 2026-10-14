@@ -49,12 +49,9 @@ const MechDetailScreen = () => {
     if (!raw || raw === "—") return "—";
     const tokens = parseHardpointTokens(raw);
     if (tokens.length === 0) return "—";
-    const expanded: string[] = [];
-    for (const t of tokens) {
-      const fullName = HP_TYPE_FULL[t.type] || t.type;
-      for (let i = 0; i < t.count; i++) expanded.push(fullName);
-    }
-    return expanded.join(", ");
+    return tokens
+      .map((t) => `${t.count > 1 ? `${t.count} ` : ""}${HP_TYPE_FULL[t.type] || t.type}`)
+      .join(", ");
   };
 
   const buildShareText = () => {
