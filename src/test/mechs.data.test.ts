@@ -83,4 +83,16 @@ describe('mechs data integrity', () => {
       expect(m.baseHeatDissipation, m.variant).toBe(m.isLosTech ? 60 : 30);
     }
   });
+
+  it('matches game JSON for previously wrong entries (audit 15-Oct-26)', () => {
+    const grf = MECHS.find(m => m.variant === 'GRF-4N')!;
+    expect(grf.initialTonnage).toBe(22);
+    expect(grf.baseHeatDissipation).toBe(60);
+    const atlas2 = MECHS.find(m => m.variant === 'AS7-D-HT')!;
+    expect(atlas2.hardpoints).toMatchObject({ ct: '2E 2S', la: '2E 1S', ra: '2E 1S' });
+    // Game JSON has no TopSpeed for these chassis; do not invent one
+    for (const v of ['WHM-6R', 'MAD-3R', 'MAD-3D', 'MAD-2R', 'MAD-BH', 'MAD-CM']) {
+      expect(MECHS.find(m => m.variant === v)!.topSpeed, v).toBeUndefined();
+    }
+  });
 });
