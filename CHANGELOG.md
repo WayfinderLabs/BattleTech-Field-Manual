@@ -1,3 +1,17 @@
+## versionCode 37 - 14-Oct-26
+   - Added: 35 DLC mechs - Flashpoint 8, Urban Warfare 6, Heavy Metal 21
+   - Added: fixed equipment on DLC mechs - shown locked in the builder, tonnage and slots reserved
+   - Added: builder UPGRADES tab - X-1 ECM, X-1 AP, Prototype TSM, Mortar with game mounting rules
+   - Added: COIL-S, COIL-M, COIL-L weapons
+   - Added: DLC badges in builder pickers
+   - Changed: DLC filter now cycles off, DLC ONLY, NO DLC on all tabs and in the builder
+   - Changed: tier weapons with the same name now show the manufacturer, e.g. AC/10 + (Defiance)
+   - Fix: Urban Warfare Guardian ECM and Beagle Probe replaced with the correct X-1 items and stats
+   - Fix: armor weight now counts toward the builder weight limit
+   - Fix: Shutdown Risk percent relabelled Max Heat in stats bar and share text
+   - Note: versionCode 35 and 36 were burned by build script reruns and never shipped
+   - Note: device tested on Samsung S20+ (Android 13) - S22+ unavailable
+
 ## versionCode 34 - 26-Jul-26
 - Changed: Capacitor 6 to 8 migration - all @capacitor/* packages and @capacitor-community/admob bumped to 8.x
 - Changed: targetSdkVersion and compileSdkVersion 35 to 36 - meets Google Play API 36 requirement effective 31-Aug-2026
